@@ -257,15 +257,31 @@ export function LineTable({ lines, gruppe = "alle", shopStatus }: { lines: LineL
       )}
       {brand ? <Tabel rows={rows} brand={brand as Brand} {...tabelProps} /> : (
         <div className="flex flex-col gap-8">
+          {(() => {
+            // Universelle varer (samme EAN i flere shops) vises ÉN gang i deres egen sektion – aldrig under hver shop
+            const univ = rows.filter((l) => new Set(l.brands).size > 1);
+            if (!univ.length) return null;
+            const nu = univ.filter((l) => l.status === "bestil_nu").length;
+            return (
+              <section key="univ">
+                <div className="flex items-center justify-between mb-3">
+                  <h2 className="font-extrabold text-xl flex items-center gap-2"><span className="inline-flex -space-x-1">{BRAND_ORDER.map((b) => <i key={b} className="inline-block w-3 h-3 rounded-full ring-2 ring-[var(--bg)]" style={{ background: BRANDS[b].farve }} />)}</span>Universelle<span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)] ml-1">samme EAN i flere shops</span></h2>
+                  <div className="flex items-center gap-3 text-xs font-semibold text-[var(--muted)]">{nu > 0 && <span className="chip !text-[.6rem]" style={{ background: LINE_STATUS_META.bestil_nu.farve, color: "#fff" }}>Bestil nu {nu}</span>}<span className="num">{univ.length} linjer</span></div>
+                </div>
+                <Tabel rows={univ.slice(0, visAlle.univ ? undefined : 8)} {...tabelProps} />
+                {univ.length > 8 && !visAlle.univ && <button onClick={() => setVisAlle((v) => ({ ...v, univ: true }))} className="mt-2 text-sm font-bold text-[var(--muted)] hover:text-[var(--ink)]">Vis alle {univ.length} universelle ↓</button>}
+              </section>
+            );
+          })()}
           {BRAND_ORDER.map((b) => {
-            const br = rows.filter((l) => l.brands.includes(b));
+            const br = rows.filter((l) => l.brands.includes(b) && new Set(l.brands).size === 1);
             if (!br.length) return null;
             const nu = br.filter((l) => l.status === "bestil_nu").length;
             return (
               <section key={b}>
                 <div className="flex items-center justify-between mb-3">
                   <h2 className="font-extrabold text-xl flex items-center gap-2"><i className="inline-block w-3 h-3 rounded-full" style={{ background: BRANDS[b].farve }} />{BRANDS[b].navn}<span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)] ml-1">{BRANDS[b].land}</span></h2>
-                  <div className="flex items-center gap-3 text-xs font-semibold text-[var(--muted)]">{nu > 0 && <span className="chip !text-[.6rem]" style={{ background: LINE_STATUS_META.bestil_nu.farve, color: "#fff" }}>Bestil nu {nu}</span>}<span className="num">{br.length} linjer</span><button onClick={() => setBrand(b)} className="font-bold text-[var(--ink)] underline">Kun {BRANDS[b].kort} →</button></div>
+                  <div className="flex items-center gap-3 text-xs font-semibold text-[var(--muted)]">{nu > 0 && <span className="chip !text-[.6rem]" style={{ background: LINE_STATUS_META.bestil_nu.farve, color: "#fff" }}>Bestil nu {nu}</span>}<span className="num">{br.length} linjer</span><button onClick={() => setBrand(b)} className="font-bold text-[var(--ink)] underline">Alle {BRANDS[b].kort} inkl. universelle →</button></div>
                 </div>
                 <Tabel rows={br.slice(0, visAlle[b] ? undefined : 8)} brand={b} {...tabelProps} />
                 {br.length > 8 && !visAlle[b] && <button onClick={() => setVisAlle((v) => ({ ...v, [b]: true }))} className="mt-2 text-sm font-bold text-[var(--muted)] hover:text-[var(--ink)]">Vis alle {br.length} linjer for {BRANDS[b].navn} ↓</button>}
