@@ -3,7 +3,7 @@ import { COOKIE, validToken } from "@/lib/auth";
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  if (pathname.startsWith("/login") || pathname.startsWith("/api/login") || pathname.startsWith("/_next") || pathname === "/favicon.ico" || pathname.startsWith("/icon")) {
+  if (pathname.startsWith("/login") || pathname.startsWith("/api/login") || pathname.startsWith("/_next") || pathname === "/favicon.ico" || pathname.startsWith("/icon") || /\.(png|svg|ico|jpg|webp)$/.test(pathname)) {
     return NextResponse.next();
   }
   const ok = await validToken(req.cookies.get(COOKIE)?.value, process.env.SITE_PASSWORD);

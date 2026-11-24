@@ -100,8 +100,12 @@ def load_sales():
         rows = {}
         if "rows" in d and isinstance(d["rows"], list) and d["rows"] and isinstance(d["rows"][0], list):
             frm, to, days = d["from"], d["to"], d["days"]
-            for pid, solgt, foer, lager in d["rows"]:
-                rows[str(pid)] = dict(solgt=solgt, solgt_foer=foer, lager=lager)
+            for row in d["rows"]:
+                pid, solgt, foer, lager = row[:4]
+                extra = {}
+                if len(row) > 4: extra["db"] = row[4]
+                if len(row) > 5: extra["titel"] = row[5]
+                rows[str(pid)] = dict(solgt=solgt, solgt_foer=foer, lager=lager, **extra)
         else:
             frm, to = d["periode"]["from"], d["periode"]["to"]
             days = (date.fromisoformat(to) - date.fromisoformat(frm)).days + 1

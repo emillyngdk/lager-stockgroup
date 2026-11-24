@@ -58,7 +58,7 @@ export const DEFAULT_CONFIG: Config = {
 };
 
 export interface Variant {
-  brand: Brand; product_id: string; title: string; created_at: string | null; published_at: string | null;
+  brand: Brand; product_id: string; title: string; title_original?: string; created_at: string | null; published_at: string | null;
   product_type: string; variant_id: string; sku: string | null; barcode: string | null; shopify_qty: number | null;
   unit_cost: number | null; levels: Record<string, number | null>; ean: string | null; components: string[] | null;
 }
@@ -95,7 +95,7 @@ export interface InboundEvent { dato: string; stk: number; sikker: boolean; po: 
 
 export interface ForecastRow {
   key: string; brand: Brand; variant_id: string; product_id: string; ean: string | null; bc_sku: string | null;
-  titel: string; product_type: string; status: Status; statusAarsag: string;
+  titel: string; titelOriginal?: string | null; product_type: string; status: Status; statusAarsag: string;
   alder: { dage: number; gruppe: AgeGroup; publiceret: string | null };
   velocity: { v7: number; v14: number; v30: number; v60: number; base: number; afsaeson: number; trend: number; saesonNu: number; saesonKilde: string };
   lager: { ecom: number; vejleFrit: number; vejleOptimistisk: number; reserveretShopGroup: number; reserveretB2b: number; bestiltB2b: number; tilgaengeligt: number; tilgaengeligtOptimistisk: number; andel: number; lokation: string; shopifyQty: number | null; bcLokation: string | null };
@@ -104,7 +104,7 @@ export interface ForecastRow {
   datoer: { udsolgt: string | null; udsolgtMedPaaVej: string | null; udsolgtOptimistisk: string | null; bestilSenest: string | null };
   genbestilling: { leadTime: number; leadTimeKilde: string; sikkerhedslager: number; reorderPoint: number; foreslaaetStk: number; foreslaaetColli: number; stkPrColli: number | null; daekningsdage: number; hero: boolean; z: number; sigma: number; region: "asia" | "eu" };
   projektion: { dag0: string; konservativ: number[]; optimistisk: number[] };
-  oekonomi: { dbPrStk: number | null; unitCost: number | null; lagervaerdi: number | null; nyeKunder: number | null };
+  oekonomi: { dbPrStk: number | null; unitCost: number | null; lagervaerdi: number | null; nyeKunder: number | null; solgt365: number | null };
   universel: boolean; brandsMedEan: Brand[]; leverandoer: string | null; indkoeber: string | null;
   forklaring: string[];
 }

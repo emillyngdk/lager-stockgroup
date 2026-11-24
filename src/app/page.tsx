@@ -19,12 +19,12 @@ export default function Forside() {
     <Shell active="forside">
       <header className="mb-6 md:mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="display text-4xl md:text-6xl">Hvad brænder?</h1>
-          <p className="mt-2 text-sm md:text-base font-medium text-[var(--muted)]">{fmtTal(f.rows.length)} varer forecastet på tværs af fire shops · {fmtDato(f.dag0)}</p>
+          <h1 className="display text-4xl md:text-6xl">Dagens overblik</h1>
+          <p className="mt-3 text-sm md:text-base font-medium text-[var(--muted)]">{(() => { const d = new Date(f.dag0 + "T12:00:00").toLocaleDateString("da-DK", { weekday: "long", day: "numeric", month: "long" }); return d.charAt(0).toUpperCase() + d.slice(1); })()} · {fmtTal(f.rows.length)} varer forecastet på tværs af fire shops</p>
         </div>
-        <Link href="/forslag" className="card px-5 py-4 flex items-center gap-4 hover:-translate-y-0.5 transition-transform">
+        <Link href="/forslag" className="card !bg-[var(--ink)] text-white px-5 py-4 flex items-center gap-4">
           <span className="display num text-4xl">{forslagLinjer}</span>
-          <span className="text-sm font-semibold leading-tight">linjer i<br />ugens forslag →</span>
+          <span className="text-sm font-semibold leading-tight text-white/85">linjer i<br />ugens forslag →</span>
         </Link>
       </header>
 

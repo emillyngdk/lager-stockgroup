@@ -1,7 +1,5 @@
 node_modules
 .next
 .env*
-data/raw/
-!data/raw/.gitkeep
 *.tsbuildinfo
 .vercel

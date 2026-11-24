@@ -84,9 +84,9 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
   // produktsalg pr. brand -> pr. product_id
   const salesOf = (b: Brand, pid: string) => {
     const s = snap.sales[b] || {};
-    const d7 = s.d7?.rows[pid], d30 = s.d30?.rows[pid];
+    const d7 = s.d7?.rows[pid], d30 = s.d30?.rows[pid], d365 = s.d365?.rows[pid];
     return {
-      s7: d7?.solgt ?? 0, s8_14: d7?.solgt_foer ?? 0, s30: d30?.solgt ?? 0, s31_60: d30?.solgt_foer ?? 0,
+      s365: d365?.solgt ?? null, s7: d7?.solgt ?? 0, s8_14: d7?.solgt_foer ?? 0, s30: d30?.solgt ?? 0, s31_60: d30?.solgt_foer ?? 0,
       lager: d30?.lager ?? d7?.lager ?? null, dbPrStk: d30?.db_pr_stk ?? null, nyeKunder: d30?.nye_kunder ?? null, db: d30?.db ?? 0, titel: d30?.titel,
     };
   };
@@ -300,7 +300,7 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
 
     rows.push({
       key, brand: v.brand, variant_id: v.variant_id, product_id: v.product_id, ean: v.ean, bc_sku: bc?.bc_sku ?? null,
-      titel: v.title, product_type: v.product_type, status, statusAarsag: aarsag,
+      titel: v.title, titelOriginal: v.title_original && v.title_original !== v.title ? v.title_original : null, product_type: v.product_type, status, statusAarsag: aarsag,
       alder: { dage: vel.ageDays, gruppe: vel.grp, publiceret: v.published_at },
       velocity: { v7: r1(vel.v7), v14: r1(vel.v14), v30: r1(vel.v30), v60: r1(vel.v60), base: r1(vel.base), afsaeson: r1(afsaeson), trend: Math.round(vel.trend * 100) / 100, saesonNu: Math.round(saesonNu * 100) / 100, saesonKilde },
       lager: { ecom, vejleFrit: Math.round(vejleFrit), vejleOptimistisk: Math.round(vejleOpt), reserveretShopGroup: resSG, reserveretB2b: resB2b, bestiltB2b: bestB2b, tilgaengeligt: Math.round(tilgaengeligt), tilgaengeligtOptimistisk: Math.round(tilgaengeligtOpt), andel: Math.round(andel * 100) / 100, lokation: Object.keys(v.levels)[0] || "Shopify", shopifyQty: v.shopify_qty, bcLokation: loc ? bcLoc : null },
@@ -309,7 +309,7 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
       datoer: { udsolgt: dageTilUdsolgt === null ? null : addDays(dag0, dageTilUdsolgt), udsolgtMedPaaVej: dageMedPaaVej === null ? null : addDays(dag0, dageMedPaaVej), udsolgtOptimistisk: dageOpt === null ? null : addDays(dag0, dageOpt), bestilSenest: bestilSenestDag === null ? null : addDays(dag0, bestilSenestDag) },
       genbestilling: { leadTime, leadTimeKilde, sikkerhedslager: sikkerhed, reorderPoint, foreslaaetStk: foreslaaetStkRund, foreslaaetColli, stkPrColli: cll, daekningsdage: daekning, hero, z, sigma: r1(sigma), region },
       projektion: { dag0, konservativ: kons.map((x) => Math.round(x)), optimistisk: opt.map((x) => Math.round(x)) },
-      oekonomi: { dbPrStk: vel.s.dbPrStk, unitCost: v.unit_cost, lagervaerdi: v.unit_cost != null ? Math.round(v.unit_cost * ecom) : null, nyeKunder: vel.s.nyeKunder },
+      oekonomi: { dbPrStk: vel.s.dbPrStk, unitCost: v.unit_cost, lagervaerdi: v.unit_cost != null ? Math.round(v.unit_cost * ecom) : null, nyeKunder: vel.s.nyeKunder, solgt365: vel.s.s365 },
       universel: (variantsByEan[v.ean] || []).filter((x) => x.brand !== v.brand).length > 0,
       brandsMedEan: [...new Set((variantsByEan[v.ean] || []).map((x) => x.brand))],
       leverandoer: poLev?.leverandoer ?? null, indkoeber: poLev?.indkoeber ?? null,

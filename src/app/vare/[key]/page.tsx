@@ -38,7 +38,8 @@ export default async function Vare({ params }: { params: Promise<{ key: string }
         <Link href={`/fane/${r.status.replace("_", "-")}`} className="text-xs font-bold text-[var(--muted)]">← Tilbage</Link>
         <div className="flex flex-wrap items-center gap-3 mt-2"><StatusChip status={r.status} /><BrandChip brand={r.brand} />{r.universel && <span className="text-[.65rem] font-bold uppercase tracking-wide text-[var(--overlager)]">Universel</span>}{r.genbestilling.hero && <span className="text-[.65rem] font-bold uppercase tracking-wide text-[var(--bestil)]">Hero-produkt</span>}</div>
         <h1 className="display text-3xl md:text-5xl mt-2">{r.titel}</h1>
-        <p className="mt-2 text-sm font-medium text-[var(--muted)] num">EAN {r.ean} · BC {r.bc_sku ?? "–"} · {r.product_type || "–"} · {r.alder.dage} dage i salg ({r.alder.gruppe}) · {r.leverandoer ?? "leverandør ukendt"}</p>
+        {r.titelOriginal && <p className="mt-1 text-sm font-semibold text-[var(--muted)]">I shoppen: {r.titelOriginal}</p>}
+        <p className="mt-2 text-sm font-medium text-[var(--muted)] num">EAN {r.ean} · BC {r.bc_sku ?? "–"}{r.product_type ? ` · ${r.product_type}` : ""} · {r.alder.dage} dage i salg ({r.alder.gruppe}) · {r.leverandoer ?? "leverandør ukendt"}</p>
         <p className="mt-2 text-base font-semibold">{r.statusAarsag}.</p>
       </div>
 
@@ -74,6 +75,7 @@ export default async function Vare({ params }: { params: Promise<{ key: string }
             {[["7 dage", r.velocity.v7], ["14 dage", r.velocity.v14], ["30 dage", r.velocity.v30], ["60 dage", r.velocity.v60]].map(([l, v]) => <div key={l as string} className="rounded-xl bg-[var(--bg)] p-3"><p className="display num text-2xl">{fmtTal(v as number, 1)}</p><p className="text-[.6rem] font-bold uppercase text-[var(--muted)]">{l}</p></div>)}
           </div>
           <ul className="mt-4 text-sm flex flex-col gap-1.5 font-medium">
+            {r.oekonomi.solgt365 != null && <li className="flex justify-between"><span>Solgt seneste 365 dage (hele produktet)</span><b className="num">{fmtTal(r.oekonomi.solgt365)} stk</b></li>}
             <li className="flex justify-between"><span>Vægtet nu</span><b className="num">{fmtTal(r.velocity.base, 1)} stk/dag</b></li>
             <li className="flex justify-between"><span>Normalt niveau (afsæsonaliseret)</span><b className="num">{fmtTal(r.velocity.afsaeson, 1)} stk/dag</b></li>
             <li className="flex justify-between"><span>Sæson denne uge</span><b className="num">{Math.round(r.velocity.saesonNu * 100)} %</b></li>

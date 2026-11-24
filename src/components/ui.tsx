@@ -27,13 +27,13 @@ export function CoverageBar({ days }: { days: number | null }) {
 
 export function BigNumber({ label, value, sub, href, color }: { label: string; value: string | number; sub?: string; href?: string; color?: string }) {
   const inner = (
-    <div className="card p-5 md:p-6 h-full flex flex-col justify-between gap-2 min-h-[132px]">
+    <div className="card accent p-5 md:p-6 pl-6 md:pl-7 h-full flex flex-col justify-between gap-2 min-h-[132px]" style={{ ["--accent" as string]: color }}>
       <p className="text-[.7rem] font-bold uppercase tracking-widest text-[var(--muted)]">{label}</p>
       <p className="display num text-5xl md:text-6xl" style={{ color }}>{value}</p>
       {sub && <p className="text-xs font-medium text-[var(--muted)]">{sub}</p>}
     </div>
   );
-  return href ? <Link href={href} className="block hover:-translate-y-0.5 transition-transform">{inner}</Link> : inner;
+  return href ? <Link href={href} className="block">{inner}</Link> : inner;
 }
 
 export function Dage({ n }: { n: number | null }) {
