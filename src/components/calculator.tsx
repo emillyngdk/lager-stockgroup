@@ -46,7 +46,7 @@ export function Calculator({ line, receivingDays, plan, onSave }: Props) {
   const pct = basis > 0 ? Math.round((stkRund / basis - 1) * 100) : null;
   const diffDage = calc.rt.dag != null && calc.ref.dag != null ? calc.rt.dag - calc.ref.dag : null;
   const vaerdi = pris !== "" ? Math.round(stkRund * Number(pris)) : null;
-  const bump = (f: number) => setStk(Math.max(0, Math.round(basis * f)));
+  const bump = (f: number) => { const v = Math.max(0, Math.round(basis * f)); setStk(cll ? Math.ceil(v / cll) * cll : v); };
 
   return (
     <section className="card p-5 md:p-6">
@@ -62,7 +62,7 @@ export function Calculator({ line, receivingDays, plan, onSave }: Props) {
             <button onClick={() => setStk(basis)} className="rounded-full px-3 py-1.5 text-xs font-bold bg-[var(--bg)] hover:bg-[#eeeae2]">Nulstil</button>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <label className="text-xs font-bold text-[var(--muted)] uppercase tracking-wide">Stk<input type="number" min={0} value={stk} onChange={(e) => setStk(Math.max(0, Number(e.target.value) || 0))} className="mt-1 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-3 num text-2xl font-extrabold text-[var(--ink)] outline-none focus:border-[var(--ink)]" /></label>
+            <label className="text-xs font-bold text-[var(--muted)] uppercase tracking-wide">Stk<input type="number" min={0} value={stk} onChange={(e) => setStk(Math.max(0, Number(e.target.value) || 0))} onBlur={() => { if (cll && stk % cll) setStk(Math.ceil(stk / cll) * cll); }} className="mt-1 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-3 num text-2xl font-extrabold text-[var(--ink)] outline-none focus:border-[var(--ink)]" /></label>
             <label className="text-xs font-bold text-[var(--muted)] uppercase tracking-wide">Colli{cll ? ` (à ${cll})` : ""}<input type="number" min={0} disabled={!cll} value={colli} onChange={(e) => setStk(Math.max(0, Number(e.target.value) || 0) * cll)} className="mt-1 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-3 num text-2xl font-extrabold text-[var(--ink)] outline-none focus:border-[var(--ink)] disabled:opacity-40" /></label>
             <label className="text-xs font-bold text-[var(--muted)] uppercase tracking-wide">Bestildato<input type="date" value={bestilDato} onChange={(e) => setBestilDato(e.target.value || dag0)} className="mt-1 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2.5 num text-sm font-semibold text-[var(--ink)] outline-none focus:border-[var(--ink)]" /></label>
             <label className="text-xs font-bold text-[var(--muted)] uppercase tracking-wide">Lead time (dage)<input type="number" min={1} value={leadTime} onChange={(e) => setLeadTime(Math.max(1, Number(e.target.value) || 1))} className="mt-1 w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2.5 num text-sm font-semibold text-[var(--ink)] outline-none focus:border-[var(--ink)]" /></label>
@@ -92,7 +92,7 @@ export function Calculator({ line, receivingDays, plan, onSave }: Props) {
         </div>
       </div>
       <div className="mt-5">
-        <div className="flex items-center justify-between mb-2"><h3 className="font-extrabold">Lagerkurve 180 dage</h3><div className="flex gap-4 text-[.65rem] font-semibold text-[var(--muted)]"><span><i className="inline-block w-4 h-0.5 bg-[var(--ink)] align-middle mr-1" />Bekræftede leveringer</span><span><i className="inline-block w-4 border-t-2 border-dashed border-[#5b6cff] align-middle mr-1" />Alle åbne PO'er</span><span><i className="inline-block w-4 h-0.5 bg-[#5b6cff] align-middle mr-1" />Med denne ordre</span><span className="text-[var(--kritisk)]">— Reorder point</span></div></div>
+        <div className="flex items-center justify-between mb-2"><h3 className="font-extrabold">Lagerkurve · {Math.round((line.projektion.optimistisk.length - 1) / 30)} måneder frem</h3><div className="flex gap-4 text-[.65rem] font-semibold text-[var(--muted)]"><span><i className="inline-block w-4 h-0.5 bg-[var(--ink)] align-middle mr-1" />Bekræftede leveringer</span><span><i className="inline-block w-4 border-t-2 border-dashed border-[#5b6cff] align-middle mr-1" />Alle åbne PO'er</span><span><i className="inline-block w-4 h-0.5 bg-[#5b6cff] align-middle mr-1" />Med denne ordre</span><span className="text-[var(--kritisk)]">— Reorder point</span></div></div>
         <LineChart dag0={dag0} konservativ={line.projektion.konservativ} optimistisk={line.projektion.optimistisk} reorderPoint={g.reorderPoint} events={line.paaVej.events} bestilSenest={line.datoer.bestilSenest} plan={stkRund > 0 ? { kurve: calc.kurve, stk: stkRund, dato: modtagelse } : null} />
       </div>
     </section>

@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { LineLite } from "@/lib/types-lite";
 import { ShopDots } from "./line-table";
-import { askNavn } from "./line-detail";
+import { ask, hvemErDu } from "./dialog";
 import { fmtDato, fmtTal } from "@/lib/format";
 
 type Flag = { udgaar?: boolean; skjul_til?: string | null; ikke_indkoeb?: boolean; af?: string; dato?: string; note?: string };
@@ -20,8 +20,8 @@ export function FjernetList({ lines, dag0 }: { lines: LineLite[]; dag0: string }
       .sort((a, b) => a.type.localeCompare(b.type) || b.l.lager.tilgaengeligt - a.l.lager.tilgaengeligt);
   }, [lines, overrides, dag0]);
   const genindsaet = async (ean: string, titel: string) => {
-    const navn = askNavn(localStorage.getItem("lager_navn") ?? ""); if (!navn) return;
-    if (!window.confirm(`Genindsæt ${titel} på indkøbslisten?`)) return;
+    const navn = await hvemErDu(); if (!navn) return;
+    if (!(await ask({ title: "Genindsæt på listen?", text: `${titel} kommer tilbage på indkøbslisten med det samme.`, ok: "Genindsæt" }))) return;
     const r = await fetch(`/api/override/${ean}`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ udgaar: false, ikke_indkoeb: false, skjul_til: null, af: navn }) });
     if (r.ok) { const saved = await r.json(); setOverrides((o) => ({ ...(o ?? {}), [ean]: saved })); setBesked(`${titel} er tilbage på listen`); setTimeout(() => setBesked(null), 3000); }
   };

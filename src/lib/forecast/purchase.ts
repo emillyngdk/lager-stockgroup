@@ -71,6 +71,8 @@ export interface PurchaseLine {
 
 const r1 = (x: number) => Math.round(x * 10) / 10;
 const HORIZON = 730;
+/** Kurven på linjesiden: 400 dage, så en ordre med 6 mdr. lead time kan ses lande og række */
+export const CHART_DAYS = 400;
 
 export function supplierIsEu(lev: string | null, flag: boolean, ov?: LineOverride): boolean {
   if (ov?.eu !== undefined) return ov.eu;
@@ -298,7 +300,7 @@ export function buildPurchaseLines(
       fordeling: foreslaaetStkRund > 0 ? fordel(lineStub, foreslaaetStkRund) : [],
       oekonomi: { unitCost, lagervaerdi: unitCost != null ? Math.round(unitCost * tilgaengeligt) : null },
       demandPrDag: demandPrDag.map((x) => Math.round(x * 10) / 10),
-      projektion: { dag0, konservativ: kons.slice(0, cfg.horizonDays + 1).map(Math.round), optimistisk: opt.slice(0, cfg.horizonDays + 1).map(Math.round) },
+      projektion: { dag0, konservativ: kons.slice(0, CHART_DAYS + 1).map(Math.round), optimistisk: opt.slice(0, CHART_DAYS + 1).map(Math.round) },
       override: ov, plan: null, forklaring,
     });
   }

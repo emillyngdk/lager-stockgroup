@@ -7,7 +7,7 @@ import { BRANDS, type Brand } from "@/lib/forecast/types";
 import { LINE_STATUS_META, type LineStatus } from "@/lib/forecast/purchase";
 import { fmtDato, fmtTal } from "@/lib/format";
 import { TrendArrow } from "./ui";
-import { askNavn } from "./line-detail";
+import { ask, hvemErDu } from "./dialog";
 
 type Flag = { udgaar?: boolean; skjul_til?: string | null; ikke_indkoeb?: boolean; af?: string; dato?: string; note?: string };
 type PlanLite = { stk: number; af?: string; status: "planlagt" | "bestilt" };
@@ -60,7 +60,15 @@ export function BestilSenest({ dato, dag0, dage, big }: { dato: string | null; d
 
 function Tabel({ rows, dag0, brand, valgt, toggle, onHandling, fjernet }: { rows: LineLite[]; dag0: string; brand?: Brand; valgt: Set<string>; toggle: (ean: string) => void; onHandling: (eans: string[], h: Handling) => void; fjernet?: boolean }) {
   const router = useRouter();
-  const [menu, setMenu] = useState<string | null>(null);
+  const [menuPos, setMenuPos] = useState<{ ean: string; right: number; top?: number; bottom?: number } | null>(null);
+  const menu = menuPos?.ean ?? null;
+  const setMenu = (ean: string | null) => { if (!ean) setMenuPos(null); };
+  const openMenu = (ean: string, el: HTMLElement) => {
+    if (menuPos?.ean === ean) { setMenuPos(null); return; }
+    const r = el.getBoundingClientRect(); const up = r.bottom + 200 > window.innerHeight;
+    setMenuPos({ ean, right: window.innerWidth - r.right, top: up ? undefined : r.bottom + 4, bottom: up ? window.innerHeight - r.top + 4 : undefined });
+  };
+  useEffect(() => { if (!menuPos) return; const h = () => setMenuPos(null); window.addEventListener("scroll", h, true); window.addEventListener("resize", h); return () => { window.removeEventListener("scroll", h, true); window.removeEventListener("resize", h); }; }, [menuPos]);
   return (
     <div>
 
@@ -90,7 +98,7 @@ function Tabel({ rows, dag0, brand, valgt, toggle, onHandling, fjernet }: { rows
                       <Link href={`/linje/${l.ean}`} className="block font-bold truncate text-[.95rem]">{l.titel}</Link>
                       <span className="flex items-center gap-2 mt-0.5">{brand && l.brands.length > 1 ? <span className="text-[.65rem] font-bold text-[var(--overlager)]">Også i {l.brands.filter((x) => x !== brand).map((x) => BRANDS[x].kort).join(" + ")}</span> : <ShopDots shops={l.shops} withText />}<span className="num text-[.65rem] text-[var(--muted)]">{l.ean}</span>{l.hero && <span className="text-[.6rem] font-bold tracking-wider text-[var(--bestil)]">HERO</span>}{l.dataKvalitet === "lav" && <span className="text-[.6rem] font-bold tracking-wider text-white bg-[var(--kritisk)] rounded px-1.5 py-0.5" title={l.advarsler[0]}>KUN {Math.min(365, l.velocity.salgsdage)} D DATA</span>}</span>
                     </td>
-                    <td className="px-3 py-3 whitespace-nowrap"><BestilSenest dato={l.datoer.bestilSenest} dag0={dag0} dage={l.dage.bestilSenest} big /></td>
+                    <td className="px-3 py-3 whitespace-nowrap">{l.status === "for_nyt" ? <span className="font-extrabold text-[var(--bestil)]" title="For lidt salgsdata til en automatisk dato">Vurdér<span className="block text-[.65rem] font-semibold text-[var(--muted)]">{Math.min(365, l.velocity.salgsdage)} d data</span></span> : <BestilSenest dato={l.datoer.bestilSenest} dag0={dag0} dage={l.dage.bestilSenest} big />}</td>
                     <td className="px-3 py-3 text-right whitespace-nowrap">
                       {l.genbestilling.foreslaaetStk > 0 ? <><span className="num font-extrabold text-2xl leading-none">{fmtTal(l.genbestilling.foreslaaetStk)}</span><span className="block text-[.65rem] font-semibold text-[var(--muted)]">{l.genbestilling.foreslaaetColli ? `${l.genbestilling.foreslaaetColli} colli` : "stk"}{l.genbestilling.moq ? " · MOQ" : ""}</span></> : <span className="text-[var(--muted)] font-semibold">–</span>}
                     </td>
@@ -103,9 +111,9 @@ function Tabel({ rows, dag0, brand, valgt, toggle, onHandling, fjernet }: { rows
                     <td className="px-3 py-3 text-right num whitespace-nowrap text-xs">{l.paaVej.sikker > 0 && <span className="block font-bold text-[var(--ok)]">+{fmtTal(l.paaVej.sikker)}</span>}{l.paaVej.usikker > 0 && <span className="block text-[#b58900] font-bold" title="Ubooket">+{fmtTal(l.paaVej.usikker)}<span className="text-[.6rem] font-semibold"> ub.</span></span>}{l.paaVej.sikker + l.paaVej.usikker === 0 && <span className="text-[var(--muted)]">0</span>}</td>
                     <td className="px-3 py-3 hidden 2xl:table-cell"><LineStatusChip status={l.status} small /></td>
                     <td className="px-2 py-3 relative" onClick={(e) => e.stopPropagation()}>
-                      <button onClick={() => setMenu(menu === l.ean ? null : l.ean)} className="rounded-lg px-2 py-1 text-sm font-bold text-[var(--muted)] hover:bg-[var(--bg)] hover:text-[var(--ink)]" aria-label="Handlinger">⋯</button>
-                      {menu === l.ean && (
-                        <div className="absolute right-2 top-10 card p-1.5 w-56 z-20 flex flex-col text-sm" onMouseLeave={() => setMenu(null)}>
+                      <button onClick={(e) => openMenu(l.ean, e.currentTarget)} className="rounded-lg px-2 py-1 text-sm font-bold text-[var(--muted)] hover:bg-[var(--bg)] hover:text-[var(--ink)]" aria-label="Handlinger">⋯</button>
+                      {menu === l.ean && menuPos && (
+                        <div className="fixed card p-1.5 w-56 z-40 flex flex-col text-sm shadow-xl" style={{ right: menuPos.right, top: menuPos.top, bottom: menuPos.bottom }} onMouseLeave={() => setMenu(null)}>
                           {fjernet ? <button onClick={() => { onHandling([l.ean], "genindsaet"); setMenu(null); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Genindsæt på listen</button> : (<>
                             <button onClick={() => { onHandling([l.ean], "udgaar"); setMenu(null); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Markér som udgår</button>
                             <button onClick={() => { onHandling([l.ean], "skjul"); setMenu(null); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Skjul i 30 dage</button>
@@ -169,9 +177,12 @@ export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; grupp
   const antalUdgaaet = useMemo(() => lines.filter((l) => l.status === "udgaar" || overrides[l.ean]?.udgaar).length, [lines, overrides]);
   const toggle = (ean: string) => setValgt((v) => { const n = new Set(v); if (n.has(ean)) n.delete(ean); else n.add(ean); return n; });
   const onHandling = async (eans: string[], h: Handling) => {
-    const navn = askNavn(localStorage.getItem("lager_navn") ?? ""); if (!navn) return;
-    const tekst = { udgaar: "Markér som udgår", skjul: "Skjul i 30 dage", ikke_indkoeb: "Ikke relevant for indkøb", genindsaet: "Genindsæt" }[h];
-    if (!window.confirm(`${tekst}: ${eans.length} ${eans.length === 1 ? "vare" : "varer"}?${h !== "genindsaet" ? "\n\nVaren forsvinder fra forslag og mails. Fortryd under Fjernede varer." : ""}`)) return;
+    const navn = await hvemErDu(); if (!navn) return;
+    const tekst = { udgaar: "Markér som udgår", skjul: "Skjul i 30 dage", ikke_indkoeb: "Ikke relevant for indkøb", genindsaet: "Genindsæt på listen" }[h];
+    const titler = eans.map((e) => lines.find((l) => l.ean === e)?.titel ?? e);
+    const hvem = eans.length === 1 ? titler[0] : `${eans.length} varer: ${titler.slice(0, 4).join(", ")}${eans.length > 4 ? " …" : ""}`;
+    const forklaring = { udgaar: "Forsvinder fra indkøbslisten, forslag og mails – også i fremtidige kørsler. Fortryd under Fjernede varer.", skjul: "Forsvinder fra listen i 30 dage og kommer selv tilbage.", ikke_indkoeb: "Fjernes fra indkøbslisten, bliver i Shops-visningen.", genindsaet: "Kommer tilbage på indkøbslisten med det samme." }[h];
+    if (!(await ask({ title: `${tekst}?`, text: `${hvem}\n\n${forklaring}`, ok: tekst, danger: h === "udgaar" }))) return;
     const body = h === "udgaar" ? { udgaar: true } : h === "skjul" ? { skjul_til: new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10) } : h === "ikke_indkoeb" ? { ikke_indkoeb: true } : { udgaar: false, ikke_indkoeb: false, skjul_til: null };
     let ok = 0;
     for (const ean of eans) {
