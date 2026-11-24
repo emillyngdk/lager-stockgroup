@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { updateState, type Flag } from "@/lib/state";
 
 export const dynamic = "force-dynamic";
-const KEYS: (keyof Flag)[] = ["udgaar", "skjul_til", "ikke_indkoeb", "note", "lead_time", "coverage_days", "moq", "eu", "kategori", "service_level"];
+const KEYS: (keyof Flag)[] = ["udgaar", "skjul_til", "ikke_indkoeb", "note", "lead_time", "coverage_days", "moq", "eu", "kategori", "service_level", "leverandoer"];
 
 /** PUT /api/override/<ean>  body = delvis Flag; felter sat til null/undefined fjernes. */
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ ean: string }> }) {

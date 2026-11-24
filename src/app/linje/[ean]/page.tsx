@@ -54,7 +54,7 @@ export default async function LinjeSide({ params }: { params: Promise<{ ean: str
         <Big label="Tør samlet" value={l.dage.medPaaVej === null ? "180+" : `${l.dage.medPaaVej} d`} sub={l.datoer.medPaaVej ? `${fmtDato(l.datoer.medPaaVej)} med bekræftede leveringer` : "ikke inden for horisonten"} color={l.dage.medPaaVej !== null && l.dage.medPaaVej <= 14 ? "var(--kritisk)" : undefined} />
       </section>
 
-      <LineDetail line={l} receivingDays={f.config.receivingDays} />
+      <LineDetail line={l} receivingDays={f.config.receivingDays} leverandoerer={[...new Set(f.linjer.map((x) => x.leverandoer).filter(Boolean) as string[])].sort()} />
 
       <section className="card p-5 md:p-6 mt-6">
         <h2 className="font-extrabold text-lg mb-3">Pr. shop</h2>

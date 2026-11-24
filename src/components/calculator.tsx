@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { PurchaseLine } from "@/lib/forecast/purchase";
 import { raekkerTil, fordel } from "@/lib/forecast/purchase";
 import { addDays } from "@/lib/forecast/engine";
@@ -21,6 +21,10 @@ export function Calculator({ line, receivingDays, plan, onSave }: Props) {
   const [pris, setPris] = useState<number | "">(line.oekonomi.unitCost ?? "");
   const [note, setNote] = useState(plan?.note ?? "");
   const [saving, setSaving] = useState(false);
+  // planen hentes asynkront – når den lander, skal felterne vise planen og ikke forslaget
+  const planKey = plan ? `${plan.stk}|${plan.bestilDato}|${plan.leadTime}|${plan.note ?? ""}` : "";
+  useEffect(() => { if (plan) { setStk(plan.stk); setBestilDato(plan.bestilDato); setLeadTime(plan.leadTime); setNote(plan.note ?? ""); } // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [planKey]);
   const cll = g.stkPrColli ?? 0;
   const colli = cll ? Math.ceil(stk / cll) : 0;
   const stkRund = cll ? colli * cll : stk;

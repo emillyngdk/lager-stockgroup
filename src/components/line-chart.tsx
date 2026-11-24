@@ -16,7 +16,14 @@ export function LineChart({ dag0, konservativ: k, optimistisk: o, reorderPoint: 
   const y = (v: number) => padT + (1 - v / max) * (H - padT - padB);
   const path = (arr: number[]) => arr.map((v, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
   const months: { i: number; label: string }[] = [];
-  for (let i = 0; i < n; i++) { const d = addDays(dag0, i); if ((d.endsWith("-01") && i > 8) || i === 0) months.push({ i, label: fmtDato(d) }); }
+  const MDR = ["jan", "feb", "mar", "apr", "maj", "jun", "jul", "aug", "sep", "okt", "nov", "dec"];
+  const step = n > 250 ? 2 : 1; // ved lange kurver: hver anden måned, så labels ikke står oven i hinanden
+  let m = 0;
+  for (let i = 0; i < n; i++) {
+    const d = addDays(dag0, i);
+    if (i === 0) { months.push({ i, label: fmtDato(d) }); continue; }
+    if (d.endsWith("-01") && i > 12) { m++; if (m % step === 0) months.push({ i, label: `${MDR[Number(d.slice(5, 7)) - 1]}${d.slice(5, 7) === "01" ? ` ${d.slice(0, 4)}` : ""}` }); }
+  }
   const toI = (d: string) => Math.round((Date.parse(d) - Date.parse(dag0)) / 864e5);
   const ev = events.map((e) => ({ ...e, i: toI(e.dato) })).filter((e) => e.i >= 0 && e.i < n);
   const bsI = bestilSenest ? toI(bestilSenest) : null;

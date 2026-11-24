@@ -9,9 +9,9 @@ import { fmtDato, fmtTal } from "@/lib/format";
 import { TrendArrow } from "./ui";
 import { ask, hvemErDu } from "./dialog";
 
-type Flag = { udgaar?: boolean; skjul_til?: string | null; ikke_indkoeb?: boolean; af?: string; dato?: string; note?: string };
+type Flag = { udgaar?: boolean; skjul_til?: string | null; ikke_indkoeb?: boolean; af?: string; dato?: string; note?: string; leverandoer?: string };
 type PlanLite = { stk: number; af?: string; status: "planlagt" | "bestilt" };
-export type Handling = "udgaar" | "skjul" | "ikke_indkoeb" | "genindsaet";
+export type Handling = "udgaar" | "skjul" | "ikke_indkoeb" | "genindsaet" | "leverandoer";
 
 const BRAND_ORDER: Brand[] = ["gladkokken", "casper", "herman", "tomi"];
 const GRUPPER: { slug: string; label: string; status: LineStatus[] }[] = [
@@ -118,6 +118,7 @@ function Tabel({ rows, dag0, brand, valgt, toggle, onHandling, fjernet }: { rows
                             <button onClick={() => { onHandling([l.ean], "udgaar"); setMenu(null); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Markér som udgår</button>
                             <button onClick={() => { onHandling([l.ean], "skjul"); setMenu(null); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Skjul i 30 dage</button>
                             <button onClick={() => { onHandling([l.ean], "ikke_indkoeb"); setMenu(null); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Ikke relevant for indkøb</button>
+                            <button onClick={() => { onHandling([l.ean], "leverandoer"); setMenu(null); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Sæt leverandør<span className="block text-xs font-medium text-[var(--muted)]">{l.leverandoer ?? "Ukendt"}</span></button>
                           </>)}
                           <Link href={`/linje/${l.ean}`} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold text-[var(--muted)]">Åbn linjen →</Link>
                         </div>
@@ -172,18 +173,20 @@ export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; grupp
     let status: LineStatus = l.status;
     if (o?.udgaar) status = "udgaar"; else if (o?.ikke_indkoeb) status = "ikke_indkoeb"; else if (o?.skjul_til && o.skjul_til >= dag0) status = "skjult";
     else if (p) status = p.status; else if (["udgaar", "ikke_indkoeb", "skjult", "planlagt", "bestilt"].includes(l.status) && o === undefined && !p && Object.keys(overrides).length + Object.keys(plans).length > 0) status = l.status;
-    return status === l.status ? l : { ...l, status };
+    const lev = o?.leverandoer || l.leverandoer;
+    return status === l.status && lev === l.leverandoer ? l : { ...l, status, leverandoer: lev };
   }).filter((l) => l.status !== "udgaar"), [lines, overrides, plans, dag0]); // udgåede varer vises aldrig i indkøbsoversigten – kun under /fjernet
   const antalUdgaaet = useMemo(() => lines.filter((l) => l.status === "udgaar" || overrides[l.ean]?.udgaar).length, [lines, overrides]);
   const toggle = (ean: string) => setValgt((v) => { const n = new Set(v); if (n.has(ean)) n.delete(ean); else n.add(ean); return n; });
   const onHandling = async (eans: string[], h: Handling) => {
     const navn = await hvemErDu(); if (!navn) return;
-    const tekst = { udgaar: "Markér som udgår", skjul: "Skjul i 30 dage", ikke_indkoeb: "Ikke relevant for indkøb", genindsaet: "Genindsæt på listen" }[h];
+    const tekst = { udgaar: "Markér som udgår", skjul: "Skjul i 30 dage", ikke_indkoeb: "Ikke relevant for indkøb", genindsaet: "Genindsæt på listen", leverandoer: "Sæt leverandør" }[h];
     const titler = eans.map((e) => lines.find((l) => l.ean === e)?.titel ?? e);
     const hvem = eans.length === 1 ? titler[0] : `${eans.length} varer: ${titler.slice(0, 4).join(", ")}${eans.length > 4 ? " …" : ""}`;
-    const forklaring = { udgaar: "Forsvinder fra indkøbslisten, forslag og mails – også i fremtidige kørsler. Fortryd under Fjernede varer.", skjul: "Forsvinder fra listen i 30 dage og kommer selv tilbage.", ikke_indkoeb: "Fjernes fra indkøbslisten, bliver i Shops-visningen.", genindsaet: "Kommer tilbage på indkøbslisten med det samme." }[h];
-    if (!(await ask({ title: `${tekst}?`, text: `${hvem}\n\n${forklaring}`, ok: tekst, danger: h === "udgaar" }))) return;
-    const body = h === "udgaar" ? { udgaar: true } : h === "skjul" ? { skjul_til: new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10) } : h === "ikke_indkoeb" ? { ikke_indkoeb: true } : { udgaar: false, ikke_indkoeb: false, skjul_til: null };
+    const forklaring = { udgaar: "Forsvinder fra indkøbslisten, forslag og mails – også i fremtidige kørsler. Fortryd under Fjernede varer.", skjul: "Forsvinder fra listen i 30 dage og kommer selv tilbage.", ikke_indkoeb: "Fjernes fra indkøbslisten, bliver i Shops-visningen.", genindsaet: "Kommer tilbage på indkøbslisten med det samme.", leverandoer: "Varerne samles under leverandøren på Leverandører-siden og i mails." }[h];
+    const svar = await ask({ title: `${tekst}?`, text: `${hvem}\n\n${forklaring}`, ok: tekst, danger: h === "udgaar", fields: h === "leverandoer" ? [{ key: "lev", label: "Leverandør", placeholder: "Begynd at skrive …", options: leverandoerer, required: true }] : undefined });
+    if (!svar) return;
+    const body = h === "udgaar" ? { udgaar: true } : h === "skjul" ? { skjul_til: new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10) } : h === "ikke_indkoeb" ? { ikke_indkoeb: true } : h === "leverandoer" ? { leverandoer: svar.lev.trim() } : { udgaar: false, ikke_indkoeb: false, skjul_til: null };
     let ok = 0;
     for (const ean of eans) {
       const r = await fetch(`/api/override/${ean}`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...body, af: navn }) });
@@ -241,6 +244,7 @@ export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; grupp
               <button onClick={() => onHandling([...valgt], "udgaar")} className="rounded-lg bg-white text-[var(--ink)] font-bold px-3 py-1.5">Markér som udgår</button>
               <button onClick={() => onHandling([...valgt], "skjul")} className="rounded-lg bg-white/15 font-bold px-3 py-1.5">Skjul i 30 dage</button>
               <button onClick={() => onHandling([...valgt], "ikke_indkoeb")} className="rounded-lg bg-white/15 font-bold px-3 py-1.5">Ikke relevant for indkøb</button>
+              <button onClick={() => onHandling([...valgt], "leverandoer")} className="rounded-lg bg-white/15 font-bold px-3 py-1.5">Sæt leverandør</button>
             </>)}
             <button onClick={() => setValgt(new Set())} className="ml-auto text-white/70 font-semibold">Fravælg</button></> : <span className="font-bold text-[#7ee2a8]">{besked}</span>}
         </div>

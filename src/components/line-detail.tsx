@@ -7,7 +7,7 @@ import { fmtDato, fmtTal } from "@/lib/format";
 import { ask, hvemErDu } from "./dialog";
 
 export type Plan = { stk: number; colli: number; bestilDato: string; leadTime: number; note?: string; af?: string; oprettet: string; status: "planlagt" | "bestilt"; po?: string };
-export type Flag = { udgaar?: boolean; skjul_til?: string | null; ikke_indkoeb?: boolean; note?: string; af?: string; dato?: string; lead_time?: number; coverage_days?: number; moq?: number; eu?: boolean; kategori?: "hybrid" | "standard" };
+export type Flag = { udgaar?: boolean; skjul_til?: string | null; ikke_indkoeb?: boolean; note?: string; af?: string; dato?: string; lead_time?: number; coverage_days?: number; moq?: number; eu?: boolean; kategori?: "hybrid" | "standard"; leverandoer?: string };
 
 export function useNavn(): [string, (n: string) => void] {
   const [navn, setNavn] = useState("");
@@ -15,7 +15,7 @@ export function useNavn(): [string, (n: string) => void] {
   return [navn, (n: string) => { localStorage.setItem("lager_navn", n); setNavn(n); }];
 }
 
-export function LineDetail({ line, receivingDays }: { line: PurchaseLine; receivingDays: number }) {
+export function LineDetail({ line, receivingDays, leverandoerer = [] }: { line: PurchaseLine; receivingDays: number; leverandoerer?: string[] }) {
   const router = useRouter();
   const [plan, setPlan] = useState<Plan | null>(null);
   const [flag, setFlag] = useState<Flag | null>(line.override as Flag | null);
@@ -68,6 +68,7 @@ export function LineDetail({ line, receivingDays }: { line: PurchaseLine; receiv
               )}
               <div className="h-px bg-[var(--line)] my-1" />
               <button onClick={async () => { setMenu(false); const v = await ask({ title: "Ret lead time", text: "Gælder kun dette EAN. Tom = tilbage til standardreglen.", fields: [{ key: "lt", label: "Lead time i dage", type: "number", value: String(flag?.lead_time ?? line.genbestilling.leadTime) }], ok: "Videre" }); if (!v) return; setFlagRemote({ lead_time: v.lt.trim() ? Number(v.lt) : undefined }, "Gem lead time?", v.lt.trim() ? `${v.lt} dage for ${line.titel}` : `Tilbage til reglen for ${line.titel}`); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Ret lead time<span className="block text-xs font-medium text-[var(--muted)]">Nu {line.genbestilling.leadTime} dage ({line.genbestilling.leadTimeKilde})</span></button>
+              <button onClick={async () => { setMenu(false); const v = await ask({ title: "Sæt leverandør", text: "Varen kommer med på leverandørens liste under Leverandører. Tom = brug leverandøren fra åbne PO'er.", fields: [{ key: "lev", label: "Leverandør", value: flag?.leverandoer ?? line.leverandoer ?? "", placeholder: "Begynd at skrive …", options: leverandoerer }], ok: "Videre" }); if (!v) return; setFlagRemote({ leverandoer: v.lev.trim() || undefined }, "Gem leverandør?", v.lev.trim() ? `${v.lev.trim()} for ${line.titel}` : `Fjern manuel leverandør for ${line.titel}`); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Sæt leverandør<span className="block text-xs font-medium text-[var(--muted)]">{line.leverandoer ?? "Ukendt – ingen åben PO"}</span></button>
               <button onClick={async () => { setMenu(false); const v = await ask({ title: "Sæt MOQ", text: "Leverandørens mindste ordre i stk. Forslaget rundes op til MOQ. Tom = ingen MOQ.", fields: [{ key: "moq", label: "MOQ (stk)", type: "number", value: String(flag?.moq ?? "") }], ok: "Videre" }); if (!v) return; setFlagRemote({ moq: v.moq.trim() ? Number(v.moq) : undefined }, "Gem MOQ?", v.moq.trim() ? `${v.moq} stk for ${line.titel}` : `Ingen MOQ for ${line.titel}`); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Sæt MOQ</button>
               <button onClick={() => setFlagRemote({ eu: !(flag?.eu ?? line.genbestilling.eu) }, line.genbestilling.eu ? "Ikke længere EU-leverandør?" : "EU-leverandør?", line.genbestilling.eu ? "Lead time går tilbage til standardreglen." : "Lead time sættes til 30 dage for dette EAN.")} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">{line.genbestilling.eu ? "Ikke EU-leverandør" : "EU-leverandør (30 dage)"}</button>
             </div>

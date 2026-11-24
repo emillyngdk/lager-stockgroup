@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 
 /** Pæn in-app dialog i stedet for browserens confirm()/prompt(). Bruges imperativt: `const v = await ask({...})`. */
-export type Field = { key: string; label: string; type?: "text" | "number" | "date"; value?: string; placeholder?: string; hint?: string; required?: boolean };
+export type Field = { key: string; label: string; type?: "text" | "number" | "date"; value?: string; placeholder?: string; hint?: string; required?: boolean; options?: string[] };
 export type AskOpts = { title: string; text?: string; fields?: Field[]; ok?: string; cancel?: string; danger?: boolean };
 type Pending = AskOpts & { resolve: (v: Record<string, string> | null) => void };
 
@@ -45,7 +45,8 @@ export function DialogHost() {
         {(p.fields ?? []).length > 0 && <div className="mt-4 flex flex-col gap-3">
           {(p.fields ?? []).map((f, i) => <label key={f.key} className="block">
             <span className="block text-[.65rem] font-bold uppercase tracking-wider text-[var(--muted)] mb-1">{f.label}</span>
-            <input ref={i === 0 ? first : undefined} type={f.type ?? "text"} value={vals[f.key] ?? ""} placeholder={f.placeholder} onChange={(e) => setVals((v) => ({ ...v, [f.key]: e.target.value }))} className="w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2.5 font-semibold num" />
+            <input ref={i === 0 ? first : undefined} type={f.type ?? "text"} value={vals[f.key] ?? ""} placeholder={f.placeholder} onChange={(e) => setVals((v) => ({ ...v, [f.key]: e.target.value }))} list={f.options ? `dl-${f.key}` : undefined} className="w-full rounded-xl border border-[var(--line)] bg-[var(--bg)] px-3 py-2.5 font-semibold num" />
+            {f.options && <datalist id={`dl-${f.key}`}>{f.options.map((o) => <option key={o} value={o} />)}</datalist>}
             {f.hint && <span className="block mt-1 text-xs font-medium text-[var(--muted)]">{f.hint}</span>}
           </label>)}
         </div>}

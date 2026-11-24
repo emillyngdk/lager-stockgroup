@@ -28,7 +28,7 @@ export const LINE_STATUS_META: Record<LineStatus, { label: string; farve: string
 };
 
 export interface LineOverride extends Override {
-  moq?: number; kategori?: "hybrid" | "standard"; eu?: boolean;
+  moq?: number; kategori?: "hybrid" | "standard"; eu?: boolean; leverandoer?: string;
   skjul_til?: string | null; ikke_indkoeb?: boolean; af?: string; dato?: string;
 }
 
@@ -205,7 +205,7 @@ export function buildPurchaseLines(
 
     // --- lead time ---
     const poLev = (poByEan[ean] || [])[0];
-    const leverandoer = poLev?.leverandoer ?? rs.find((r) => r.leverandoer)?.leverandoer ?? null;
+    const leverandoer = ov?.leverandoer || poLev?.leverandoer || rs.find((r) => r.leverandoer)?.leverandoer || null;
     const eu = supplierIsEu(leverandoer, poLev?.eu_leverandoer ?? false, ov ?? undefined);
     const erHybrid = ov?.kategori ? ov.kategori === "hybrid" : /hybrid/i.test(titel) || rs.some((r) => /hybrid/i.test(r.titel) || /hybrid/i.test(r.titelOriginal ?? ""));
     const kategori: "hybrid" | "standard" = erHybrid ? "hybrid" : "standard";
@@ -276,7 +276,7 @@ export function buildPurchaseLines(
     if (dataKvalitet === "lav") advarsler.push(`Kun ${salgsdage} dages salgsdata – forslaget bygger på en meget kort periode og kan være langt fra det rigtige. Tjek tallet med egen vurdering før du bestiller.`);
     else if (dataKvalitet === "middel") advarsler.push(`${salgsdage} dages salgsdata – varen er ny, og sæsonmønstret er endnu ikke kendt.`);
     if (rs.some((r) => r.forklaring.some((f) => f.startsWith("Normalt niveau dæmpet")))) advarsler.push("De seneste ugers salg er kampagnedrevet (Black Week) – normalt niveau er dæmpet til 3× årsgennemsnittet.");
-    if (!leverandoer) advarsler.push("Ingen leverandør kendt (ingen åben PO) – vælg leverandør når du bestiller.");
+    if (!leverandoer) advarsler.push("Ingen leverandør kendt (ingen åben PO). Sæt leverandøren under ⋯ → Sæt leverandør, så kommer varen med på leverandørens liste.");
     const unitCost = rs.find((r) => r.oekonomi.unitCost != null && r.brand === "casper")?.oekonomi.unitCost ?? rs.find((r) => r.oekonomi.unitCost != null)?.oekonomi.unitCost ?? null;
 
     forklaring.push(`Behov: ${rs.map((r) => `${BRANDS[r.brand].navn} ${r1(r.velocity.base)}`).join(" + ")} = ${r1(base)} stk/dag nu; normalt niveau ${r1(afsaeson)} stk/dag.`);
