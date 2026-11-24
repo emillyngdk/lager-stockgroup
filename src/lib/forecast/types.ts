@@ -26,12 +26,20 @@ export type AgeGroup = "nyhed" | "ung" | "etableret" | "moden";
 export interface Config {
   weights: { v7: number; v30: number; v60: number };
   seasonClamp: [number, number];
+  /** sæsonindeks over dette = kampagne/peak: vinduet tæller næsten ikke i niveauet */
+  peakIndex: number;
+  /** dage med salgsdata før en vare regnes som moden (årets salg bruges, fuld dækning) */
+  matureDays: number;
+  /** [under N dages data, faktor]: de første uger efter lancering er pustet op (backtest: 1,3–1,6× for høj under 30 dage) */
+  launchHaircut: [number, number][];
   seasonSmoothWeeks: number;
   horizonDays: number;
   transferDays: number;       // Vejle -> shoplokation
   receivingDays: number;      // levering til lager -> salgbar
   leadTimeDefault: { hybrid: number; asia: number; eu: number };
   coverageDays: { asia: number; eu: number };
+  /** unge varer (under matureDays): bestil til kortere tid ad gangen, til der er et års data */
+  coverageDaysYoung: { asia: number; eu: number };
   zHero: number;
   zNormal: number;
   heroShareOfDb: number;      // top X% af DB = hero
@@ -43,12 +51,16 @@ export interface Config {
 export const DEFAULT_CONFIG: Config = {
   weights: { v7: 0.5, v30: 0.3, v60: 0.2 },
   seasonClamp: [0.3, 8.0],
+  peakIndex: 1.5,
+  matureDays: 180,
+  launchHaircut: [[30, 0.7], [60, 0.8]],
   seasonSmoothWeeks: 3,
   horizonDays: 180,
   transferDays: 0,
   receivingDays: 3,
   leadTimeDefault: { hybrid: 180, asia: 150, eu: 30 },
   coverageDays: { asia: 120, eu: 90 },
+  coverageDaysYoung: { asia: 60, eu: 45 },
   zHero: 1.65,
   zNormal: 1.28,
   heroShareOfDb: 0.2,
@@ -87,6 +99,8 @@ export interface Snapshot {
   po_lines: PoLine[];
   sales: Record<string, Record<string, SalesPeriod>>;
   dayseries: Record<string, Record<string, number>>;
+  season_kitchen?: { kilde: string; ugeIndeks: number[]; opdateret?: string };
+  season_summer?: { kilde: string; opdateret?: string; brands: Partial<Record<Brand, number[]>> };
 }
 
 export interface Override { lead_time?: number; coverage_days?: number; service_level?: "hero" | "normal"; udgaar?: boolean; note?: string; kampagne_uge?: number }
@@ -97,7 +111,7 @@ export interface ForecastRow {
   key: string; brand: Brand; variant_id: string; product_id: string; ean: string | null; bc_sku: string | null;
   titel: string; titelOriginal?: string | null; product_type: string; status: Status; statusAarsag: string;
   alder: { dage: number; gruppe: AgeGroup; publiceret: string | null; oprettet: string | null; salgsdage: number };
-  velocity: { v7: number; v14: number; v30: number; v60: number; base: number; afsaeson: number; trend: number; saesonNu: number; saesonKilde: string };
+  velocity: { v7: number; v14: number; v30: number; v60: number; base: number; afsaeson: number; trend: number; saesonNu: number; saesonKilde: string; saesonKlasse?: "koekken" | "sommer"; moden?: boolean };
   lager: { ecom: number; vejleFrit: number; vejleOptimistisk: number; reserveretShopGroup: number; reserveretB2b: number; bestiltB2b: number; tilgaengeligt: number; tilgaengeligtOptimistisk: number; andel: number; lokation: string; shopifyQty: number | null; bcLokation: string | null };
   paaVej: { sikker: number; usikker: number; foersteEta: string | null; events: InboundEvent[] };
   dage: { tilUdsolgt: number | null; tilUdsolgtMedPaaVej: number | null; tilUdsolgtOptimistisk: number | null };
@@ -116,7 +130,7 @@ export interface UniversalRow {
 
 export interface ForecastOutput {
   kørt: string; dag0: string; config: Config; kilder: Snapshot["sources"];
-  saeson: { kilde: string; ugeIndeks: number[] };
+  saeson: { kilde: string; ugeIndeks: number[]; koekken?: { kilde: string; ugeIndeks: number[] } | null };
   rows: ForecastRow[]; universelle: UniversalRow[];
   udenKobling: { brand: Brand; variant_id: string; titel: string; sku: string | null; solgt30: number; grund: string }[];
   opsummering: Record<Status, number> & { total: number };

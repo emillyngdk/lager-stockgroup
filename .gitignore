@@ -7,3 +7,4 @@ data/mail.html
 data/mail.txt
 data/mail_kritisk.html
 data/state.json
+__pycache__/

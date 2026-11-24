@@ -19,7 +19,7 @@ export default function Forslag() {
     }));
   return (
     <Shell active="forslag" title="Pr. leverandør" intro="Opret PO'en i BC for én leverandør ad gangen, og tryk “PO oprettet” – så forsvinder varerne fra listen. Ses PO'en ikke i BC inden 7 dage, kommer de tilbage.">
-      <div className="mb-4 flex gap-2 flex-wrap"><a href="/api/forslag.csv" className="rounded-xl bg-white font-bold px-4 py-2.5 text-sm border-2 border-[var(--line)]">Download forslag (CSV)</a><a href="/api/plan.csv" className="rounded-xl bg-white font-bold px-4 py-2.5 text-sm border-2 border-[var(--line)]">Download planer (CSV)</a></div>
+      <div className="mb-4 flex gap-2 flex-wrap"><a href="/api/skal-bestilles.xlsx" className="rounded-xl bg-[var(--ink)] text-white font-bold px-4 py-2.5 text-sm">⬇ Hent som Excel</a><a href="/api/plan.csv" className="rounded-xl bg-white font-bold px-4 py-2.5 text-sm border-2 border-[var(--line)]">Download planer (CSV)</a></div>
       <Suspense><ForslagListe linjer={linjer} dag0={f.dag0} /></Suspense>
     </Shell>
   );

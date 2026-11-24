@@ -130,6 +130,14 @@ def load_dayseries():
             ser[day["day"]] = day["units"]
     return out
 
+def load_kitchen():
+    p = os.path.join(ROOT, 'data', 'kalibrering', 'koekken_indeks.json')
+    return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else None
+
+def load_summer():
+    p = os.path.join(ROOT, 'data', 'kalibrering', 'sommer_indeks.json')
+    return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else None
+
 def main():
     variants = json.load(open(os.path.join(ROOT, "data", "variants.json"), encoding="utf-8"))
     stock, stock_laest = load_bc_stock()
@@ -141,7 +149,7 @@ def main():
         sources=dict(bc_laest=stock_laest, po_laest=po_laest, shopify_hentet=date.today().isoformat(),
                      sales_periods={b: {p: [v["from"], v["to"]] for p, v in d.items()} for b, d in sales.items()},
                      dayseries_range={b: [min(s), max(s)] for b, s in days.items()}),
-        variants=variants, bc_stock=stock, po_lines=po, sales=sales, dayseries=days,
+        variants=variants, bc_stock=stock, po_lines=po, sales=sales, dayseries=days, season_kitchen=load_kitchen(), season_summer=load_summer(),
     )
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(snap, f, ensure_ascii=False)

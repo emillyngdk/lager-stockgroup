@@ -66,6 +66,11 @@ export function supplierRegion(lev: string | null, euFlag: boolean): "asia" | "e
   return EU_HINTS.some((h) => l.includes(h)) ? "eu" : "asia";
 }
 
+const SOMMER_RX = /slush|sirup|siirap|siroop|kon[sc]entrat|ismaskin|ismix|isbæger|iskrem|\bijs|jäätelö|sommerstang/i;
+export function erSommervare(v: { title: string; title_original?: string | null; product_type: string }): boolean {
+  return SOMMER_RX.test(`${v.title} ${v.title_original ?? ""} ${v.product_type}`);
+}
+
 // ---------- hovedkørsel ----------
 export function runForecast(snap: Snapshot, overrides: Record<string, Override> = {}, cfg: Config = DEFAULT_CONFIG, today?: string): ForecastOutput {
   const dag0 = today ?? iso(new Date());
@@ -78,9 +83,21 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
     const idx = seasonIndex(snap.dayseries[b], cfg);
     if (idx) { seasonByBrand[b] = idx; if (!fallback || Object.keys(snap.dayseries[b]).length > Object.keys(snap.dayseries[fallback.brand]).length) fallback = { brand: b, idx }; }
   }
-  const seasonFor = (b: Brand): { idx: number[]; kilde: string } =>
+  const brandSeason = (b: Brand): { idx: number[]; kilde: string } =>
     seasonByBrand[b] ? { idx: seasonByBrand[b]!, kilde: `${BRANDS[b].navn}s egen historik` } : fallback ? { idx: fallback.idx, kilde: `lånt fra ${BRANDS[fallback.brand].navn}` } : { idx: new Array(54).fill(1), kilde: "ingen sæson (for lidt historik)" };
+  // To sæsonklasser: "sommer" (slush, sirup, ismaskiner) følger shoppens eget ugesalg af netop de varer (data/kalibrering/sommer_reference.json);
+  // alt andet følger køkken-profilen (Black Week + jul, stille sommer), bygget på referencevarer med fuld dagshistorik.
+  // En shop uden egen sommer-profil (Herman, Tomi) har ikke vist noget sommermønster – der regnes varerne som køkken.
+  const kitchen = snap.season_kitchen?.ugeIndeks?.length === 54 ? snap.season_kitchen.ugeIndeks : null;
+  const summer = snap.season_summer?.brands ?? {};
+  const seasonFor = (b: Brand, v?: { title: string; title_original?: string | null; product_type: string }): { idx: number[]; kilde: string; klasse: "koekken" | "sommer" } => {
+    const sIdx = v && erSommervare(v) && summer[b]?.length === 54 ? summer[b]! : null;
+    if (sIdx) return { idx: sIdx, kilde: "sommer-profil (shoppens eget salg af slush, sirup og is)", klasse: "sommer" };
+    if (kitchen) return { idx: kitchen, kilde: "køkken-profil", klasse: "koekken" };
+    return { ...brandSeason(b), klasse: "koekken" };
+  };
 
+  const seasonIdxByKey: Record<string, number[]> = {};
   // produktsalg pr. brand -> pr. product_id
   const salesOf = (b: Brand, pid: string) => {
     const s = snap.sales[b] || {};
@@ -185,31 +202,56 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
     const bc = snap.bc_stock[v.ean];
     const bcLoc = BRANDS[v.brand].bcLokation;
     const loc = bc?.lokationer[bcLoc];
-    const { idx: S, kilde: saesonKilde } = seasonFor(v.brand);
+    const { idx: S, kilde: saesonKilde, klasse: saesonKlasse } = seasonFor(v.brand, v);
+    seasonIdxByKey[key] = S;
     const wNow = isoWeek(dag0);
     const saesonNu = S[wNow];
-    const avgS = (n: number) => { let t = 0; for (let d = 0; d < n; d++) t += S[isoWeek(addDays(dag0, -d))]; return t / n; };
-    const a7 = avgS(7), a14 = avgS(14), a30 = avgS(30), a60 = avgS(60);
-    let afsaeson: number;
-    if (vel.grp === "nyhed") afsaeson = vel.v7 / a7;
-    else if (vel.grp === "ung") afsaeson = 0.6 * vel.v7 / a7 + 0.4 * vel.v30 / a30;
-    else afsaeson = cfg.weights.v7 * vel.v7 / a7 + cfg.weights.v30 * vel.v30 / a30 + cfg.weights.v60 * vel.v60 / a60;
+    // snit-indeks for dag a..b talt bagud fra i går (1 = i går)
+    const avgIdx = (a: number, b: number) => { let t = 0; for (let d = a; d <= b; d++) t += S[isoWeek(addDays(dag0, -d))]; return t / (b - a + 1); };
+    const a14 = avgIdx(1, 14), a60 = avgIdx(1, 60);
     vel.trend = vel.v60 > 0 ? clamp((vel.v14 / a14) / (vel.v60 / a60) - 1, -0.9, 3) : vel.v14 > 0 ? 1 : 0;
-    // Kampagnedæmper: en moden vare (≥180 dages data) må højst regnes til 3× sit årsgennemsnit – ellers bestiller vi efter én Black Week-uge
-    let daempet: string | null = null;
-    if (vel.salgsdage >= 180 && vel.s365 > 0) {
-      const avg365 = vel.s365 / Math.min(365, vel.salgsdage);
-      if (afsaeson > 3 * avg365) { daempet = `Normalt niveau dæmpet fra ${r1(afsaeson)} til ${r1(3 * avg365)} stk/dag (3× årsgennemsnittet ${r1(avg365)}) – de seneste uger er kampagnedrevne.`; afsaeson = 3 * avg365; }
+    // --- Normalt niveau (kalibreret mod backtest, se scripts/kalibrering.py) ---
+    // Delvinduer bagud: 1-7, 8-14, 15-30, 31-60 og 61-N dage. Hvert vindue giver et niveau = stk/dag ÷ sæsonindeks.
+    // Kampagne-/peak-vinduer (indeks > 1,5) tæller næsten ikke: Black Week-salg divideret med sidste års indeks er for usikkert.
+    // Moden vare (≥ 300 dages data): halvdelen af vægten ligger på hele årets salg ÷ årets indeks.
+    // Ung vare: sæsonen kendes ikke – et lavt indeks må ikke puste niveauet op (der divideres højst med 1).
+    const N = Math.max(1, Math.min(365, vel.salgsdage));
+    const win: { a: number; b: number; r: number }[] = [];
+    const add = (a: number, b: number, stk: number) => { const bb = Math.min(b, N); if (a <= bb) win.push({ a, b: bb, r: Math.max(0, stk) / (bb - a + 1) }); };
+    add(1, 7, vel.v7 * 7); add(8, 14, vel.v14 * 14 - vel.v7 * 7); add(15, 30, vel.v30 * 30 - vel.v14 * 14); add(31, 60, vel.v60 * 60 - vel.v30 * 30);
+    const harAar = vel.s365 > 0 && N > 60;
+    if (harAar) add(61, N, vel.s365 - vel.v60 * 60);
+    const straf = (ai: number) => (ai <= cfg.peakIndex ? 1 : (cfg.peakIndex / ai) ** 2);
+    const moden = harAar && N >= cfg.matureDays;
+    let afsaeson: number, niveauTekst: string;
+    if (moden) {
+      const aar = (vel.s365 / N) / avgIdx(1, N);
+      let num = 0, den = 0;
+      for (const w of win) { if (w.a > 60) continue; const ai = avgIdx(w.a, w.b); const wt = (w.b - w.a + 1) * straf(ai); num += wt * w.r / ai; den += wt; }
+      const nylig = den > 0 ? num / den : aar;
+      // Sommervarer uden for sæson: de seneste 60 dage siger intet om næste sommer – brug kun året.
+      const md = Number(dag0.slice(5, 7));
+      const udenForSaeson = saesonKlasse === "sommer" && (md < 5 || md > 8);
+      afsaeson = udenForSaeson ? aar : 0.5 * aar + 0.5 * nylig;
+      niveauTekst = udenForSaeson
+        ? `Normalt niveau ${r1(afsaeson)} stk/dag = de seneste ${N} dages salg, sæsonrenset. Sommervare uden for sæson: forslaget antager, at næste sommer bliver som den sidste.`
+        : `Normalt niveau ${r1(afsaeson)} stk/dag = halvt de seneste ${N} dages salg (${r1(aar)}/dag sæsonrenset) + halvt de seneste 60 dage uden kampagneuger (${r1(nylig)}/dag).`;
+    } else {
+      let num = 0, den = 0;
+      for (const w of win) { const ai = avgIdx(w.a, w.b); const wt = (w.b - w.a + 1) * straf(ai) * (w.a > 60 ? 0.5 : 1); num += wt * w.r / Math.max(ai, 1); den += wt; }
+      const haircut = cfg.launchHaircut.find(([d]) => N < d)?.[1] ?? 1;
+      afsaeson = haircut * (den > 0 ? num / den : 0);
+      // Ung sommervare: de seneste uger ligger uden for sæson og siger intet. Brug hele periodens snit, uden at skrive det op.
+      const ungSommer = saesonKlasse === "sommer" && harAar;
+      if (ungSommer) afsaeson = haircut * (vel.s365 / N) / Math.max(avgIdx(1, N), 1);
+      niveauTekst = ungSommer ? `Normalt niveau ${r1(afsaeson)} stk/dag = snittet af de ${N} dage varen har været til salg. Ny sommervare: den har kun én (halv) sæson bag sig, så tallet er usikkert.` : `Normalt niveau ${r1(afsaeson)} stk/dag = snit af ${N} dages salg, hvor kampagneuger næsten ikke tæller. Varen har under ${cfg.matureDays} dages data, så tallet er ikke sæsonopskrevet${haircut < 1 ? ` og er skåret ${Math.round((1 - haircut) * 100)} % (lanceringsuger sælger over normalen)` : ""}.`;
     }
-
     // Udsolgt-korrektion: står varen på 0 i shoppen, viser de seneste uger tabt salg, ikke efterspørgsel.
-    // Så bruges årsgennemsnittet (afsæsonaliseret) som normalt niveau, hvis det er markant højere.
+    // Så bruges hele periodens salg (sæsonrenset) som normalt niveau, hvis det er højere.
     let udsolgtKorr: string | null = null;
-    if ((v.shopify_qty ?? 0) <= 0 && vel.salgsdage >= 60 && vel.s365 > 0) {
-      const avg365 = vel.s365 / Math.min(365, vel.salgsdage);
-      let sS = 0; for (let d = 0; d < Math.min(365, vel.salgsdage); d++) sS += S[isoWeek(addDays(dag0, -d))];
-      const avgAfs = avg365 / (sS / Math.min(365, vel.salgsdage));
-      if (avgAfs > 2 * afsaeson && avgAfs > 0.2) { udsolgtKorr = `Udsolgt i shoppen – de seneste uger viser tabt salg. Normalt niveau sat til årsgennemsnittet ${r1(avgAfs)} stk/dag (var ${r1(afsaeson)}).`; afsaeson = avgAfs; vel.base = avgAfs * saesonNu; }
+    if ((v.shopify_qty ?? 0) <= 0 && N >= 60 && vel.s365 > 0) {
+      const helePerioden = (vel.s365 / N) / (moden ? avgIdx(1, N) : Math.max(avgIdx(1, N), 1));
+      if (helePerioden > afsaeson * 1.05 && helePerioden > 0.2) { udsolgtKorr = `Udsolgt i shoppen – de seneste uger viser tabt salg. Normalt niveau sat til hele periodens snit ${r1(helePerioden)} stk/dag (var ${r1(afsaeson)}).`; afsaeson = helePerioden; vel.base = Math.max(vel.base, helePerioden * saesonNu); }
     }
 
     // lagerpuljer
@@ -318,14 +360,14 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
 
     const forklaring = [
       `Salg: ${r1(vel.v7)} stk/dag (7 d), ${r1(vel.v30)} (30 d), ${r1(vel.v60)} (60 d) → vægtet ${r1(vel.base)} stk/dag.`,
-      `Sæson: uge ${wNow} ligger på ${(saesonNu * 100).toFixed(0)} % af årsgennemsnittet (${saesonKilde}); de sidste 30 dage lå på ${(a30 * 100).toFixed(0)} % → normalt niveau ${r1(afsaeson)} stk/dag.`,
+      `Sæson (${saesonKlasse === "sommer" ? "sommervare" : "køkken"}, ${saesonKilde}): uge ${wNow} ligger på ${(saesonNu * 100).toFixed(0)} % af årsgennemsnittet.`,
+      niveauTekst,
       `Salgsdata: ${vel.salgsdage} dage (oprettet ${vel.pub}${vel.salgsdage < vel.sidenOprettet ? `, men salg kun i ca. ${vel.salgsdage} dage` : ""}; ${vel.grp}) → sikkerhedstillæg ${Math.round(cfg.extraSafetyByAge[vel.grp] * 100)} %.${vel.s365 > 0 ? ` Solgt ${Math.round(vel.s365)} stk i perioden = ${r1(vel.s365 / Math.max(1, Math.min(365, vel.salgsdage)))} stk/dag i snit.` : ""}`,
       `Tilgængeligt: ${ecom} på ${BRANDS[v.brand].navn}s lokation + ${Math.round(vejleFrit)} frit i ${bcLoc}${andel < 1 ? ` (din andel ${Math.round(andel * 100)} %)` : ""} = ${Math.round(tilgaengeligt)} stk.`,
       `På vej: ${paaVejSikker} stk bekræftet (booket), ${paaVejUsikker} stk bestilt men ikke booket${foersteSikker ? `, første sikre ${foersteSikker}` : ""}.`,
       `Lead time ${leadTime} dage (${leadTimeKilde}), servicegrad ${hero ? "95 % (hero)" : "90 %"}, sikkerhedslager ${sikkerhed} stk, reorder point ${reorderPoint} stk.`,
       `Foreslået: dækning ${daekning} dage efter modtagelse → ${foreslaaetStkRund} stk${cll ? ` (${foreslaaetColli} colli à ${cll})` : ""}.`,
     ];
-    if (daempet) forklaring.push(daempet);
     if (udsolgtKorr) forklaring.push(udsolgtKorr);
     if (vel.sameProduct > 1) forklaring.push(`Produktet har ${vel.sameProduct} varianter – salget er delt ligeligt (Jullytics rapporterer pr. produkt).`);
 
@@ -333,7 +375,7 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
       key, brand: v.brand, variant_id: v.variant_id, product_id: v.product_id, ean: v.ean, bc_sku: bc?.bc_sku ?? null,
       titel: v.title, titelOriginal: v.title_original && v.title_original !== v.title ? v.title_original : null, product_type: v.product_type, status, statusAarsag: aarsag,
       alder: { dage: vel.ageDays, gruppe: vel.grp, publiceret: v.published_at, oprettet: v.created_at, salgsdage: vel.salgsdage },
-      velocity: { v7: r1(vel.v7), v14: r1(vel.v14), v30: r1(vel.v30), v60: r1(vel.v60), base: r1(vel.base), afsaeson: r1(afsaeson), trend: Math.round(vel.trend * 100) / 100, saesonNu: Math.round(saesonNu * 100) / 100, saesonKilde },
+      velocity: { v7: r1(vel.v7), v14: r1(vel.v14), v30: r1(vel.v30), v60: r1(vel.v60), base: r1(vel.base), afsaeson: r1(afsaeson), trend: Math.round(vel.trend * 100) / 100, saesonNu: Math.round(saesonNu * 100) / 100, saesonKilde, saesonKlasse, moden },
       lager: { ecom, vejleFrit: Math.round(vejleFrit), vejleOptimistisk: Math.round(vejleOpt), reserveretShopGroup: resSG, reserveretB2b: resB2b, bestiltB2b: bestB2b, tilgaengeligt: Math.round(tilgaengeligt), tilgaengeligtOptimistisk: Math.round(tilgaengeligtOpt), andel: Math.round(andel * 100) / 100, lokation: Object.keys(v.levels)[0] || "Shopify", shopifyQty: v.shopify_qty, bcLokation: loc ? bcLoc : null },
       paaVej: { sikker: paaVejSikker, usikker: paaVejUsikker, foersteEta: events[0]?.dato ?? null, events },
       dage: { tilUdsolgt: dageTilUdsolgt, tilUdsolgtMedPaaVej: dageMedPaaVej, tilUdsolgtOptimistisk: dageOpt },
@@ -398,7 +440,7 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
   rows.sort((a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status] || (a.status === "udsolgt" ? b.velocity.base - a.velocity.base : (a.dage.tilUdsolgtMedPaaVej ?? 9999) - (b.dage.tilUdsolgtMedPaaVej ?? 9999)));
 
   // --- v2: indkøbslinjer pr. EAN ---
-  const linjer = buildPurchaseLines(rows, snap, cfg, dag0, seasonFor, overrides as Record<string, LineOverride>, poByEan);
+  const linjer = buildPurchaseLines(rows, snap, cfg, dag0, (r) => seasonIdxByKey[r.key] ?? brandSeason(r.brand).idx, overrides as Record<string, LineOverride>, poByEan);
   const opsLinjer = Object.fromEntries(Object.keys(LINE_STATUS_META).map((k) => [k, 0])) as Record<LineStatus, number>;
   for (const l of linjer) opsLinjer[l.status]++;
   const forslagEanMap: Record<string, ForecastOutput["forslagEan"][0]["linjer"]> = {};
@@ -408,7 +450,7 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
   }
   const forslagEan = Object.entries(forslagEanMap).map(([leverandoer, linjer]) => ({ leverandoer, linjer: linjer.sort((a, b) => (a.bestilSenest || "9999").localeCompare(b.bestilSenest || "9999")) })).sort((a, b) => b.linjer.length - a.linjer.length);
 
-  return { kørt: new Date().toISOString(), dag0, config: cfg, kilder: snap.sources, saeson: seasonMeta, rows, universelle, udenKobling, opsummering, prBrand, forslag, linjer, opsummeringLinjer: opsLinjer, forslagEan };
+  return { kørt: new Date().toISOString(), dag0, config: cfg, kilder: snap.sources, saeson: { ...seasonMeta, koekken: kitchen ? { kilde: snap.season_kitchen!.kilde, ugeIndeks: kitchen.map((x) => Math.round(x * 100) / 100) } : null }, rows, universelle, udenKobling, opsummering, prBrand, forslag, linjer, opsummeringLinjer: opsLinjer, forslagEan };
 }
 
 const STATUS_ORDER: Record<Status, number> = { udsolgt: 0, kritisk: 1, bestil_nu: 2, obs: 3, ok: 4, overlager: 5, for_nyt: 6, uden_kobling: 7 };

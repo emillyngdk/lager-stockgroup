@@ -52,7 +52,9 @@ export interface PurchaseLine {
   poNumre: string[];
   poOprettet: PoTilstand | null;
   leverandoer: string | null; indkoeber: string | null;
-  velocity: { base: number; afsaeson: number; trend: number; solgt365: number | null; salgsdage: number; snitPrDag: number | null };
+  velocity: { base: number; afsaeson: number; trend: number; solgt365: number | null; solgtAarsrate?: number | null; salgsdage: number; snitPrDag: number | null;
+    /** hvad modellen regner med at sælge de næste 365 dage (alle shops) – det tal man skal være enig i */
+    forventet12: number; moden: boolean; sommervare: boolean };
   /** Hvor meget kan man stole på forslaget? lav = under 30 dages salgsdata, middel = under 90, ok = 90+ */
   dataKvalitet: "lav" | "middel" | "ok";
   advarsler: string[];
@@ -69,7 +71,7 @@ export interface PurchaseLine {
     raekkerDage: number | null; // dage efter modtagelse den foreslåede mængde rækker
   };
   fordeling: { brand: Brand; stk: number }[];
-  oekonomi: { unitCost: number | null; lagervaerdi: number | null };
+  oekonomi: { unitCost: number | null; valuta?: string | null; lagervaerdi: number | null };
   demandPrDag: number[]; // dag 0..400, samlet behov pr. dag
   projektion: { dag0: string; konservativ: number[]; optimistisk: number[] };
   override: LineOverride | null;
@@ -130,7 +132,7 @@ export function fordel(line: { shops: LineShop[]; demandPrDag: number[]; genbest
 
 export function buildPurchaseLines(
   rows: ForecastRow[], snap: Snapshot, cfg: Config, dag0: string,
-  seasonFor: (b: Brand) => { idx: number[]; kilde: string },
+  seasonFor: (r: ForecastRow) => number[],
   overrides: Record<string, LineOverride>,
   poByEan: Record<string, PoLine[]>,
 ): PurchaseLine[] {
@@ -148,7 +150,7 @@ export function buildPurchaseLines(
 
     // --- behov pr. dag (sum af shops, hver med sit sæsonindeks) ---
     const demandPrDag = new Array(HORIZON + 1).fill(0);
-    const seasons = rs.map((r) => seasonFor(r.brand).idx);
+    const seasons = rs.map((r) => seasonFor(r));
     for (let d = 0; d <= HORIZON; d++) {
       const w = isoWeek(addDays(dag0, d));
       let t = 0;
@@ -219,7 +221,11 @@ export function buildPurchaseLines(
     const kategori: "hybrid" | "standard" = erHybrid ? "hybrid" : "standard";
     const leadTime = ov?.lead_time ?? (eu ? cfg.leadTimeDefault.eu : erHybrid ? cfg.leadTimeDefault.hybrid : cfg.leadTimeDefault.asia);
     const leadTimeKilde = ov?.lead_time ? `manuelt sat (${ov.af ?? "sitet"})` : eu ? `EU-leverandør${leverandoer ? `: ${leverandoer}` : ""} → ca. 30 dage` : erHybrid ? "Hybrid → 6 mdr." : "øvrige varer → 5 mdr.";
-    const daekning = ov?.coverage_days ?? (eu ? cfg.coverageDays.eu : cfg.coverageDays.asia);
+    // Moden linje = mindst halvdelen af behovet kommer fra shops med et års data. Unge linjer bestilles til kortere tid ad gangen.
+    const modenAndel = afsaeson > 0 ? rs.reduce((a, r) => a + (r.velocity.moden ? r.velocity.afsaeson : 0), 0) / afsaeson : 0;
+    const moden = modenAndel >= 0.5;
+    const dk = moden ? cfg.coverageDays : cfg.coverageDaysYoung;
+    const daekning = ov?.coverage_days ?? (eu ? dk.eu : dk.asia);
 
     // --- sikkerhedslager og reorder point ---
     const hero = rs.some((r) => r.genbestilling.hero);
@@ -271,7 +277,7 @@ export function buildPurchaseLines(
     const foersteUsikker = events.find((e) => !e.sikker) ?? null;
     let status: LineStatus; let aarsag: string;
     if (rs.every((r) => r.alder.gruppe === "nyhed")) { status = "for_nyt"; aarsag = "Under 14 dage i salg i alle shops – for lidt data"; }
-    else if (base <= 0.05 && rs.every((r) => r.alder.dage > 90)) { status = "overlager"; aarsag = tilgaengeligt > 0 ? "Ingen salg de sidste 60 dage" : "Ingen salg og intet på lager – udgået?"; }
+    else if (base <= 0.05 && rs.every((r) => r.alder.dage > 90) && !(afsaeson > 0.2 && rs.some((r) => r.velocity.saesonKlasse === "sommer"))) { status = "overlager"; aarsag = tilgaengeligt > 0 ? "Ingen salg de sidste 60 dage" : "Ingen salg og intet på lager – udgået?"; }
     else if (foreslaaetStkRund === 0 && udenUbooketRund > 0 && foersteUsikker) { status = "book_po"; aarsag = `Tør ${dK === Infinity ? "ikke" : "om " + dK + " dage"} – ubooket PO ${foersteUsikker.po} dækker behovet men kommer først ${foersteUsikker.dato}: book eller fremryk den`; }
     else if (foreslaaetStkRund === 0 && udenUbooketRund === 0) { status = base <= 0.05 ? "overlager" : "daekket"; aarsag = base <= 0.05 ? "Ingen efterspørgsel at regne på – intet at bestille" : "Intet behov ud over det der er på lager og bestilt"; }
     else if (bs <= 0) { status = "bestil_nu"; aarsag = tilgaengeligt <= 0 ? `0 tilgængeligt i alle shops${foersteSikker ? ` – næste bekræftede levering ${foersteSikker}` : foersteUsikker ? ` – kun ubooket PO ${foersteUsikker.po} (${foersteUsikker.dato})` : " og intet på vej"}` : `Lageret inkl. det der er på vej rammer sikkerhedslageret om ${sikkerhedsDag} dage – en ny PO tager ${leadTime + cfg.receivingDays} dage, så den skal afsted nu`; }
@@ -296,17 +302,21 @@ export function buildPurchaseLines(
 
     const salgsdage = Math.max(...rs.map((r) => r.alder.salgsdage));
     const solgt365Sum = rs.some((r) => r.oekonomi.solgt365 != null) ? rs.reduce((a, r) => a + (r.oekonomi.solgt365 ?? 0), 0) : null;
-    const dataKvalitet: PurchaseLine["dataKvalitet"] = salgsdage < 30 ? "lav" : salgsdage < 90 ? "middel" : "ok";
+    const dataKvalitet: PurchaseLine["dataKvalitet"] = salgsdage < 60 ? "lav" : salgsdage < cfg.matureDays ? "middel" : "ok";
     const advarsler: string[] = [];
-    if (dataKvalitet === "lav") advarsler.push(`Kun ${salgsdage} dages salgsdata – forslaget bygger på en meget kort periode og kan være langt fra det rigtige. Tjek tallet med egen vurdering før du bestiller.`);
-    else if (dataKvalitet === "middel") advarsler.push(`${salgsdage} dages salgsdata – varen er ny, og sæsonmønstret er endnu ikke kendt.`);
-    if (rs.some((r) => r.forklaring.some((f) => f.startsWith("Normalt niveau dæmpet")))) advarsler.push("De seneste ugers salg er kampagnedrevet (Black Week) – normalt niveau er dæmpet til 3× årsgennemsnittet.");
+    if (dataKvalitet === "lav") advarsler.push(`Kun ${salgsdage} dages salgsdata. I backtesten ramte forecast på under 60 dages data mellem 0,6× og 1,4× det faktiske salg – altså ±40 %. Tjek tallet med egen vurdering før du bestiller.`);
+    else if (dataKvalitet === "middel") advarsler.push(`${salgsdage} dages salgsdata – varen er ny, så der bestilles kun til ${daekning} dages dækning efter lead time (mindre ad gangen, til der er et halvt års salg).`);
     if (poOprettet?.tilstand === "udloebet" && paaListen(status, bsDag)) advarsler.unshift(grundStatus === "book_po" ? `Markeret booket ${poOprettet.dato}${poOprettet.af ? ` af ${poOprettet.af}` : ""}, men PO'en står stadig som ikke booket i BC efter ${PO_DAGE} dage.` : `Markeret “PO oprettet” ${poOprettet.dato}${poOprettet.af ? ` af ${poOprettet.af}` : ""}, men der er ikke dukket en ny PO op i BC på ${PO_DAGE} dage – tjek at den er oprettet.`);
     if (poOprettet?.tilstand === "fundet" && paaListen(status, bsDag)) advarsler.unshift(`PO ${poOprettet.nyPo ?? ""} er fundet i BC, men dækker ikke hele behovet – der mangler stadig ${foreslaaetStkRund} stk.`);
+    if (rs.some((r) => r.velocity.saesonKlasse === "sommer") && moden) advarsler.push("Sommervare: forslaget antager, at næste sommer sælger som den sidste. Skru selv op eller ned i beregneren.");
     if (!leverandoer) advarsler.push("Ingen leverandør kendt (ingen åben PO). Sæt leverandøren under ⋯ → Sæt leverandør, så kommer varen med på leverandørens liste.");
-    const unitCost = rs.find((r) => r.oekonomi.unitCost != null && r.brand === "casper")?.oekonomi.unitCost ?? rs.find((r) => r.oekonomi.unitCost != null)?.oekonomi.unitCost ?? null;
+    const costRow = rs.find((r) => r.oekonomi.unitCost != null && r.brand === "casper") ?? rs.find((r) => r.oekonomi.unitCost != null) ?? null;
+    const unitCost = costRow?.oekonomi.unitCost ?? null;
+    const costValuta = costRow ? BRANDS[costRow.brand].valuta : null; // kostprisen står i shoppens egen valuta i Shopify
 
-    forklaring.push(`Behov: ${rs.map((r) => `${BRANDS[r.brand].navn} ${r1(r.velocity.base)}`).join(" + ")} = ${r1(base)} stk/dag nu; normalt niveau ${r1(afsaeson)} stk/dag.`);
+    const forv12 = Math.round(demandPrDag.slice(1, 366).reduce((a, x) => a + x, 0));
+    forklaring.push(`Behov: ${rs.map((r) => `${BRANDS[r.brand].navn} ${r1(r.velocity.base)}`).join(" + ")} = ${r1(base)} stk/dag nu; normalt niveau ${r1(afsaeson)} stk/dag. Modellen regner med ${forv12} stk de næste 12 måneder.`);
+    if (!moden) forklaring.push(`Ung linje (under ${cfg.matureDays} dages data): der bestilles kun til ${daekning} dages dækning efter lead time i stedet for ${eu ? cfg.coverageDays.eu : cfg.coverageDays.asia} – mindre ad gangen, til der er et års salg at regne på.`);
     forklaring.push(`Salgsdata: ${salgsdage} dage${salgsdage < 365 ? " – varen er ny, så 365-dages tallet dækker kun den periode" : ""}${solgt365Sum != null ? `; solgt ${solgt365Sum} stk = ${r1(solgt365Sum / Math.max(1, Math.min(365, salgsdage)))} stk/dag i snit over hele perioden (vægtet velocity bruger de seneste 7/30/60 dage)` : ""}.`);
     forklaring.push(`Tilgængeligt: ${ecomSum} på shop-lokationer + ${Math.round(vejleFrit)} frit i Vejle${tredjepart ? ` + ${Math.round(tredjepart)} på 3PL` : ""} = ${Math.round(tilgaengeligt)} stk. B2B binder ${resB2b} reserveret og ${bestB2b} bestilt.`);
     forklaring.push(`På vej: ${paaVejSikker} stk bekræftet, ${paaVejUsikker} stk ubooket${foersteSikker ? `, første sikre ${foersteSikker}` : ""}.`);
@@ -317,7 +327,8 @@ export function buildPurchaseLines(
     lines.push({
       ean, bcSku: bc?.bc_sku ?? null, titel, shopTitler: [...new Set(rs.map((r) => r.titelOriginal ?? r.titel))], brands: rs.map((r) => r.brand), shops,
       status, statusAarsag: aarsag, hero, grundStatus, poNumre, poOprettet, leverandoer, indkoeber: poLev?.indkoeber ?? null,
-      velocity: { base: r1(base), afsaeson: r1(afsaeson), trend: Math.round(trend * 100) / 100, solgt365: solgt365Sum, salgsdage, snitPrDag: solgt365Sum != null && salgsdage > 0 ? r1(solgt365Sum / Math.min(365, salgsdage)) : null },
+      velocity: { base: r1(base), afsaeson: r1(afsaeson), trend: Math.round(trend * 100) / 100, solgt365: solgt365Sum, solgtAarsrate: solgt365Sum != null ? Math.round(rs.reduce((a, r) => a + (r.oekonomi.solgt365 ?? 0) / Math.max(1, Math.min(365, r.alder.salgsdage)) * 365, 0)) : null, salgsdage, snitPrDag: solgt365Sum != null && salgsdage > 0 ? r1(solgt365Sum / Math.min(365, salgsdage)) : null,
+        forventet12: Math.round(demandPrDag.slice(1, 366).reduce((a, x) => a + x, 0)), moden, sommervare: (() => { const t = rs.reduce((a, r) => a + r.velocity.afsaeson, 0); const so = rs.filter((r) => r.velocity.saesonKlasse === "sommer").reduce((a, r) => a + r.velocity.afsaeson, 0); return t > 0 ? so / t >= 0.5 : rs.some((r) => r.velocity.saesonKlasse === "sommer"); })() },
       dataKvalitet, advarsler,
       lager: { ecomSum, vejleFrit: Math.round(vejleFrit), vejleOptimistisk: Math.round(vejleOpt), tredjepart: Math.round(tredjepart), tredjepartOptimistisk: Math.round(tredjepartOpt), reserveretShopGroup: resSG, reserveretB2b: resB2b, bestiltB2b: bestB2b, tilgaengeligt: Math.round(tilgaengeligt), tilgaengeligtOptimistisk: Math.round(tilgaengeligtOpt), prLokation },
       paaVej: { sikker: paaVejSikker, usikker: paaVejUsikker, foersteSikker, foersteUsikker: foersteUsikker?.dato ?? null, events },
@@ -325,7 +336,7 @@ export function buildPurchaseLines(
       datoer: { udsolgt: dTil !== null ? addDays(dag0, dTil) : null, medPaaVej: dKons !== null ? addDays(dag0, dKons) : null, optimistisk: dOpt !== null ? addDays(dag0, dOpt) : null, bestilSenest: bestilDato, raekkerTil: rt.dato },
       genbestilling: { leadTime, leadTimeKilde, kategori, eu, daekningsdage: daekning, sikkerhedslager: sikkerhed, reorderPoint, behovLeadTime: Math.round(behovLead), behovDaekning: Math.round(behovDaekning), foreslaaetStk: foreslaaetStkRund, foreslaaetColli, foreslaaetUdenUbooket: udenUbooketRund, stkPrColli: cll, moq, z, sigma: r1(sigma), raekkerDage: rt.dageEfterModtagelse },
       fordeling: foreslaaetStkRund > 0 ? fordel(lineStub, foreslaaetStkRund) : [],
-      oekonomi: { unitCost, lagervaerdi: unitCost != null ? Math.round(unitCost * tilgaengeligt) : null },
+      oekonomi: { unitCost, valuta: costValuta, lagervaerdi: unitCost != null ? Math.round(unitCost * tilgaengeligt) : null },
       demandPrDag: demandPrDag.map((x) => Math.round(x * 10) / 10),
       projektion: { dag0, konservativ: kons.slice(0, CHART_DAYS + 1).map(Math.round), optimistisk: opt.slice(0, CHART_DAYS + 1).map(Math.round) },
       override: ov, plan: null, forklaring,

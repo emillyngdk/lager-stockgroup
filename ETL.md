@@ -124,3 +124,15 @@ i stedet for forslag). Send til samme to modtagere, emne `Ugens indkøbsforslag 
 * Herman: fjern `inventoryLevels` fra query'en (read_locations mangler).
 * `check.py` fejler: hent de manglende sider – byg aldrig med halve data.
 * Byggefejl: ret ikke sitet i den daglige opgave; commit kun data og skriv fejlen i commit-beskeden, så Emil kan se den.
+
+
+## Kalibrering (ikke dagligt)
+
+`data/kalibrering/koekken_reference.json` holder dagssalget for to referencevarer (Sobczyk Hybrid Stegepande Ø28, Gladkokken Hybrid Stekepanne Ø28).
+`python3 scripts/kalibrering.py` bygger `data/kalibrering/koekken_indeks.json` (køkken-sæsonprofilen), som `normalize.py` lægger i snapshot som `season_kitchen`.
+`python3 scripts/kalibrering.py --backtest` gentager backtesten (forecast mod faktisk salg, 180/300 dage).
+Den daglige kørsel skal IKKE hente referenceserierne – filen ligger fast i repoet. Opdatér den manuelt et par gange om året
+(Jullytics `produktsalg` med `product_id` og `from`/`to`, svaret er stort) og kør scriptet igen.
+`data/kalibrering/sommer_reference.json` holder ugesalget af sommervarer (slush/sirup/is) pr. shop; forespørgslen står i filen
+(Jullytics `shopify_analyse`, ét lille kald). Opdatér den efter hver sommer. Scriptet bygger `sommer_indeks.json` → snapshot `season_summer`.
+Dagsserierne (`dagsserie_*.json`) bruges kun som reserve, hvis køkken-profilen mangler.

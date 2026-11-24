@@ -34,10 +34,10 @@ export default async function LinjeSide({ params }: { params: Promise<{ ean: str
     <Shell active="indkoeb">
       <Link href="/" className="text-sm font-bold text-[var(--muted)] hover:text-[var(--ink)]">← Indkøb</Link>
       <header className="mt-3 mb-6">
-        <div className="flex flex-wrap items-center gap-2"><LineStatusChip status={l.status} /><ShopDots shops={l.shops} withText />{l.hero && <span className="chip !bg-[#fff3e0] !text-[var(--bestil)]">Hero-produkt</span>}</div>
+        <div className="flex flex-wrap items-center gap-2"><LineStatusChip status={l.status} /><ShopDots shops={l.shops} withText />{l.hero && <span className="chip !bg-[#fff3e0] !text-[var(--bestil)]">Hero-produkt</span>}{l.velocity.sommervare && <span className="chip !bg-[#e8f4ff] !text-[#1c6fb8]">Sommervare</span>}{!l.velocity.moden && <span className="chip !bg-[#f3efff] !text-[#6b46c1]">Ny vare · {Math.min(365, l.velocity.salgsdage)} d data</span>}</div>
         <h1 className="display text-3xl md:text-5xl mt-2">{l.titel}</h1>
         {l.shopTitler.filter((t) => t !== l.titel).length > 0 && <p className="mt-1 text-sm font-semibold text-[var(--muted)]">I shoppene: {l.shopTitler.filter((t) => t !== l.titel).join(" · ")}</p>}
-        <p className="mt-2 text-sm font-medium text-[var(--muted)] num">EAN {l.ean} · BC {l.bcSku ?? "–"} · {l.leverandoer ?? "leverandør ukendt"} · lead time {g.leadTime} dage ({g.leadTimeKilde}) · <span style={{ color: l.velocity.salgsdage < 90 ? "var(--bestil)" : undefined, fontWeight: l.velocity.salgsdage < 90 ? 700 : undefined }}>salgsdata {Math.min(365, l.velocity.salgsdage)} dage</span></p>
+        <p className="mt-2 text-sm font-medium text-[var(--muted)] num">EAN {l.ean} · BC {l.bcSku ?? "–"} · {l.leverandoer ?? "leverandør ukendt"} · lead time {g.leadTime} dage ({g.leadTimeKilde}) · <span style={{ color: l.velocity.salgsdage < 180 ? "var(--bestil)" : undefined, fontWeight: l.velocity.salgsdage < 180 ? 700 : undefined }}>salgsdata {Math.min(365, l.velocity.salgsdage)} dage</span></p>
         <p className="mt-2 font-semibold">{l.statusAarsag}</p>
         {l.advarsler.length > 0 && <div className={`mt-4 rounded-xl border px-4 py-3 text-sm font-semibold ${l.dataKvalitet === "lav" ? "border-[var(--kritisk)] bg-[#fff1f0] text-[var(--kritisk)]" : "border-[#f2b705] bg-[#fffbe6] text-[#7a5a00]"}`}>
           <b className="block text-[.65rem] uppercase tracking-wider mb-1">{l.dataKvalitet === "lav" ? "Pas på – usikkert forslag" : "Værd at vide"}</b>
@@ -100,8 +100,10 @@ export default async function LinjeSide({ params }: { params: Promise<{ ean: str
             <li className="flex justify-between"><span>Nu (alle shops)</span><b className="num">{fmtTal(l.velocity.base, 1)} stk/dag</b></li>
             <li className="flex justify-between"><span>Normalt niveau (afsæsonaliseret)</span><b className="num">{fmtTal(l.velocity.afsaeson, 1)} stk/dag</b></li>
             <li className="flex justify-between"><span>Trend</span><TrendArrow trend={l.velocity.trend} /></li>
-            <li className="flex justify-between"><span>Salgsdata</span><b className="num" style={{ color: l.velocity.salgsdage < 90 ? "var(--bestil)" : undefined }}>{Math.min(365, l.velocity.salgsdage)} dage{l.velocity.salgsdage < 90 ? " · ny vare" : ""}</b></li>
+            <li className="flex justify-between"><span>Salgsdata</span><b className="num" style={{ color: l.velocity.salgsdage < 180 ? "var(--bestil)" : undefined }}>{Math.min(365, l.velocity.salgsdage)} dage{l.velocity.salgsdage < 180 ? " · ny vare" : ""}</b></li>
             {l.velocity.solgt365 != null && <li className="flex justify-between"><span>Solgt i perioden ({Math.min(365, l.velocity.salgsdage)} dage)</span><b className="num">{fmtTal(l.velocity.solgt365)} stk{l.velocity.snitPrDag != null ? ` · ${fmtTal(l.velocity.snitPrDag, 1)} stk/dag i snit` : ""}</b></li>}
+            {l.velocity.solgtAarsrate != null && l.velocity.solgt365 != null && Math.abs(l.velocity.solgtAarsrate - l.velocity.solgt365) > 0.05 * l.velocity.solgt365 && <li className="flex justify-between"><span>Omregnet til 12 mdr. (nye shops ganget op)</span><b className="num">{fmtTal(l.velocity.solgtAarsrate)} stk</b></li>}
+            <li className="flex justify-between font-bold border-t border-[var(--line)] pt-2"><span>Modellen regner med, næste 12 mdr.</span><b className="num">{fmtTal(l.velocity.forventet12)} stk · {fmtTal(l.velocity.forventet12 / 365, 1)} stk/dag i snit</b></li>
             <li className="flex justify-between"><span>Behov i lead time ({g.leadTime} d)</span><b className="num">{fmtTal(g.behovLeadTime)} stk</b></li>
             <li className="flex justify-between"><span>Behov i lead time + {g.daekningsdage} d dækning</span><b className="num">{fmtTal(g.behovDaekning)} stk</b></li>
             <li className="flex justify-between"><span>Sikkerhedslager (z {g.z}, σ {g.sigma})</span><b className="num">{fmtTal(g.sikkerhedslager)} stk</b></li>
