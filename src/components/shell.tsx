@@ -1,8 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getForecast, FANER } from "@/lib/data";
+import { getForecast } from "@/lib/data";
 
-import { STATUS_META } from "@/lib/forecast/types";
 import { LINE_STATUS_META } from "@/lib/forecast/purchase";
 
 
@@ -25,16 +24,13 @@ export function Shell({ children, active, title, intro, aside }: { children: Rea
   const ol = f.opsummeringLinjer;
   const nav = (
     <>
-      <NavItem href="/" label="Indkøb" count={ol.bestil_nu + ol.bestil_14 + ol.bestil_45 + ol.book_po} color={LINE_STATUS_META.bestil_nu.farve} active={active === "indkoeb"} />
-      <NavItem href="/forslag" label="Leverandører" count={f.forslagEan.reduce((a, g) => a + g.linjer.length, 0)} active={active === "forslag"} />
+      <NavItem href="/" label="Skal bestilles" count={ol.bestil_nu + ol.bestil_14 + ol.bestil_30 + ol.book_po} color={LINE_STATUS_META.bestil_nu.farve} active={active === "indkoeb"} />
+      <NavItem href="/forslag" label="Pr. leverandør" count={f.forslagEan.reduce((a, g) => a + g.linjer.length, 0)} active={active === "forslag"} />
       <NavItem href="/paa-vej" label="På vej" active={active === "paa-vej"} />
       <div className="h-px bg-white/10 my-3 hidden md:block" />
-      <p className="hidden md:block px-3 pb-1 text-[.6rem] font-bold uppercase tracking-[.18em] text-white/35">Shops (e-com)</p>
+      <p className="hidden md:block px-3 pb-1 text-[.6rem] font-bold uppercase tracking-[.18em] text-white/35">Sortiment</p>
+      <NavItem href="/fane/alle" label="Alle varer" count={f.linjer.length} active={active === "alle"} />
       <NavItem href="/shops" label="Overblik pr. shop" active={active === "shops"} />
-      {FANER.filter((t) => ["udsolgt", "kritisk", "bestil-nu", "obs", "alle"].includes(t.slug)).map((t) => {
-        const count = t.status ? f.linjer.filter((l) => l.shops.some((s) => t.status!.includes(s.status))).length : f.linjer.length;
-        return <NavItem key={t.slug} href={`/fane/${t.slug}`} label={t.label} count={count} color={t.status ? STATUS_META[t.status[0]].farve : undefined} active={active === t.slug} />;
-      })}
       <div className="h-px bg-white/10 my-3 hidden md:block" />
       <NavItem href="/uden-kobling" label="Uden kobling" count={f.udenKobling.length} active={active === "uden-kobling"} />
       <NavItem href="/fjernet" label="Fjernede varer" count={fjernet} active={active === "fjernet"} />

@@ -17,7 +17,7 @@ export default async function Fane({ params }: { params: Promise<{ slug: string 
   const lines = f.linjer.map(liteLine);
   const antal = fane.status ? lines.filter((l) => l.shops.some((s) => fane.status!.includes(s.status))).length : lines.length;
   return (
-    <Shell active={slug} title={fane.label} intro={`${fane.beskrivelse} · ${antal} EAN${fane.status ? " – brikkerne viser hvilke shops det gælder og hvornår de tør" : ""}`}>
+    <Shell active={slug} title={fane.label} intro={slug === "alle" ? `Hele sortimentet, ${antal} EAN – søg, markér udgår, sæt leverandør. Brikkerne viser hver shops lager og hvornår den tør.` : `${fane.beskrivelse} · ${antal} EAN – brikkerne viser hvilke shops det gælder og hvornår de tør`}>
       {antal === 0 ? <EmptyState text={`Ingen varer i “${fane.label}” i dag`} /> : <Suspense><LineTable lines={lines} shopStatus={fane.status ?? []} /></Suspense>}
     </Shell>
   );

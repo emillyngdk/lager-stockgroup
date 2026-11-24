@@ -16,8 +16,8 @@ planer = {l["ean"]: l["plan"] for l in f["linjer"] if l.get("plan")}
 h = [f'<div style="font-family:Poppins,Arial,sans-serif;color:#141414;max-width:720px">',
      f'<h1 style="font-size:26px;margin:0 0 4px">Ugens indkøbsforslag – uge {uge}</h1>',
      f'<p style="color:#6b6b6b;margin:0 0 16px">Forecast pr. {dt.date.fromisoformat(dag0).strftime("%-d. %B %Y")} · {total} indkøbslinjer (én pr. EAN, dækker alle shops) hos {len(forslag)} leverandører · <a href="{site}/forslag">åbn på sitet</a></p>',
-     f'<p style="margin:0 0 20px"><b style="color:#e5322d">Bestil nu {ol["bestil_nu"]}</b> · <b style="color:#f5820d">Inden 14 dage {ol["bestil_14"]}</b> · <b style="color:#b58900">Inden 45 dage {ol["bestil_45"]}</b> · Book PO {ol["book_po"]} · Planlagt {ol["planlagt"]}</p>']
-t = [f"Ugens indkøbsforslag – uge {uge} ({dag0})", f"Bestil nu {ol['bestil_nu']} · Inden 14 dage {ol['bestil_14']} · Inden 45 dage {ol['bestil_45']} · Book PO {ol['book_po']}", f"{site}/forslag", ""]
+     f'<p style="margin:0 0 20px"><b style="color:#e5322d">Bestil nu {ol["bestil_nu"]}</b> · <b style="color:#f5820d">Inden 14 dage {ol["bestil_14"]}</b> · <b style="color:#b58900">Inden 30 dage {ol["bestil_30"]}</b> · Book PO {ol["book_po"]} · Planlagt {ol["planlagt"]}</p>']
+t = [f"Ugens indkøbsforslag – uge {uge} ({dag0})", f"Bestil nu {ol['bestil_nu']} · Inden 14 dage {ol['bestil_14']} · Inden 30 dage {ol['bestil_30']} · Book PO {ol['book_po']}", f"{site}/forslag", ""]
 for g in forslag:
     h.append(f'<h2 style="font-size:17px;margin:22px 0 6px">{g["leverandoer"]} <span style="color:#6b6b6b;font-weight:normal;font-size:13px">{len(g["linjer"])} linjer · {tal(sum(l["foreslaaetStk"] for l in g["linjer"]))} stk</span></h2>')
     h.append('<table style="border-collapse:collapse;width:100%;font-size:13px"><tr style="text-align:left;color:#6b6b6b"><th style="padding:4px 6px">Vare</th><th style="padding:4px 6px">Shops</th><th style="padding:4px 6px">EAN</th><th style="padding:4px 6px">Bestil senest</th><th style="padding:4px 6px;text-align:right">Stk</th><th style="padding:4px 6px;text-align:right">Colli</th><th style="padding:4px 6px">Rækker til</th></tr>')

@@ -14,16 +14,12 @@ type PlanLite = { stk: number; af?: string; status: "planlagt" | "bestilt" };
 export type Handling = "udgaar" | "skjul" | "ikke_indkoeb" | "genindsaet" | "leverandoer";
 
 const BRAND_ORDER: Brand[] = ["gladkokken", "casper", "herman", "tomi"];
+export const BESTIL_STATUS: LineStatus[] = ["bestil_nu", "bestil_14", "bestil_30", "book_po"];
 const GRUPPER: { slug: string; label: string; status: LineStatus[] }[] = [
-  { slug: "alle", label: "Alle", status: ["bestil_nu", "bestil_14", "bestil_45", "book_po", "planlagt", "bestilt", "daekket", "overlager", "for_nyt"] },
-  { slug: "nu", label: "Bestil nu", status: ["bestil_nu"] },
-  { slug: "14", label: "Inden 14 dage", status: ["bestil_14"] },
-  { slug: "45", label: "Inden 45 dage", status: ["bestil_45"] },
-  { slug: "book", label: "Book PO", status: ["book_po"] },
+  { slug: "bestil", label: "Skal bestilles", status: ["bestil_nu", "bestil_14", "bestil_30", "book_po", "for_nyt"] },
+  { slug: "nu", label: "Haster", status: ["bestil_nu"] },
+  { slug: "book", label: "Kun booking af PO", status: ["book_po"] },
   { slug: "plan", label: "Planlagt / bestilt", status: ["planlagt", "bestilt"] },
-  { slug: "daekket", label: "Dækket", status: ["daekket"] },
-  { slug: "over", label: "Overlager", status: ["overlager"] },
-  { slug: "nyt", label: "Nyheder", status: ["for_nyt"] },
   { slug: "fjernet", label: "Skjult", status: ["skjult", "ikke_indkoeb"] },
 ];
 
@@ -157,7 +153,7 @@ function Tabel({ rows, dag0, brand, valgt, toggle, onHandling, fjernet }: { rows
 }
 
 /** shopStatus: vis kun linjer hvor mindst én shop har en af disse e-com-statusser (Shops-fanerne). Linjen er stadig ét EAN. */
-export function LineTable({ lines, gruppe = "alle", shopStatus }: { lines: LineLite[]; gruppe?: string; shopStatus?: string[] | null }) {
+export function LineTable({ lines, gruppe = "bestil", shopStatus }: { lines: LineLite[]; gruppe?: string; shopStatus?: string[] | null }) {
   const router = useRouter(); const pathname = usePathname(); const sp = useSearchParams();
   const [q, setQ] = useState(sp.get("q") ?? "");
   const [brand, setBrand] = useState(sp.get("brand") ?? "");
@@ -211,17 +207,18 @@ export function LineTable({ lines, gruppe = "alle", shopStatus }: { lines: LineL
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const p = new URLSearchParams();
-    if (q) p.set("q", q); if (brand) p.set("brand", brand); if (lev) p.set("lev", lev); if (hero) p.set("hero", "1"); if (g !== "alle") p.set("g", g);
+    if (q) p.set("q", q); if (brand) p.set("brand", brand); if (lev) p.set("lev", lev); if (hero) p.set("hero", "1"); if (g !== gruppe) p.set("g", g);
     lastWritten.current = p.toString();
     router.replace(`${pathname}${p.toString() ? `?${p}` : ""}`, { scroll: false });
   }, [q, brand, lev, hero, g, pathname, router]);
   useEffect(() => { const h = (e: KeyboardEvent) => { if (e.key === "/" && document.activeElement?.tagName !== "INPUT") { e.preventDefault(); inputRef.current?.focus(); } }; window.addEventListener("keydown", h); return () => window.removeEventListener("keydown", h); }, []);
   const leverandoerer = useMemo(() => [...new Set(lines.map((l) => l.leverandoer).filter(Boolean) as string[])].sort(), [lines]);
   const grp = GRUPPER.find((x) => x.slug === g) ?? GRUPPER[0];
-  const counts = useMemo(() => Object.fromEntries(GRUPPER.map((x) => [x.slug, effLines.filter((l) => x.status.includes(l.status)).length])), [effLines]);
+  const counts = useMemo(() => Object.fromEntries(GRUPPER.map((x) => [x.slug, effLines.filter((l) => x.status.includes(l.status) && (l.status !== "for_nyt" || (l.dage.bestilSenest != null && l.dage.bestilSenest <= 30))).length])), [effLines]);
   const rows = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    return effLines.filter((l) => shopStatus ? (!shopStatus.length || l.shops.some((s) => shopStatus.includes(s.status) && (!brand || s.brand === brand))) : grp.status.includes(l.status))
+    const iGruppe = (l: LineLite) => grp.status.includes(l.status) && (l.status !== "for_nyt" || (l.dage.bestilSenest != null && l.dage.bestilSenest <= 30));
+    return effLines.filter((l) => shopStatus ? (!shopStatus.length || l.shops.some((s) => shopStatus.includes(s.status) && (!brand || s.brand === brand))) : iGruppe(l))
       .filter((l) => !brand || l.brands.includes(brand as Brand))
       .filter((l) => !lev || l.leverandoer === lev)
       .filter((l) => !hero || l.hero)
@@ -236,7 +233,7 @@ export function LineTable({ lines, gruppe = "alle", shopStatus }: { lines: LineL
         {([["", "Alle shops"], ...BRAND_ORDER.map((b) => [b, BRANDS[b].navn])] as [string, string][]).map(([b, label]) => {
           const n = shopStatus
             ? effLines.filter((l) => (!b || l.brands.includes(b as Brand)) && (!shopStatus.length || l.shops.some((s) => shopStatus.includes(s.status) && (!b || s.brand === b)))).length
-            : effLines.filter((l) => (!b || l.brands.includes(b as Brand)) && ["bestil_nu", "bestil_14", "bestil_45", "book_po"].includes(l.status)).length;
+            : effLines.filter((l) => (!b || l.brands.includes(b as Brand)) && (BESTIL_STATUS.includes(l.status) || (l.status === "for_nyt" && l.dage.bestilSenest != null && l.dage.bestilSenest <= 30))).length;
           const on = brand === b;
           return <button key={b} onClick={() => setBrand(b)} className={`card !rounded-2xl px-4 md:px-5 py-3 text-left transition ${on ? "!bg-[var(--ink)] text-white" : "hover:-translate-y-0.5"}`}>
             <span className="flex items-center gap-2 font-extrabold text-base">{b && <i className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: BRANDS[b as Brand].farve }} />}{label}</span>

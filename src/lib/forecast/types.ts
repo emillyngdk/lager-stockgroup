@@ -54,7 +54,7 @@ export const DEFAULT_CONFIG: Config = {
   heroShareOfDb: 0.2,
   cvByAge: { nyhed: 0.8, ung: 0.6, etableret: 0.45, moden: 0.35 },
   extraSafetyByAge: { nyhed: 0.5, ung: 0.3, etableret: 0.15, moden: 0 },
-  status: { bestilNuDays: 14, obsDays: 45, overlagerDays: 365, trendObs: 0.3 },
+  status: { bestilNuDays: 14, obsDays: 30, overlagerDays: 365, trendObs: 0.3 },
 };
 
 export interface Variant {

@@ -403,7 +403,7 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
   for (const l of linjer) opsLinjer[l.status]++;
   const forslagEanMap: Record<string, ForecastOutput["forslagEan"][0]["linjer"]> = {};
   for (const l of linjer) {
-    if (!["bestil_nu", "bestil_14", "bestil_45"].includes(l.status) || l.genbestilling.foreslaaetStk <= 0) continue;
+    if (!["bestil_nu", "bestil_14", "bestil_30"].includes(l.status) || l.genbestilling.foreslaaetStk <= 0) continue;
     (forslagEanMap[l.leverandoer || "Ukendt leverandør"] ??= []).push({ ean: l.ean, titel: l.titel, brands: l.brands, bestilSenest: l.datoer.bestilSenest, foreslaaetStk: l.genbestilling.foreslaaetStk, foreslaaetColli: l.genbestilling.foreslaaetColli, raekkerTil: l.datoer.raekkerTil, status: l.status, begrundelse: l.statusAarsag });
   }
   const forslagEan = Object.entries(forslagEanMap).map(([leverandoer, linjer]) => ({ leverandoer, linjer: linjer.sort((a, b) => (a.bestilSenest || "9999").localeCompare(b.bestilSenest || "9999")) })).sort((a, b) => b.linjer.length - a.linjer.length);
