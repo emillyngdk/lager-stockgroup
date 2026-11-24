@@ -60,6 +60,14 @@ export function BestilSenest({ dato, dag0, dage, big }: { dato: string | null; d
 }
 
 
+/** Leverandørnavn uden selskabsendelser ("Co.,Ltd.", "LIMITED", "A/S" …), så det kan stå på én linje. */
+export function kortLev(n: string): string {
+  const k = n.replace(/[\s,.]*(co\.?\s*,?\s*ltd\.?|company\s+limited|limited|ltd\.?|inc\.?|gmbh|a\/s|aps|b\.?v\.?|oy|ab)\s*$/i, "").replace(/[\s,.]+$/, "").trim();
+  const r = k || n;
+  // RÅBENDE STORE BOGSTAVER → Almindelig Skrift
+  return r === r.toUpperCase() ? r.toLowerCase().replace(/(^|[\s&(-])(\p{L})/gu, (_, a: string, b: string) => a + b.toUpperCase()) : r;
+}
+
 function PoBadge({ l }: { l: LineLite }) {
   const po = l.poOprettet;
   if (!po || !paaListen(l.status, l.dage.bestilSenest)) return null;
@@ -68,7 +76,7 @@ function PoBadge({ l }: { l: LineLite }) {
   return null;
 }
 
-function Tabel({ rows, dag0, brand, valgt, toggle, onHandling, fjernet, fortrydTekst }: { rows: LineLite[]; dag0: string; brand?: Brand; valgt: Set<string>; toggle: (ean: string) => void; onHandling: (eans: string[], h: Handling, hurtig?: boolean) => void; fjernet?: boolean; fortrydTekst?: string }) {
+function Tabel({ rows, dag0, brand, valgt, toggle, onHandling, onLev, fjernet, fortrydTekst }: { rows: LineLite[]; dag0: string; brand?: Brand; valgt: Set<string>; toggle: (ean: string) => void; onHandling: (eans: string[], h: Handling, hurtig?: boolean) => void; onLev?: (lev: string) => void; fjernet?: boolean; fortrydTekst?: string }) {
   const router = useRouter();
   const [menuPos, setMenuPos] = useState<{ ean: string; right: number; top?: number; bottom?: number } | null>(null);
   const menu = menuPos?.ean ?? null;
@@ -105,6 +113,9 @@ function Tabel({ rows, dag0, brand, valgt, toggle, onHandling, fjernet, fortrydT
                     <td className="pl-3 pr-1 py-3" onClick={(e) => e.stopPropagation()}><input type="checkbox" checked={valgt.has(l.ean)} onChange={() => toggle(l.ean)} aria-label="Vælg" /></td>
                     <td className="px-3 py-3 max-w-[300px]">
                       <Link href={`/linje/${l.ean}`} className="block font-bold truncate text-[.95rem]">{l.titel}</Link>
+                      {l.leverandoer
+                        ? <button type="button" onClick={(e) => { e.stopPropagation(); onLev?.(l.leverandoer!); }} title={`${l.leverandoer} – klik for kun at se denne leverandør`} className="block max-w-full truncate text-left text-[.72rem] font-semibold text-[#555] hover:text-[var(--ink)] hover:underline">{kortLev(l.leverandoer)}</button>
+                        : !fjernet && <button type="button" onClick={(e) => { e.stopPropagation(); onHandling([l.ean], "leverandoer"); }} className="block text-left text-[.72rem] font-semibold text-[var(--muted)] hover:text-[var(--ink)] hover:underline" title="Ingen åben PO at læse leverandøren fra – klik for at sætte den">+ Sæt leverandør</button>}
                       <span className="flex items-center gap-2 mt-0.5"><ShopDots shops={l.shops} withDays /><span className="num text-[.65rem] text-[var(--muted)]">{l.ean}</span>{l.hero && <span className="text-[.6rem] font-bold tracking-wider text-[var(--bestil)]">HERO</span>}{l.dataKvalitet === "lav" && <span className="text-[.6rem] font-bold tracking-wider text-white bg-[var(--kritisk)] rounded px-1.5 py-0.5" title={l.advarsler[0]}>KUN {Math.min(365, l.velocity.salgsdage)} D DATA</span>}{l.velocity.sommervare && <span className="text-[.6rem] font-bold tracking-wider text-[#1c6fb8] bg-[#e8f4ff] rounded px-1.5 py-0.5" title="Slush, sirup og is: forslaget antager, at næste sommer sælger som den sidste">SOMMERVARE</span>}<PoBadge l={l} /></span>
                     </td>
                     <td className="px-3 py-3 whitespace-nowrap">{l.status === "for_nyt" ? <span className="font-extrabold text-[var(--bestil)]" title="For lidt salgsdata til en automatisk dato">Vurdér<span className="block text-[.65rem] font-semibold text-[var(--muted)]">{Math.min(365, l.velocity.salgsdage)} d data</span></span> : <BestilSenest dato={l.datoer.bestilSenest} dag0={dag0} dage={l.dage.bestilSenest} big />}</td>
@@ -251,7 +262,7 @@ export function LineTable({ lines, gruppe = "bestil", shopStatus, kort }: { line
       .filter((l) => !needle || l.titel.toLowerCase().includes(needle) || l.ean.includes(needle) || l.shopTitler.some((t) => t.toLowerCase().includes(needle)) || (l.bcSku ?? "").toLowerCase().includes(needle));
   }, [effLines, grp, brand, lev, hero, q, shopStatus]);
   const erFjernet = !shopStatus && (g === "fjernet" || g === "po");
-  const tabelProps = { dag0, valgt, toggle, onHandling, fjernet: erFjernet, fortrydTekst: g === "po" ? "Fortryd – tilbage på listen" : undefined };
+  const tabelProps = { dag0, valgt, toggle, onHandling, onLev: (v: string) => { setLev(v); window.scrollTo({ top: 0, behavior: "smooth" }); }, fjernet: erFjernet, fortrydTekst: g === "po" ? "Fortryd – tilbage på listen" : undefined };
   const filtreret = !!(q || lev || hero);
   // Nøgletal til kortene øverst (live – falder i takt med at opgaverne sorteres væk)
   const paaListe = useMemo(() => effLines.filter((l) => paaListen(l.status, l.dage.bestilSenest)), [effLines]);
