@@ -5,7 +5,7 @@ import type { Brand } from "@/lib/forecast/types";
 import type { LineStatus } from "@/lib/forecast/purchase";
 import { fmtDato, fmtTal } from "@/lib/format";
 import { effektivStatus, paaListen, PO_OPRETTET_DAGE, type OverlayFlag } from "@/lib/overlay";
-import { markerPoOprettet, saetFlag, meldStateAendret, PO_NULSTIL } from "@/lib/handlinger";
+import { markerPoOprettet, saetFlag, meldStateAendret, hurtigKlik, PO_NULSTIL } from "@/lib/handlinger";
 import { ShopDots } from "./line-table";
 import { ask, hvemErDu } from "./dialog";
 import { visToast } from "./toast";
@@ -80,7 +80,7 @@ export function ForslagListe({ linjer, dag0 }: { linjer: ForslagLinje[]; dag0: s
                   <td className="py-2.5 pr-3 num text-right">{l.colli || "–"}</td>
                   <td className="py-2.5 pr-3 num whitespace-nowrap">{l.raekkerTil ? fmtDato(l.raekkerTil) : "2 år+"}</td>
                   <td className="py-2.5 pr-3 text-xs text-[var(--muted)] hidden lg:table-cell max-w-[360px]">{l.begrundelse}</td>
-                  <td className="py-2.5 text-right whitespace-nowrap">{l.status !== "planlagt" && <button onClick={() => markér([l], g.lev, true)} className="rounded-full border-2 border-[var(--line)] px-3 py-1 text-xs font-bold hover:border-[var(--ok)] hover:bg-[var(--ok)] hover:text-white transition">✓ PO</button>}</td>
+                  <td className="py-2.5 text-right whitespace-nowrap">{l.status !== "planlagt" && <button onClick={() => hurtigKlik(() => markér([l], g.lev, true))} className="rounded-full border-2 border-[var(--line)] px-3 py-1 text-xs font-bold hover:border-[var(--ok)] hover:bg-[var(--ok)] hover:text-white transition">✓ PO</button>}</td>
                 </tr>
               ))}</tbody>
             </table></div>

@@ -11,10 +11,13 @@ export function LiveListeCount({ base, dag0, initial }: { base: ListeBase[]; dag
   const [n, setN] = useState(initial);
   useEffect(() => {
     const regn = (d: St) => setN(base.filter((x) => paaListen(effektivStatus(x.s, x.b, d.overrides?.[x.e], d.plans?.[x.e] ?? null, x.p, x.v, dag0).status, x.b)).length);
-    fetch("/api/state").then((r) => (r.ok ? r.json() : null)).then((d) => { if (d) regn(d); }).catch(() => {});
+    const hent = () => fetch("/api/state").then((r) => (r.ok ? r.json() : null)).then((d) => { if (d) regn(d); }).catch(() => {});
+    hent();
+    let t: ReturnType<typeof setTimeout> | null = null;
+    const igen = () => { if (t) clearTimeout(t); t = setTimeout(hent, 400); };
     const h = (ev: Event) => regn((ev as CustomEvent<St>).detail);
-    window.addEventListener("lager:state", h);
-    return () => window.removeEventListener("lager:state", h);
+    window.addEventListener("lager:state", h); window.addEventListener("lager:refetch", igen);
+    return () => { window.removeEventListener("lager:state", h); window.removeEventListener("lager:refetch", igen); if (t) clearTimeout(t); };
   }, [base, dag0]);
   return <>{n}</>;
 }

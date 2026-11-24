@@ -11,7 +11,7 @@ export function ToastHost() {
   const [t, setT] = useState<Toast | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => { setToastGlobal = setT; return () => { setToastGlobal = null; }; }, []);
-  useEffect(() => { if (!t) return; if (timer.current) clearTimeout(timer.current); timer.current = setTimeout(() => setT(null), t.fortryd ? 7000 : 3500); return () => { if (timer.current) clearTimeout(timer.current); }; }, [t]);
+  useEffect(() => { if (!t) return; if (timer.current) clearTimeout(timer.current); timer.current = setTimeout(() => setT(null), t.fortryd ? 10000 : 3500); return () => { if (timer.current) clearTimeout(timer.current); }; }, [t]);
   if (!t) return null;
   return (
     <div className="fixed bottom-5 left-1/2 -translate-x-1/2 z-[90] max-w-[92vw]">

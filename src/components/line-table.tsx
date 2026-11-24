@@ -10,7 +10,7 @@ import { TrendArrow } from "./ui";
 import { ask, hvemErDu } from "./dialog";
 import { visToast } from "./toast";
 import { effektivStatus, paaListen, PO_OPRETTET_DAGE, type OverlayFlag } from "@/lib/overlay";
-import { markerPoOprettet, saetFlag, meldStateAendret, PO_NULSTIL } from "@/lib/handlinger";
+import { markerPoOprettet, saetFlag, meldStateAendret, hurtigKlik, PO_NULSTIL } from "@/lib/handlinger";
 
 type Flag = OverlayFlag & { dato?: string };
 type PlanLite = { stk: number; af?: string; status: "planlagt" | "bestilt" };
@@ -120,7 +120,7 @@ function Tabel({ rows, dag0, brand, valgt, toggle, onHandling, fjernet, fortrydT
                     <td className="px-3 py-3 text-right num whitespace-nowrap text-xs">{l.paaVej.sikker > 0 && <span className="block font-bold text-[var(--ok)]">+{fmtTal(l.paaVej.sikker)}</span>}{l.paaVej.usikker > 0 && <span className="block text-[#b58900] font-bold" title="Ubooket">+{fmtTal(l.paaVej.usikker)}<span className="text-[.6rem] font-semibold"> ub.</span></span>}{l.paaVej.sikker + l.paaVej.usikker === 0 && <span className="text-[var(--muted)]">0</span>}</td>
                     <td className="px-2 py-3 relative whitespace-nowrap text-right" onClick={(e) => e.stopPropagation()}>
                       {!fjernet && paaListen(l.status, l.dage.bestilSenest)
-                        ? <button onClick={() => onHandling([l.ean], "po_oprettet", true)} className="po-btn rounded-full border-2 border-[var(--line)] px-3 py-1 text-xs font-bold text-[var(--ink)] hover:border-[var(--ok)] hover:bg-[var(--ok)] hover:text-white transition" title={l.status === "book_po" ? `PO'en er booket hos speditøren. Står den stadig som ikke booket i BC om ${PO_OPRETTET_DAGE} dage, kommer varen tilbage.` : `Fjerner varen fra listen i ${PO_OPRETTET_DAGE} dage. Dukker der ikke en ny PO op i BC, kommer den tilbage.`}>{l.status === "book_po" ? "✓ Booket" : "✓ PO oprettet"}</button>
+                        ? <button onClick={() => hurtigKlik(() => onHandling([l.ean], "po_oprettet", true))} className="po-btn rounded-full border-2 border-[var(--line)] px-3 py-1 text-xs font-bold text-[var(--ink)] hover:border-[var(--ok)] hover:bg-[var(--ok)] hover:text-white transition" title={l.status === "book_po" ? `PO'en er booket hos speditøren. Står den stadig som ikke booket i BC om ${PO_OPRETTET_DAGE} dage, kommer varen tilbage.` : `Fjerner varen fra listen i ${PO_OPRETTET_DAGE} dage. Dukker der ikke en ny PO op i BC, kommer den tilbage.`}>{l.status === "book_po" ? "✓ Booket" : "✓ PO oprettet"}</button>
                         : <span className="inline-block align-middle"><LineStatusChip status={l.status} small />{l.status === "po_oprettet" && l.poOprettet && <span className="block text-[.6rem] font-semibold text-[var(--muted)] mt-0.5">tjekkes til {fmtDato(l.poOprettet.frist)}</span>}</span>}
                       <button onClick={(e) => openMenu(l.ean, e.currentTarget)} className="rounded-lg px-2 py-1 text-sm font-bold text-[var(--muted)] hover:bg-[var(--bg)] hover:text-[var(--ink)]" aria-label="Handlinger">⋯</button>
                       {menu === l.ean && menuPos && (
@@ -160,7 +160,7 @@ function Tabel({ rows, dag0, brand, valgt, toggle, onHandling, fjernet, fortrydT
           </Link>
           <div className="flex justify-end gap-3 -mt-1 pr-2 pb-1">{fjernet
             ? <button onClick={() => onHandling([l.ean], "genindsaet")} className="text-xs font-bold text-[var(--muted)] underline">{fortrydTekst ?? "Genindsæt"}</button>
-            : <><button onClick={() => onHandling([l.ean], "udgaar")} className="text-[.65rem] font-bold text-[var(--muted)] underline">Udgår</button><button onClick={() => onHandling([l.ean], "po_oprettet", true)} className="rounded-full bg-[var(--ink)] text-white px-3 py-1 text-xs font-bold">✓ PO oprettet</button></>}</div></li>
+            : <><button onClick={() => onHandling([l.ean], "udgaar")} className="text-[.65rem] font-bold text-[var(--muted)] underline">Udgår</button><button onClick={() => hurtigKlik(() => onHandling([l.ean], "po_oprettet", true))} className="rounded-full bg-[var(--ink)] text-white px-3 py-1 text-xs font-bold">✓ PO oprettet</button></>}</div></li>
         ))}
       </ul>
     </div>

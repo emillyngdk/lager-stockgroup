@@ -33,12 +33,12 @@ export function LineDetail({ line, receivingDays, leverandoerer = [] }: { line: 
   const save = async (p: { stk: number; colli: number; bestilDato: string; leadTime: number; note: string }) => {
     const af = await who(); if (!af) return; setNavn(af);
     const r = await fetch(`/api/plan/${line.ean}`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...p, af }) });
-    if (r.ok) { setPlan(await r.json()); setMsg("Plan gemt"); setTimeout(() => setMsg(null), 2500); } else setMsg("Kunne ikke gemme – prøv igen");
+    if (r.ok) { window.dispatchEvent(new Event("lager:refetch")); setPlan(await r.json()); setMsg("Plan gemt"); setTimeout(() => setMsg(null), 2500); } else setMsg("Kunne ikke gemme – prøv igen");
   };
   const slet = async () => {
     if (!(await ask({ title: "Fjern planen?", text: "Planen slettes for alle. Forslaget fra beregneren bliver stående.", ok: "Fjern plan", danger: true }))) return;
     const r = await fetch(`/api/plan/${line.ean}`, { method: "DELETE" });
-    if (r.ok) setPlan(null);
+    if (r.ok) { setPlan(null); window.dispatchEvent(new Event("lager:refetch")); }
   };
   const setFlagRemote = async (patch: Flag, titel: string, tekst?: string, danger = false) => {
     setMenu(false);
@@ -47,7 +47,7 @@ export function LineDetail({ line, receivingDays, leverandoerer = [] }: { line: 
     if (!v) return;
     const note = v.note.trim();
     const r = await fetch(`/api/override/${line.ean}`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...patch, note: note || undefined, af }) });
-    if (r.ok) { setFlag(await r.json()); setMenu(false); setMsg("Gemt – slår igennem på listen ved næste opdatering i morgen tidlig"); router.refresh(); } else setMsg("Kunne ikke gemme");
+    if (r.ok) { window.dispatchEvent(new Event("lager:refetch")); setFlag(await r.json()); setMenu(false); setMsg("Gemt"); router.refresh(); } else setMsg("Kunne ikke gemme");
   };
   const fjernet = flag?.udgaar || flag?.ikke_indkoeb || (flag?.skjul_til && flag.skjul_til >= line.projektion.dag0);
   const pv = line.paaVej.sikker + line.paaVej.usikker;

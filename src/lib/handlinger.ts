@@ -7,6 +7,7 @@ export const PO_NULSTIL = { po_oprettet: null, po_kendt: null, po_paavej: null, 
 
 async function put(ean: string, body: Record<string, unknown>): Promise<OverlayFlag | null> {
   const r = await fetch(`/api/override/${ean}`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify(body) });
+  if (r.ok && typeof window !== "undefined") window.dispatchEvent(new Event("lager:refetch"));
   return r.ok ? ((await r.json()) as OverlayFlag) : null;
 }
 
@@ -31,3 +32,7 @@ export async function saetFlag(eans: string[], body: Record<string, unknown>, af
 export function meldStateAendret(overrides: Record<string, OverlayFlag>, plans?: Record<string, unknown>) {
   if (typeof window !== "undefined") window.dispatchEvent(new CustomEvent("lager:state", { detail: { overrides, plans } }));
 }
+
+// Når en række forsvinder, glider den næste op under musen. Et hurtigt dobbeltklik må ikke markere den næste vare.
+let laastTil = 0;
+export const hurtigKlik = (fn: () => void) => { if (Date.now() < laastTil) return; laastTil = Date.now() + 900; fn(); };
