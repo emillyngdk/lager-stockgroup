@@ -54,6 +54,7 @@ export function Calculator({ line, receivingDays, plan, onSave }: Props) {
         <h2 className="font-extrabold text-lg">Bestillingsberegner</h2>
         <p className="text-xs text-[var(--muted)] font-medium">{basisTekst}: <b className="num">{fmtTal(basis)} stk</b>{cll && basis ? ` · ${Math.ceil(basis / cll)} colli à ${cll}` : ""} · lead time {g.leadTime} dage ({g.leadTimeKilde})</p>
       </div>
+      {line.dataKvalitet === "lav" && <p className="mb-4 rounded-lg bg-[#fff1f0] border border-[var(--kritisk)] px-3 py-2 text-xs font-bold text-[var(--kritisk)]">Forslaget bygger kun på {Math.min(365, line.velocity.salgsdage)} dages salg – brug knapperne herunder til at skrue ned, hvis det virker for højt.</p>}
       <div className="grid md:grid-cols-[1fr_1.2fr] gap-5">
         <div className="flex flex-col gap-3">
           <div className="flex gap-1.5 flex-wrap">

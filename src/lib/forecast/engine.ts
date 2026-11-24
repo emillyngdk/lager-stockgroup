@@ -24,7 +24,7 @@ export function isoWeek(dateStr: string): number {
 /** Ugeindeks (1..53) ud fra en dagsserie med units. Kræver mindst ~300 dage; ellers null. */
 export function seasonIndex(series: Record<string, number>, cfg: Config): number[] | null {
   const days = Object.keys(series).sort();
-  if (days.length < 300) return null;
+  if (days.length < 360) return null; // kræver et helt år – ellers mangler toppe/bunde, og indekset lyver
   const perWeek: Record<number, { sum: number; n: number }> = {};
   for (const d of days) {
     const w = isoWeek(d);
@@ -34,18 +34,17 @@ export function seasonIndex(series: Record<string, number>, cfg: Config): number
   const weekly: number[] = new Array(54).fill(NaN);
   for (let w = 1; w <= 53; w++) if (perWeek[w] && perWeek[w].n >= 5) weekly[w] = perWeek[w].sum / perWeek[w].n * 7;
   const vals = weekly.filter((x) => !isNaN(x));
-  if (vals.length < 40) return null;
+  if (vals.length < 50) return null;
   const mean = vals.reduce((a, b) => a + b, 0) / vals.length;
   // uge 53 arver uge 52
   if (isNaN(weekly[53])) weekly[53] = weekly[52];
   const raw = weekly.map((x) => (isNaN(x) ? 1 : x / mean));
   // glidende gennemsnit (cirkulært) og klem
-  const k = Math.floor(cfg.seasonSmoothWeeks / 2);
+  // trekantet glatning (ugen selv vejer 50 %, naboerne 25 %): tåler at Black Week flytter sig en uge, uden at toppen udjævnes væk
   const out = new Array(54).fill(1);
   for (let w = 1; w <= 52; w++) {
-    let s = 0, n = 0;
-    for (let j = -k; j <= k; j++) { let ww = w + j; if (ww < 1) ww += 52; if (ww > 52) ww -= 52; s += raw[ww]; n++; }
-    out[w] = clamp(s / n, cfg.seasonClamp[0], cfg.seasonClamp[1]);
+    const prev = w === 1 ? 52 : w - 1, next = w === 52 ? 1 : w + 1;
+    out[w] = clamp(0.25 * raw[prev] + 0.5 * raw[w] + 0.25 * raw[next], cfg.seasonClamp[0], cfg.seasonClamp[1]);
   }
   out[53] = out[52];
   return out;
@@ -196,6 +195,12 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
     else if (vel.grp === "ung") afsaeson = 0.6 * vel.v7 / a7 + 0.4 * vel.v30 / a30;
     else afsaeson = cfg.weights.v7 * vel.v7 / a7 + cfg.weights.v30 * vel.v30 / a30 + cfg.weights.v60 * vel.v60 / a60;
     vel.trend = vel.v60 > 0 ? clamp((vel.v14 / a14) / (vel.v60 / a60) - 1, -0.9, 3) : vel.v14 > 0 ? 1 : 0;
+    // Kampagnedæmper: en moden vare (≥180 dages data) må højst regnes til 3× sit årsgennemsnit – ellers bestiller vi efter én Black Week-uge
+    let daempet: string | null = null;
+    if (vel.salgsdage >= 180 && vel.s365 > 0) {
+      const avg365 = vel.s365 / Math.min(365, vel.salgsdage);
+      if (afsaeson > 3 * avg365) { daempet = `Normalt niveau dæmpet fra ${r1(afsaeson)} til ${r1(3 * avg365)} stk/dag (3× årsgennemsnittet ${r1(avg365)}) – de seneste uger er kampagnedrevne.`; afsaeson = 3 * avg365; }
+    }
 
     // lagerpuljer
     const ecom = Math.max(0, v.shopify_qty ?? 0);
@@ -310,6 +315,7 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
       `Lead time ${leadTime} dage (${leadTimeKilde}), servicegrad ${hero ? "95 % (hero)" : "90 %"}, sikkerhedslager ${sikkerhed} stk, reorder point ${reorderPoint} stk.`,
       `Foreslået: dækning ${daekning} dage efter modtagelse → ${foreslaaetStkRund} stk${cll ? ` (${foreslaaetColli} colli à ${cll})` : ""}.`,
     ];
+    if (daempet) forklaring.push(daempet);
     if (vel.sameProduct > 1) forklaring.push(`Produktet har ${vel.sameProduct} varianter – salget er delt ligeligt (Jullytics rapporterer pr. produkt).`);
 
     rows.push({

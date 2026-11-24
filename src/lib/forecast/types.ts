@@ -42,7 +42,7 @@ export interface Config {
 
 export const DEFAULT_CONFIG: Config = {
   weights: { v7: 0.5, v30: 0.3, v60: 0.2 },
-  seasonClamp: [0.4, 3.0],
+  seasonClamp: [0.3, 8.0],
   seasonSmoothWeeks: 3,
   horizonDays: 180,
   transferDays: 0,

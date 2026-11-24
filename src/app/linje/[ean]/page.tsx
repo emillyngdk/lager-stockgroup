@@ -39,6 +39,10 @@ export default async function LinjeSide({ params }: { params: Promise<{ ean: str
         {l.shopTitler.filter((t) => t !== l.titel).length > 0 && <p className="mt-1 text-sm font-semibold text-[var(--muted)]">I shoppene: {l.shopTitler.filter((t) => t !== l.titel).join(" · ")}</p>}
         <p className="mt-2 text-sm font-medium text-[var(--muted)] num">EAN {l.ean} · BC {l.bcSku ?? "–"} · {l.leverandoer ?? "leverandør ukendt"} · lead time {g.leadTime} dage ({g.leadTimeKilde}) · <span style={{ color: l.velocity.salgsdage < 90 ? "var(--bestil)" : undefined, fontWeight: l.velocity.salgsdage < 90 ? 700 : undefined }}>salgsdata {Math.min(365, l.velocity.salgsdage)} dage</span></p>
         <p className="mt-2 font-semibold">{l.statusAarsag}</p>
+        {l.advarsler.length > 0 && <div className={`mt-4 rounded-xl border px-4 py-3 text-sm font-semibold ${l.dataKvalitet === "lav" ? "border-[var(--kritisk)] bg-[#fff1f0] text-[var(--kritisk)]" : "border-[#f2b705] bg-[#fffbe6] text-[#7a5a00]"}`}>
+          <b className="block text-[.65rem] uppercase tracking-wider mb-1">{l.dataKvalitet === "lav" ? "Pas på – usikkert forslag" : "Værd at vide"}</b>
+          <ul className="space-y-1">{l.advarsler.map((a) => <li key={a}>• {a}</li>)}</ul>
+        </div>}
       </header>
 
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">

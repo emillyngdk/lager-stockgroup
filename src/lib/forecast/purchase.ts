@@ -45,8 +45,11 @@ export interface PurchaseLine {
   status: LineStatus; statusAarsag: string; hero: boolean;
   leverandoer: string | null; indkoeber: string | null;
   velocity: { base: number; afsaeson: number; trend: number; solgt365: number | null; salgsdage: number; snitPrDag: number | null };
+  /** Hvor meget kan man stole på forslaget? lav = under 30 dages salgsdata, middel = under 90, ok = 90+ */
+  dataKvalitet: "lav" | "middel" | "ok";
+  advarsler: string[];
   lager: {
-    ecomSum: number; vejleFrit: number; vejleOptimistisk: number; tredjepart: number; reserveretShopGroup: number; reserveretB2b: number; bestiltB2b: number;
+    ecomSum: number; vejleFrit: number; vejleOptimistisk: number; tredjepart: number; tredjepartOptimistisk: number; reserveretShopGroup: number; reserveretB2b: number; bestiltB2b: number;
     tilgaengeligt: number; tilgaengeligtOptimistisk: number; prLokation: Record<string, number>;
   };
   paaVej: { sikker: number; usikker: number; foersteSikker: string | null; foersteUsikker: string | null; events: LineEvent[] };
@@ -149,7 +152,7 @@ export function buildPurchaseLines(
     // --- puljer (hele EAN'et, én gang) ---
     const ecomSum = rs.reduce((a, r) => a + r.lager.ecom, 0);
     const prLokation: Record<string, number> = {};
-    let vejleFrit = 0, vejleOpt = 0, tredjepart = 0, resSG = 0, resB2b = 0, bestB2b = 0;
+    let vejleFrit = 0, vejleOpt = 0, tredjepart = 0, tredjepartOpt = 0, resSG = 0, resB2b = 0, bestB2b = 0;
     if (bc) {
       for (const [lok, l] of Object.entries(bc.lokationer)) {
         prLokation[lok] = l.lager;
@@ -161,12 +164,12 @@ export function buildPurchaseLines(
           // 3PL-lokation (NL-NONFOOD / FI-NONFOOD): BC-tallet dækker typisk det samme som Shopify; tæl kun overskud
           const brand = (Object.keys(BRANDS) as Brand[]).find((b) => BRANDS[b].bcLokation === lok);
           const shopEcom = brand ? rs.find((r) => r.brand === brand)?.lager.ecom ?? 0 : 0;
-          tredjepart += Math.max(0, kons - shopEcom); vejleOpt += Math.max(0, opt - shopEcom);
+          tredjepart += Math.max(0, kons - shopEcom); tredjepartOpt += Math.max(0, opt - shopEcom);
         }
       }
     }
     const tilgaengeligt = ecomSum + vejleFrit + tredjepart;
-    const tilgaengeligtOpt = ecomSum + vejleOpt;
+    const tilgaengeligtOpt = ecomSum + vejleOpt + tredjepartOpt;
 
     // --- på vej: alle PO-linjer for EAN'et ---
     const events: LineEvent[] = [];
@@ -266,6 +269,12 @@ export function buildPurchaseLines(
 
     const salgsdage = Math.max(...rs.map((r) => r.alder.salgsdage));
     const solgt365Sum = rs.some((r) => r.oekonomi.solgt365 != null) ? rs.reduce((a, r) => a + (r.oekonomi.solgt365 ?? 0), 0) : null;
+    const dataKvalitet: PurchaseLine["dataKvalitet"] = salgsdage < 30 ? "lav" : salgsdage < 90 ? "middel" : "ok";
+    const advarsler: string[] = [];
+    if (dataKvalitet === "lav") advarsler.push(`Kun ${salgsdage} dages salgsdata – forslaget bygger på en meget kort periode og kan være langt fra det rigtige. Tjek tallet med egen vurdering før du bestiller.`);
+    else if (dataKvalitet === "middel") advarsler.push(`${salgsdage} dages salgsdata – varen er ny, og sæsonmønstret er endnu ikke kendt.`);
+    if (rs.some((r) => r.forklaring.some((f) => f.startsWith("Normalt niveau dæmpet")))) advarsler.push("De seneste ugers salg er kampagnedrevet (Black Week) – normalt niveau er dæmpet til 3× årsgennemsnittet.");
+    if (!leverandoer) advarsler.push("Ingen leverandør kendt (ingen åben PO) – vælg leverandør når du bestiller.");
     const unitCost = rs.find((r) => r.oekonomi.unitCost != null && r.brand === "casper")?.oekonomi.unitCost ?? rs.find((r) => r.oekonomi.unitCost != null)?.oekonomi.unitCost ?? null;
 
     forklaring.push(`Behov: ${rs.map((r) => `${BRANDS[r.brand].navn} ${r1(r.velocity.base)}`).join(" + ")} = ${r1(base)} stk/dag nu; normalt niveau ${r1(afsaeson)} stk/dag.`);
@@ -280,7 +289,8 @@ export function buildPurchaseLines(
       ean, bcSku: bc?.bc_sku ?? null, titel, shopTitler: [...new Set(rs.map((r) => r.titelOriginal ?? r.titel))], brands: rs.map((r) => r.brand), shops,
       status, statusAarsag: aarsag, hero, leverandoer, indkoeber: poLev?.indkoeber ?? null,
       velocity: { base: r1(base), afsaeson: r1(afsaeson), trend: Math.round(trend * 100) / 100, solgt365: solgt365Sum, salgsdage, snitPrDag: solgt365Sum != null && salgsdage > 0 ? r1(solgt365Sum / Math.min(365, salgsdage)) : null },
-      lager: { ecomSum, vejleFrit: Math.round(vejleFrit), vejleOptimistisk: Math.round(vejleOpt), tredjepart: Math.round(tredjepart), reserveretShopGroup: resSG, reserveretB2b: resB2b, bestiltB2b: bestB2b, tilgaengeligt: Math.round(tilgaengeligt), tilgaengeligtOptimistisk: Math.round(tilgaengeligtOpt), prLokation },
+      dataKvalitet, advarsler,
+      lager: { ecomSum, vejleFrit: Math.round(vejleFrit), vejleOptimistisk: Math.round(vejleOpt), tredjepart: Math.round(tredjepart), tredjepartOptimistisk: Math.round(tredjepartOpt), reserveretShopGroup: resSG, reserveretB2b: resB2b, bestiltB2b: bestB2b, tilgaengeligt: Math.round(tilgaengeligt), tilgaengeligtOptimistisk: Math.round(tilgaengeligtOpt), prLokation },
       paaVej: { sikker: paaVejSikker, usikker: paaVejUsikker, foersteSikker, foersteUsikker: foersteUsikker?.dato ?? null, events },
       dage: { tilUdsolgt: dTil, medPaaVej: dKons, optimistisk: dOpt, bestilSenest: bsDag },
       datoer: { udsolgt: dTil !== null ? addDays(dag0, dTil) : null, medPaaVej: dKons !== null ? addDays(dag0, dKons) : null, optimistisk: dOpt !== null ? addDays(dag0, dOpt) : null, bestilSenest: bestilDato, raekkerTil: rt.dato },
