@@ -55,7 +55,7 @@ for l in nu[:MAX]:
              f'<td align="right" class="d">{tal(g["foreslaaetStk"]) if g["foreslaaetStk"] else "–"}<br><span class="s">{(str(g["foreslaaetColli"]) + " colli") if g["foreslaaetColli"] else ""}</span></td>'
              f'<td align="right" class="c">{dato(l["datoer"]["raekkerTil"]) if g["foreslaaetStk"] and l["datoer"]["raekkerTil"] else ("2 år+" if g["foreslaaetStk"] else "–")}</td>'
              f'<td align="right" class="c" style="color:{"#e5322d" if d is not None and d <= 14 else "#f5820d" if d is not None and d <= 45 else "#141414"}">{"180+" if d is None else str(d) + " d"}{pa}</td>'
-             f'<td align="right" class="c">{tal(l["velocity"]["base"], 1)}<br><span class="s">{tal(l["velocity"]["solgt365"] or 0)} / 365 d</span></td></tr>')
+             f'<td align="right" class="c">{tal(l["velocity"]["base"], 1)}<br><span class="s">{tal(l["velocity"]["solgt365"] or 0)} / {min(365, l["velocity"]["salgsdage"])} d{" · ny" if l["velocity"]["salgsdage"] < 90 else ""}</span></td></tr>')
 if len(nu) > MAX: h.append(f'<tr><td colspan="5" style="padding:10px 0 0;font-size:12px;color:#6b6b6b">+ {len(nu) - MAX} flere – <a href="{SITE}/?g=nu" style="color:#141414;font-weight:700">se alle på sitet →</a></td></tr>')
 h.append('</table></td></tr>')
 h.append(f'''<tr><td bgcolor="#ffffff" style="background-color:#ffffff;padding:32px;border-radius:0 0 22px 22px">

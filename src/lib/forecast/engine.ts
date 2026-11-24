@@ -130,8 +130,19 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
     const share = sameProduct > 1 ? 1 / sameProduct : 1; // produktsalg deles ligeligt på varianter
     const ex = v.ean ? bundleExtra[`${v.brand}:${v.ean}`] : undefined;
     const s7 = s.s7 * share + (ex?.s7 ?? 0), s8_14 = s.s8_14 * share + (ex?.s8_14 ?? 0), s30 = s.s30 * share + (ex?.s30 ?? 0), s31_60 = s.s31_60 * share + (ex?.s31_60 ?? 0);
-    const pub = v.published_at || v.created_at || dag0;
-    const ageDays = Math.max(0, daysBetween(pub, dag0));
+    // Salgsdage: hvor længe har varen reelt solgt? publishedAt nulstilles når en vare genpubliceres, så den duer ikke.
+    // Vi bruger oprettelsesdatoen, begrænset af hvor langt tilbage der faktisk er salg (365/60/30/7-dages vinduerne).
+    const oprettet = v.created_at || v.published_at || dag0;
+    const sidenOprettet = Math.max(0, daysBetween(oprettet, dag0));
+    const s365 = (s.s365 ?? 0) * share, s60 = s30 + s31_60;
+    let salgsdage: number;
+    if (s365 > s60 * 1.02 && s365 > 0) salgsdage = Math.min(365, sidenOprettet);
+    else if (s60 > s30 * 1.02) salgsdage = Math.min(60, sidenOprettet);
+    else if (s30 > s7 * 1.02) salgsdage = Math.min(30, sidenOprettet);
+    else if (s7 > 0) salgsdage = Math.min(7, sidenOprettet);
+    else salgsdage = sidenOprettet; // ingen salg: alderen er alt vi har
+    const pub = oprettet;
+    const ageDays = salgsdage;
     const grp = ageGroup(ageDays);
     const v7 = s7 / 7, v14 = (s7 + s8_14) / 14, v30 = s30 / 30, v60 = (s30 + s31_60) / 60;
     let base: number;
@@ -139,7 +150,7 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
     else if (grp === "ung") base = 0.6 * v7 + 0.4 * v30;
     else base = cfg.weights.v7 * v7 + cfg.weights.v30 * v30 + cfg.weights.v60 * v60;
     const trend = v60 > 0 ? clamp(v14 / v60 - 1, -0.9, 3) : v14 > 0 ? 1 : 0;
-    return { s, share, sameProduct, ageDays, grp, v7, v14, v30, v60, base, trend, pub };
+    return { s, share, sameProduct, ageDays, grp, v7, v14, v30, v60, base, trend, pub, salgsdage, sidenOprettet, s365 };
   };
   const isGiftOrDemo = (v: Variant) => /100% off|🎁|\*demo\*/i.test(v.title) || /^d-/i.test(v.sku || "");
   const pres: Pre[] = snap.variants.filter((v) => !isGiftOrDemo(v)).map((v) => ({ v, vel: velocityFor(v) }));
@@ -293,7 +304,7 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
     const forklaring = [
       `Salg: ${r1(vel.v7)} stk/dag (7 d), ${r1(vel.v30)} (30 d), ${r1(vel.v60)} (60 d) → vægtet ${r1(vel.base)} stk/dag.`,
       `Sæson: uge ${wNow} ligger på ${(saesonNu * 100).toFixed(0)} % af årsgennemsnittet (${saesonKilde}); de sidste 30 dage lå på ${(a30 * 100).toFixed(0)} % → normalt niveau ${r1(afsaeson)} stk/dag.`,
-      `Alder: ${vel.ageDays} dage i salg (${vel.grp}) → sikkerhedstillæg ${Math.round(cfg.extraSafetyByAge[vel.grp] * 100)} %.`,
+      `Salgsdata: ${vel.salgsdage} dage (oprettet ${vel.pub}${vel.salgsdage < vel.sidenOprettet ? `, men salg kun i ca. ${vel.salgsdage} dage` : ""}; ${vel.grp}) → sikkerhedstillæg ${Math.round(cfg.extraSafetyByAge[vel.grp] * 100)} %.${vel.s365 > 0 ? ` Solgt ${Math.round(vel.s365)} stk i perioden = ${r1(vel.s365 / Math.max(1, Math.min(365, vel.salgsdage)))} stk/dag i snit.` : ""}`,
       `Tilgængeligt: ${ecom} på ${BRANDS[v.brand].navn}s lokation + ${Math.round(vejleFrit)} frit i ${bcLoc}${andel < 1 ? ` (din andel ${Math.round(andel * 100)} %)` : ""} = ${Math.round(tilgaengeligt)} stk.`,
       `På vej: ${paaVejSikker} stk bekræftet (booket), ${paaVejUsikker} stk bestilt men ikke booket${foersteSikker ? `, første sikre ${foersteSikker}` : ""}.`,
       `Lead time ${leadTime} dage (${leadTimeKilde}), servicegrad ${hero ? "95 % (hero)" : "90 %"}, sikkerhedslager ${sikkerhed} stk, reorder point ${reorderPoint} stk.`,
@@ -304,7 +315,7 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
     rows.push({
       key, brand: v.brand, variant_id: v.variant_id, product_id: v.product_id, ean: v.ean, bc_sku: bc?.bc_sku ?? null,
       titel: v.title, titelOriginal: v.title_original && v.title_original !== v.title ? v.title_original : null, product_type: v.product_type, status, statusAarsag: aarsag,
-      alder: { dage: vel.ageDays, gruppe: vel.grp, publiceret: v.published_at },
+      alder: { dage: vel.ageDays, gruppe: vel.grp, publiceret: v.published_at, oprettet: v.created_at, salgsdage: vel.salgsdage },
       velocity: { v7: r1(vel.v7), v14: r1(vel.v14), v30: r1(vel.v30), v60: r1(vel.v60), base: r1(vel.base), afsaeson: r1(afsaeson), trend: Math.round(vel.trend * 100) / 100, saesonNu: Math.round(saesonNu * 100) / 100, saesonKilde },
       lager: { ecom, vejleFrit: Math.round(vejleFrit), vejleOptimistisk: Math.round(vejleOpt), reserveretShopGroup: resSG, reserveretB2b: resB2b, bestiltB2b: bestB2b, tilgaengeligt: Math.round(tilgaengeligt), tilgaengeligtOptimistisk: Math.round(tilgaengeligtOpt), andel: Math.round(andel * 100) / 100, lokation: Object.keys(v.levels)[0] || "Shopify", shopifyQty: v.shopify_qty, bcLokation: loc ? bcLoc : null },
       paaVej: { sikker: paaVejSikker, usikker: paaVejUsikker, foersteEta: events[0]?.dato ?? null, events },

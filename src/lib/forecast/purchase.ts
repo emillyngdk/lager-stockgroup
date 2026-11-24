@@ -34,7 +34,7 @@ export interface LineOverride extends Override {
 
 export interface LineShop {
   brand: Brand; key: string; titel: string; velocity: number; afsaeson: number; trend: number; ecom: number;
-  dageTilUdsolgt: number | null; udsolgt: string | null; status: ForecastRow["status"]; hero: boolean; alder: AgeGroup; solgt365: number | null;
+  dageTilUdsolgt: number | null; udsolgt: string | null; status: ForecastRow["status"]; hero: boolean; alder: AgeGroup; salgsdage: number; solgt365: number | null;
   andelAfBehov: number; // andel af samlet behov i dækningsperioden
 }
 
@@ -44,7 +44,7 @@ export interface PurchaseLine {
   ean: string; bcSku: string | null; titel: string; shopTitler: string[]; brands: Brand[]; shops: LineShop[];
   status: LineStatus; statusAarsag: string; hero: boolean;
   leverandoer: string | null; indkoeber: string | null;
-  velocity: { base: number; afsaeson: number; trend: number; solgt365: number | null };
+  velocity: { base: number; afsaeson: number; trend: number; solgt365: number | null; salgsdage: number; snitPrDag: number | null };
   lager: {
     ecomSum: number; vejleFrit: number; vejleOptimistisk: number; tredjepart: number; reserveretShopGroup: number; reserveretB2b: number; bestiltB2b: number;
     tilgaengeligt: number; tilgaengeligtOptimistisk: number; prLokation: Record<string, number>;
@@ -236,7 +236,7 @@ export function buildPurchaseLines(
     const shops: LineShop[] = rs.map((r, i) => ({
       brand: r.brand, key: r.key, titel: r.titel, velocity: r.velocity.base, afsaeson: r.velocity.afsaeson, trend: r.velocity.trend, ecom: r.lager.ecom,
       dageTilUdsolgt: r.dage.tilUdsolgtMedPaaVej, udsolgt: r.datoer.udsolgtMedPaaVej, status: r.status, hero: r.genbestilling.hero, alder: r.alder.gruppe,
-      solgt365: r.oekonomi.solgt365, andelAfBehov: hdSum > 0 ? horizonDemand[i] / hdSum : 1 / rs.length,
+      salgsdage: r.alder.salgsdage, solgt365: r.oekonomi.solgt365, andelAfBehov: hdSum > 0 ? horizonDemand[i] / hdSum : 1 / rs.length,
     }));
 
     const lineStub = { demandPrDag, paaVej: { events }, lager: { tilgaengeligt }, projektion: { dag0 }, shops, genbestilling: { leadTime, daekningsdage: daekning } };
@@ -264,9 +264,12 @@ export function buildPurchaseLines(
     else if ((dTil ?? Infinity) > cfg.status.overlagerDays && paaVejSikker + paaVejUsikker === 0) { status = "overlager"; aarsag = `Over ${cfg.status.overlagerDays} dages dækning uden nye køb`; }
     else { status = "daekket"; aarsag = bs === Infinity ? "Dækket hele horisonten med det der er bestilt" : `Næste bestilling om ${bs} dage`; }
 
+    const salgsdage = Math.max(...rs.map((r) => r.alder.salgsdage));
+    const solgt365Sum = rs.some((r) => r.oekonomi.solgt365 != null) ? rs.reduce((a, r) => a + (r.oekonomi.solgt365 ?? 0), 0) : null;
     const unitCost = rs.find((r) => r.oekonomi.unitCost != null && r.brand === "casper")?.oekonomi.unitCost ?? rs.find((r) => r.oekonomi.unitCost != null)?.oekonomi.unitCost ?? null;
 
     forklaring.push(`Behov: ${rs.map((r) => `${BRANDS[r.brand].navn} ${r1(r.velocity.base)}`).join(" + ")} = ${r1(base)} stk/dag nu; normalt niveau ${r1(afsaeson)} stk/dag.`);
+    forklaring.push(`Salgsdata: ${salgsdage} dage${salgsdage < 365 ? " – varen er ny, så 365-dages tallet dækker kun den periode" : ""}${solgt365Sum != null ? `; solgt ${solgt365Sum} stk = ${r1(solgt365Sum / Math.max(1, Math.min(365, salgsdage)))} stk/dag i snit over hele perioden (vægtet velocity bruger de seneste 7/30/60 dage)` : ""}.`);
     forklaring.push(`Tilgængeligt: ${ecomSum} på shop-lokationer + ${Math.round(vejleFrit)} frit i Vejle${tredjepart ? ` + ${Math.round(tredjepart)} på 3PL` : ""} = ${Math.round(tilgaengeligt)} stk. B2B binder ${resB2b} reserveret og ${bestB2b} bestilt.`);
     forklaring.push(`På vej: ${paaVejSikker} stk bekræftet, ${paaVejUsikker} stk ubooket${foersteSikker ? `, første sikre ${foersteSikker}` : ""}.`);
     forklaring.push(`Lead time ${leadTime} dage (${leadTimeKilde}). Behov i lead time ${Math.round(behovLead)} stk + sikkerhedslager ${sikkerhed} stk (z ${z}, σ ${r1(sigma)}) = reorder point ${reorderPoint} stk.`);
@@ -276,7 +279,7 @@ export function buildPurchaseLines(
     lines.push({
       ean, bcSku: bc?.bc_sku ?? null, titel, shopTitler: [...new Set(rs.map((r) => r.titelOriginal ?? r.titel))], brands: rs.map((r) => r.brand), shops,
       status, statusAarsag: aarsag, hero, leverandoer, indkoeber: poLev?.indkoeber ?? null,
-      velocity: { base: r1(base), afsaeson: r1(afsaeson), trend: Math.round(trend * 100) / 100, solgt365: rs.some((r) => r.oekonomi.solgt365 != null) ? rs.reduce((a, r) => a + (r.oekonomi.solgt365 ?? 0), 0) : null },
+      velocity: { base: r1(base), afsaeson: r1(afsaeson), trend: Math.round(trend * 100) / 100, solgt365: solgt365Sum, salgsdage, snitPrDag: solgt365Sum != null && salgsdage > 0 ? r1(solgt365Sum / Math.min(365, salgsdage)) : null },
       lager: { ecomSum, vejleFrit: Math.round(vejleFrit), vejleOptimistisk: Math.round(vejleOpt), tredjepart: Math.round(tredjepart), reserveretShopGroup: resSG, reserveretB2b: resB2b, bestiltB2b: bestB2b, tilgaengeligt: Math.round(tilgaengeligt), tilgaengeligtOptimistisk: Math.round(tilgaengeligtOpt), prLokation },
       paaVej: { sikker: paaVejSikker, usikker: paaVejUsikker, foersteSikker, foersteUsikker: foersteUsikker?.dato ?? null, events },
       dage: { tilUdsolgt: dTil, medPaaVej: dKons, optimistisk: dOpt, bestilSenest: bsDag },

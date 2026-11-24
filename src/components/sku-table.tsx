@@ -76,7 +76,7 @@ export function SkuTable({ rows, visStatus = true }: { rows: RowLite[]; visStatu
                 <td className="px-3 py-2.5 text-right"><div className="flex flex-col items-end gap-1"><Dage n={r.dage.tilUdsolgtMedPaaVej} /><CoverageBar days={r.dage.tilUdsolgtMedPaaVej} /></div></td>
                 <td className="px-3 py-2.5 num font-medium whitespace-nowrap">{fmtDato(r.datoer.udsolgtMedPaaVej)}</td>
                 <td className="px-3 py-2.5 num font-bold whitespace-nowrap">{r.datoer.bestilSenest && r.datoer.bestilSenest <= r.projektionDag0 ? <span className="text-[var(--kritisk)]">Nu</span> : fmtDato(r.datoer.bestilSenest)}</td>
-                <td className="px-3 py-2.5 text-right whitespace-nowrap"><span className="num font-semibold">{fmtTal(r.velocity.base, 1)}</span> <TrendArrow trend={r.velocity.trend} />{r.oekonomi.solgt365 != null && <span className="block num text-[.65rem] font-medium text-[var(--muted)]">{fmtTal(r.oekonomi.solgt365)} / 365 d</span>}</td>
+                <td className="px-3 py-2.5 text-right whitespace-nowrap"><span className="num font-semibold">{fmtTal(r.velocity.base, 1)}</span> <TrendArrow trend={r.velocity.trend} />{r.oekonomi.solgt365 != null && <span className="block num text-[.65rem] font-medium text-[var(--muted)]">{fmtTal(r.oekonomi.solgt365)} / {Math.min(365, r.alder.salgsdage)} d</span>}</td>
                 <td className="px-3 py-2.5 text-right num font-semibold">{fmtTal(r.lager.tilgaengeligt)}</td>
                 <td className="px-3 py-2.5 text-right whitespace-nowrap"><span className="num font-semibold">{fmtTal(r.paaVej.sikker)}</span>{r.paaVej.usikker > 0 && <span className="num text-xs text-[var(--muted)]"> +{fmtTal(r.paaVej.usikker)}</span>}{r.paaVej.foersteEta && <span className="block text-[.65rem] text-[var(--muted)]">{fmtDato(r.paaVej.foersteEta)}</span>}</td>
                 <td className="px-4 py-2.5 text-right num font-bold">{r.genbestilling.foreslaaetStk > 0 ? <>{fmtTal(r.genbestilling.foreslaaetStk)}{r.genbestilling.foreslaaetColli > 0 && <span className="block text-[.65rem] font-medium text-[var(--muted)]">{r.genbestilling.foreslaaetColli} colli</span>}</> : <span className="text-[var(--muted)]">–</span>}</td>
@@ -94,7 +94,7 @@ export function SkuTable({ rows, visStatus = true }: { rows: RowLite[]; visStatu
             <div className="min-w-0 flex-1">
               <p className="font-semibold leading-snug truncate">{r.titel}</p>
               <div className="flex items-center gap-2 mt-1 flex-wrap"><BrandChip brand={r.brand} />{visStatus && <StatusChip status={r.status} small />}</div>
-              <p className="text-xs text-[var(--muted)] mt-1.5 num">{fmtTal(r.velocity.base, 1)} stk/dag{r.oekonomi.solgt365 != null ? ` · ${fmtTal(r.oekonomi.solgt365)} solgt/365 d` : ""} · {fmtTal(r.lager.tilgaengeligt)} tilg. · bestil {r.datoer.bestilSenest && r.datoer.bestilSenest <= r.projektionDag0 ? "nu" : fmtDato(r.datoer.bestilSenest)}</p>
+              <p className="text-xs text-[var(--muted)] mt-1.5 num">{fmtTal(r.velocity.base, 1)} stk/dag{r.oekonomi.solgt365 != null ? ` · ${fmtTal(r.oekonomi.solgt365)} solgt/${Math.min(365, r.alder.salgsdage)} d` : ""} · {fmtTal(r.lager.tilgaengeligt)} tilg. · bestil {r.datoer.bestilSenest && r.datoer.bestilSenest <= r.projektionDag0 ? "nu" : fmtDato(r.datoer.bestilSenest)}</p>
             </div>
             <div className="text-right shrink-0"><Dage n={r.dage.tilUdsolgtMedPaaVej} /><p className="text-[.6rem] uppercase font-bold text-[var(--muted)]">dage</p></div>
           </Link>

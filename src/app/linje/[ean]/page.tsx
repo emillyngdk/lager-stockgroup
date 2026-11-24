@@ -37,7 +37,7 @@ export default async function LinjeSide({ params }: { params: Promise<{ ean: str
         <div className="flex flex-wrap items-center gap-2"><LineStatusChip status={l.status} /><ShopDots shops={l.shops} withText />{l.hero && <span className="chip !bg-[#fff3e0] !text-[var(--bestil)]">Hero-produkt</span>}</div>
         <h1 className="display text-3xl md:text-5xl mt-2">{l.titel}</h1>
         {l.shopTitler.filter((t) => t !== l.titel).length > 0 && <p className="mt-1 text-sm font-semibold text-[var(--muted)]">I shoppene: {l.shopTitler.filter((t) => t !== l.titel).join(" · ")}</p>}
-        <p className="mt-2 text-sm font-medium text-[var(--muted)] num">EAN {l.ean} · BC {l.bcSku ?? "–"} · {l.leverandoer ?? "leverandør ukendt"} · lead time {g.leadTime} dage ({g.leadTimeKilde})</p>
+        <p className="mt-2 text-sm font-medium text-[var(--muted)] num">EAN {l.ean} · BC {l.bcSku ?? "–"} · {l.leverandoer ?? "leverandør ukendt"} · lead time {g.leadTime} dage ({g.leadTimeKilde}) · <span style={{ color: l.velocity.salgsdage < 90 ? "var(--bestil)" : undefined, fontWeight: l.velocity.salgsdage < 90 ? 700 : undefined }}>salgsdata {Math.min(365, l.velocity.salgsdage)} dage</span></p>
         <p className="mt-2 font-semibold">{l.statusAarsag}</p>
       </header>
 
@@ -94,7 +94,8 @@ export default async function LinjeSide({ params }: { params: Promise<{ ean: str
             <li className="flex justify-between"><span>Nu (alle shops)</span><b className="num">{fmtTal(l.velocity.base, 1)} stk/dag</b></li>
             <li className="flex justify-between"><span>Normalt niveau (afsæsonaliseret)</span><b className="num">{fmtTal(l.velocity.afsaeson, 1)} stk/dag</b></li>
             <li className="flex justify-between"><span>Trend</span><TrendArrow trend={l.velocity.trend} /></li>
-            {l.velocity.solgt365 != null && <li className="flex justify-between"><span>Solgt seneste 365 dage</span><b className="num">{fmtTal(l.velocity.solgt365)} stk</b></li>}
+            <li className="flex justify-between"><span>Salgsdata</span><b className="num" style={{ color: l.velocity.salgsdage < 90 ? "var(--bestil)" : undefined }}>{Math.min(365, l.velocity.salgsdage)} dage{l.velocity.salgsdage < 90 ? " · ny vare" : ""}</b></li>
+            {l.velocity.solgt365 != null && <li className="flex justify-between"><span>Solgt i perioden ({Math.min(365, l.velocity.salgsdage)} dage)</span><b className="num">{fmtTal(l.velocity.solgt365)} stk{l.velocity.snitPrDag != null ? ` · ${fmtTal(l.velocity.snitPrDag, 1)} stk/dag i snit` : ""}</b></li>}
             <li className="flex justify-between"><span>Behov i lead time ({g.leadTime} d)</span><b className="num">{fmtTal(g.behovLeadTime)} stk</b></li>
             <li className="flex justify-between"><span>Behov i lead time + {g.daekningsdage} d dækning</span><b className="num">{fmtTal(g.behovDaekning)} stk</b></li>
             <li className="flex justify-between"><span>Sikkerhedslager (z {g.z}, σ {g.sigma})</span><b className="num">{fmtTal(g.sikkerhedslager)} stk</b></li>

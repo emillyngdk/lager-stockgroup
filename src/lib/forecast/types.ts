@@ -96,7 +96,7 @@ export interface InboundEvent { dato: string; stk: number; sikker: boolean; po: 
 export interface ForecastRow {
   key: string; brand: Brand; variant_id: string; product_id: string; ean: string | null; bc_sku: string | null;
   titel: string; titelOriginal?: string | null; product_type: string; status: Status; statusAarsag: string;
-  alder: { dage: number; gruppe: AgeGroup; publiceret: string | null };
+  alder: { dage: number; gruppe: AgeGroup; publiceret: string | null; oprettet: string | null; salgsdage: number };
   velocity: { v7: number; v14: number; v30: number; v60: number; base: number; afsaeson: number; trend: number; saesonNu: number; saesonKilde: string };
   lager: { ecom: number; vejleFrit: number; vejleOptimistisk: number; reserveretShopGroup: number; reserveretB2b: number; bestiltB2b: number; tilgaengeligt: number; tilgaengeligtOptimistisk: number; andel: number; lokation: string; shopifyQty: number | null; bcLokation: string | null };
   paaVej: { sikker: number; usikker: number; foersteEta: string | null; events: InboundEvent[] };
