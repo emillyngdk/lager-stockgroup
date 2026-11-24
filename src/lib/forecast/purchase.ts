@@ -7,7 +7,7 @@
  */
 import { BRANDS, type Brand, type Config, type ForecastRow, type Override, type PoLine, type Snapshot, type AgeGroup } from "./types";
 import { addDays, isoWeek } from "./engine";
-import { effektivStatus, paaListen, PO_OPRETTET_DAGE as PO_DAGE, type PoTilstand } from "../overlay";
+import { effektivStatus, paaListen, LISTE_HORISONT, PO_OPRETTET_DAGE as PO_DAGE, type PoTilstand } from "../overlay";
 
 export type LineStatus =
   | "bestil_nu" | "bestil_14" | "bestil_30" | "book_po" | "po_oprettet" | "planlagt" | "bestilt" | "daekket" | "overlager" | "for_nyt"
@@ -16,7 +16,7 @@ export type LineStatus =
 export const LINE_STATUS_META: Record<LineStatus, { label: string; farve: string; tekst: string; orden: number; kort: string }> = {
   bestil_nu: { label: "Bestil", farve: "#E5322D", tekst: "#FFFFFF", orden: 0, kort: "Nu" },
   bestil_14: { label: "Bestil", farve: "#F5820D", tekst: "#FFFFFF", orden: 1, kort: "14 d" },
-  bestil_30: { label: "Bestil", farve: "#F2B705", tekst: "#141414", orden: 2, kort: "30 d" },
+  bestil_30: { label: "Bestil", farve: "#F2B705", tekst: "#141414", orden: 2, kort: "2 mdr." },
   book_po: { label: "Book PO", farve: "#F2B705", tekst: "#141414", orden: 3, kort: "Book" },
   po_oprettet: { label: "PO oprettet", farve: "#5B6CFF", tekst: "#FFFFFF", orden: 4, kort: "PO" },
   planlagt: { label: "Planlagt", farve: "#5B6CFF", tekst: "#FFFFFF", orden: 4, kort: "Plan" },
@@ -278,11 +278,13 @@ export function buildPurchaseLines(
     let status: LineStatus; let aarsag: string;
     if (rs.every((r) => r.alder.gruppe === "nyhed")) { status = "for_nyt"; aarsag = "Under 14 dage i salg i alle shops – for lidt data"; }
     else if (base <= 0.05 && rs.every((r) => r.alder.dage > 90) && !(afsaeson > 0.2 && rs.some((r) => r.velocity.saesonKlasse === "sommer"))) { status = "overlager"; aarsag = tilgaengeligt > 0 ? "Ingen salg de sidste 60 dage" : "Ingen salg og intet på lager – udgået?"; }
+    // Book PO er kun en opgave, når datoen er inden for listens horisont (2 mdr.) – ellers er varen dækket af det der er bestilt.
+    else if (foreslaaetStkRund === 0 && udenUbooketRund > 0 && foersteUsikker && bs > LISTE_HORISONT) { status = "daekket"; aarsag = `Dækket af det der er bestilt, inkl. ubooket PO ${foersteUsikker.po} (${foersteUsikker.dato}) – ${bs === Infinity ? "ingen ny bestilling i horisonten" : `næste bestilling om ${bs} dage`}`; }
     else if (foreslaaetStkRund === 0 && udenUbooketRund > 0 && foersteUsikker) { status = "book_po"; aarsag = `Tør ${dK === Infinity ? "ikke" : "om " + dK + " dage"} – ubooket PO ${foersteUsikker.po} dækker behovet men kommer først ${foersteUsikker.dato}: book eller fremryk den`; }
     else if (foreslaaetStkRund === 0 && udenUbooketRund === 0) { status = base <= 0.05 ? "overlager" : "daekket"; aarsag = base <= 0.05 ? "Ingen efterspørgsel at regne på – intet at bestille" : "Intet behov ud over det der er på lager og bestilt"; }
     else if (bs <= 0) { status = "bestil_nu"; aarsag = tilgaengeligt <= 0 ? `0 tilgængeligt i alle shops${foersteSikker ? ` – næste bekræftede levering ${foersteSikker}` : foersteUsikker ? ` – kun ubooket PO ${foersteUsikker.po} (${foersteUsikker.dato})` : " og intet på vej"}` : `Lageret inkl. det der er på vej rammer sikkerhedslageret om ${sikkerhedsDag} dage – en ny PO tager ${leadTime + cfg.receivingDays} dage, så den skal afsted nu`; }
     else if (bs <= cfg.status.bestilNuDays) { status = "bestil_14"; aarsag = `Skal bestilles om ${bs} dage for at nå hjem før lageret rammer sikkerhedslageret (om ${sikkerhedsDag} dage)`; }
-    else if (bs <= cfg.status.obsDays) { status = "bestil_30"; aarsag = `Skal bestilles om ${bs} dage – lageret rammer sikkerhedslageret om ${sikkerhedsDag} dage`; }
+    else if (bs <= LISTE_HORISONT) { status = "bestil_30"; aarsag = `Skal bestilles om ${bs} dage – lageret rammer sikkerhedslageret om ${sikkerhedsDag} dage`; }
     else if ((dTil ?? Infinity) > cfg.status.overlagerDays && paaVejSikker + paaVejUsikker === 0) { status = "overlager"; aarsag = `Over ${cfg.status.overlagerDays} dages dækning uden nye køb`; }
     else { status = "daekket"; aarsag = (hulFoer !== null ? `Tør om ${hulFoer} dage indtil næste levering${foersteSikker ? ` ${foersteSikker}` : ""} – kan ikke nås med en ny PO (${tidligstNy} dage); derefter ` : "") + (bs === Infinity ? "dækket hele horisonten med det der er bestilt" : `næste bestilling om ${bs} dage`); }
 

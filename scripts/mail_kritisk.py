@@ -39,7 +39,7 @@ h = [f'''<!DOCTYPE html><html lang="da"><head><meta charset="utf-8"><meta name="
   <p style="margin:12px 0 0;font-size:14px;line-height:1.5;color:rgba(255,255,255,.75)">{intro}</p>
 </td></tr>
 <tr><td bgcolor="#ffffff" style="background-color:#ffffff;padding:0 32px"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>''']
-for lab, val, col in (("Bestil nu", ol["bestil_nu"], "#e5322d"), ("Inden 14 d", ol["bestil_14"], "#f5820d"), ("Inden 30 d", ol["bestil_30"], "#b58900"), ("Book PO", ol["book_po"], "#b58900")):
+for lab, val, col in (("Bestil nu", ol["bestil_nu"], "#e5322d"), ("Inden 14 d", ol["bestil_14"], "#f5820d"), ("Inden 2 mdr.", ol["bestil_30"], "#b58900"), ("Book PO", ol["book_po"], "#b58900")):
     h.append(f'<td width="25%" style="padding:22px 0 18px;border-bottom:1px solid #e8e4dc"><p style="margin:0;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#6b6b6b">{lab}</p><p style="margin:4px 0 0;font-size:34px;line-height:1;font-weight:800;color:{col}">{val}</p></td>')
 h.append('</tr></table></td></tr>')
 h.append('<tr><td bgcolor="#ffffff" style="background-color:#ffffff;padding:20px 32px 0"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse">')

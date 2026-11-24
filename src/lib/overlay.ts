@@ -2,8 +2,8 @@ import type { LineStatus } from "./forecast/purchase";
 
 /** Hvor længe en vare markeret "PO oprettet" er væk fra listen, før den kommer tilbage hvis BC ikke viser en ny PO. */
 export const PO_OPRETTET_DAGE = 7;
-/** Hvor langt frem "Skal bestilles" kigger: alt der skal afsted inden så mange dage. */
-export const LISTE_HORISONT = 30;
+/** Hvor langt frem "Skal bestilles" kigger: kun opgaver hvis dato ligger inden for så mange dage – gælder alle varer og alle typer opgaver. */
+export const LISTE_HORISONT = 60;
 
 export type OverlayFlag = {
   udgaar?: boolean; ikke_indkoeb?: boolean; skjul_til?: string | null; leverandoer?: string; af?: string; note?: string;
@@ -42,8 +42,9 @@ export function poTilstand(o: OverlayFlag | null | undefined, poNumre: string[],
 
 /** Står linjen på "Skal bestilles"? (statussen før manuelle flag) */
 export function paaListen(status: LineStatus, bestilSenestDage: number | null): boolean {
-  if (status === "bestil_nu" || status === "bestil_14" || status === "bestil_30" || status === "book_po") return true;
-  return status === "for_nyt" && bestilSenestDage != null && bestilSenestDage <= LISTE_HORISONT;
+  if (status === "bestil_nu" || status === "bestil_14") return true;
+  if (status === "bestil_30" || status === "book_po" || status === "for_nyt") return bestilSenestDage != null && bestilSenestDage <= LISTE_HORISONT;
+  return false;
 }
 
 /** Effektiv status = grundstatus fra beregningen + det folk har trykket på sitet. Samme regel overalt. */

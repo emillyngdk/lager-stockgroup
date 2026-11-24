@@ -24,7 +24,8 @@ const GRUPPER: { slug: string; label: string; status: LineStatus[] }[] = [
   { slug: "po", label: "PO oprettet", status: ["po_oprettet", "planlagt", "bestilt"] },
   { slug: "fjernet", label: "Skjult", status: ["skjult", "ikke_indkoeb"] },
 ];
-const iGruppe = (l: LineLite, status: LineStatus[]) => status.includes(l.status) && (l.status !== "for_nyt" || paaListen(l.status, l.dage.bestilSenest));
+const LISTE_STATUS: LineStatus[] = ["bestil_nu", "bestil_14", "bestil_30", "book_po", "for_nyt"];
+const iGruppe = (l: LineLite, status: LineStatus[]) => status.includes(l.status) && (!LISTE_STATUS.includes(l.status) || paaListen(l.status, l.dage.bestilSenest));
 
 export function LineStatusChip({ status, small }: { status: LineStatus; small?: boolean }) {
   const m = LINE_STATUS_META[status];
@@ -49,7 +50,7 @@ export function ShopDots({ shops, withText, withDays }: { shops: { brand: Brand;
 
 export function BestilSenest({ dato, dag0, dage, big }: { dato: string | null; dag0: string; dage: number | null; big?: boolean }) {
   const nu = dato !== null && dato <= dag0;
-  const color = nu ? "var(--kritisk)" : dage !== null && dage <= 14 ? "var(--bestil)" : dage !== null && dage <= 45 ? "#b58900" : "var(--ink)";
+  const color = nu ? "var(--kritisk)" : dage !== null && dage <= 14 ? "var(--bestil)" : dage !== null && dage <= 60 ? "#b58900" : "var(--ink)";
   return (
     <span className="block">
       <span className={`num font-extrabold ${big ? "text-2xl" : "text-lg"} leading-none`} style={{ color }}>{dato === null ? "–" : nu ? "NU" : fmtDato(dato)}</span>
