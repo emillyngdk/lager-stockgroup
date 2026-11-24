@@ -52,46 +52,12 @@ export function BestilSenest({ dato, dag0, dage, big }: { dato: string | null; d
   );
 }
 
-export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; gruppe?: string }) {
-  const router = useRouter(); const pathname = usePathname(); const sp = useSearchParams();
-  const [q, setQ] = useState(sp.get("q") ?? "");
-  const [brand, setBrand] = useState(sp.get("brand") ?? "");
-  const [lev, setLev] = useState(sp.get("lev") ?? "");
-  const [hero, setHero] = useState(sp.get("hero") === "1");
-  const [g, setG] = useState(sp.get("g") ?? gruppe);
-  const inputRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    const p = new URLSearchParams();
-    if (q) p.set("q", q); if (brand) p.set("brand", brand); if (lev) p.set("lev", lev); if (hero) p.set("hero", "1"); if (g !== "alle") p.set("g", g);
-    router.replace(`${pathname}${p.toString() ? `?${p}` : ""}`, { scroll: false });
-  }, [q, brand, lev, hero, g, pathname, router]);
-  useEffect(() => { const h = (e: KeyboardEvent) => { if (e.key === "/" && document.activeElement?.tagName !== "INPUT") { e.preventDefault(); inputRef.current?.focus(); } }; window.addEventListener("keydown", h); return () => window.removeEventListener("keydown", h); }, []);
-  const leverandoerer = useMemo(() => [...new Set(lines.map((l) => l.leverandoer).filter(Boolean) as string[])].sort(), [lines]);
-  const grp = GRUPPER.find((x) => x.slug === g) ?? GRUPPER[0];
-  const counts = useMemo(() => Object.fromEntries(GRUPPER.map((x) => [x.slug, lines.filter((l) => x.status.includes(l.status)).length])), [lines]);
-  const rows = useMemo(() => {
-    const needle = q.trim().toLowerCase();
-    return lines.filter((l) => grp.status.includes(l.status))
-      .filter((l) => !brand || l.brands.includes(brand as Brand))
-      .filter((l) => !lev || l.leverandoer === lev)
-      .filter((l) => !hero || l.hero)
-      .filter((l) => !needle || l.titel.toLowerCase().includes(needle) || l.ean.includes(needle) || l.shopTitler.some((t) => t.toLowerCase().includes(needle)) || (l.bcSku ?? "").toLowerCase().includes(needle));
-  }, [lines, grp, brand, lev, hero, q]);
 
+function Tabel({ rows, dag0, brand }: { rows: LineLite[]; dag0: string; brand?: Brand }) {
+  const router = useRouter();
   return (
     <div>
-      <div className="flex gap-1.5 flex-wrap mb-4">
-        {GRUPPER.map((x) => <button key={x.slug} onClick={() => setG(x.slug)} className={`rounded-full px-3 py-1.5 text-xs font-bold whitespace-nowrap transition ${g === x.slug ? "bg-[var(--ink)] text-white" : "bg-white hover:bg-[#eeeae2]"}`}>{x.label} <span className={`num ml-1 ${g === x.slug ? "text-white/70" : "text-[var(--muted)]"}`}>{counts[x.slug]}</span></button>)}
-      </div>
-      <div className="flex flex-wrap gap-2 mb-4 items-center">
-        <input ref={inputRef} value={q} onChange={(e) => setQ(e.target.value)} placeholder="Søg vare, EAN eller BC-nr.  ( / )" className="card !rounded-xl px-4 py-2.5 text-sm font-medium w-full md:w-80 outline-none focus:ring-2 ring-[var(--ink)]" />
-        <select value={brand} onChange={(e) => setBrand(e.target.value)} className="card !rounded-xl px-3 py-2.5 text-sm font-semibold"><option value="">Alle shops</option>{BRAND_ORDER.map((b) => <option key={b} value={b}>{BRANDS[b].navn}</option>)}</select>
-        <select value={lev} onChange={(e) => setLev(e.target.value)} className="card !rounded-xl px-3 py-2.5 text-sm font-semibold max-w-[220px]"><option value="">Alle leverandører</option>{leverandoerer.map((l) => <option key={l} value={l}>{l}</option>)}</select>
-        <label className="card !rounded-xl px-3 py-2.5 text-sm font-semibold flex items-center gap-2 cursor-pointer"><input type="checkbox" checked={hero} onChange={(e) => setHero(e.target.checked)} /> Kun hero</label>
-        <span className="text-xs font-semibold text-[var(--muted)] ml-auto num">{rows.length} linjer</span>
-      </div>
 
-      {/* desktop */}
       <div className="card hidden md:block overflow-hidden">
         <div className="scroll-x">
           <table className="w-full text-sm">
@@ -113,9 +79,9 @@ export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; grupp
                   <tr key={l.ean} className="row-link border-t border-[var(--line)] align-top cursor-pointer" onClick={() => router.push(`/linje/${l.ean}`)}>
                     <td className="px-4 py-3 max-w-[300px]">
                       <Link href={`/linje/${l.ean}`} className="block font-bold truncate text-[.95rem]">{l.titel}</Link>
-                      <span className="flex items-center gap-2 mt-0.5"><ShopDots shops={l.shops} withText /><span className="num text-[.65rem] text-[var(--muted)]">{l.ean}</span>{l.hero && <span className="text-[.6rem] font-bold tracking-wider text-[var(--bestil)]">HERO</span>}</span>
+                      <span className="flex items-center gap-2 mt-0.5">{brand && l.brands.length > 1 ? <span className="text-[.65rem] font-bold text-[var(--overlager)]">Også i {l.brands.filter((x) => x !== brand).map((x) => BRANDS[x].kort).join(" + ")}</span> : <ShopDots shops={l.shops} withText />}<span className="num text-[.65rem] text-[var(--muted)]">{l.ean}</span>{l.hero && <span className="text-[.6rem] font-bold tracking-wider text-[var(--bestil)]">HERO</span>}</span>
                     </td>
-                    <td className="px-3 py-3 whitespace-nowrap"><BestilSenest dato={l.datoer.bestilSenest} dag0={l.dag0} dage={l.dage.bestilSenest} big /></td>
+                    <td className="px-3 py-3 whitespace-nowrap"><BestilSenest dato={l.datoer.bestilSenest} dag0={dag0} dage={l.dage.bestilSenest} big /></td>
                     <td className="px-3 py-3 text-right whitespace-nowrap">
                       {l.genbestilling.foreslaaetStk > 0 ? <><span className="num font-extrabold text-2xl leading-none">{fmtTal(l.genbestilling.foreslaaetStk)}</span><span className="block text-[.65rem] font-semibold text-[var(--muted)]">{l.genbestilling.foreslaaetColli ? `${l.genbestilling.foreslaaetColli} colli` : "stk"}{l.genbestilling.moq ? " · MOQ" : ""}</span></> : <span className="text-[var(--muted)] font-semibold">–</span>}
                     </td>
@@ -142,7 +108,7 @@ export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; grupp
           <li key={l.ean}><Link href={`/linje/${l.ean}`} className="card block p-4">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0"><p className="font-bold truncate">{l.titel}</p><ShopDots shops={l.shops} withText /></div>
-              <BestilSenest dato={l.datoer.bestilSenest} dag0={l.dag0} dage={l.dage.bestilSenest} big />
+              <BestilSenest dato={l.datoer.bestilSenest} dag0={dag0} dage={l.dage.bestilSenest} big />
             </div>
             <div className="flex items-center justify-between mt-2 text-xs text-[var(--muted)]">
               <span className="num">{fmtTal(l.velocity.base, 1)} stk/dag · {fmtTal(l.lager.tilgaengeligt)} tilg.</span>
@@ -151,6 +117,79 @@ export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; grupp
           </Link></li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; gruppe?: string }) {
+  const router = useRouter(); const pathname = usePathname(); const sp = useSearchParams();
+  const [q, setQ] = useState(sp.get("q") ?? "");
+  const [brand, setBrand] = useState(sp.get("brand") ?? "");
+  const [lev, setLev] = useState(sp.get("lev") ?? "");
+  const [hero, setHero] = useState(sp.get("hero") === "1");
+  const [g, setG] = useState(sp.get("g") ?? gruppe);
+  const [visAlle, setVisAlle] = useState<Record<string, boolean>>({});
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    const p = new URLSearchParams();
+    if (q) p.set("q", q); if (brand) p.set("brand", brand); if (lev) p.set("lev", lev); if (hero) p.set("hero", "1"); if (g !== "alle") p.set("g", g);
+    router.replace(`${pathname}${p.toString() ? `?${p}` : ""}`, { scroll: false });
+  }, [q, brand, lev, hero, g, pathname, router]);
+  useEffect(() => { const h = (e: KeyboardEvent) => { if (e.key === "/" && document.activeElement?.tagName !== "INPUT") { e.preventDefault(); inputRef.current?.focus(); } }; window.addEventListener("keydown", h); return () => window.removeEventListener("keydown", h); }, []);
+  const leverandoerer = useMemo(() => [...new Set(lines.map((l) => l.leverandoer).filter(Boolean) as string[])].sort(), [lines]);
+  const grp = GRUPPER.find((x) => x.slug === g) ?? GRUPPER[0];
+  const counts = useMemo(() => Object.fromEntries(GRUPPER.map((x) => [x.slug, lines.filter((l) => x.status.includes(l.status)).length])), [lines]);
+  const rows = useMemo(() => {
+    const needle = q.trim().toLowerCase();
+    return lines.filter((l) => grp.status.includes(l.status))
+      .filter((l) => !brand || l.brands.includes(brand as Brand))
+      .filter((l) => !lev || l.leverandoer === lev)
+      .filter((l) => !hero || l.hero)
+      .filter((l) => !needle || l.titel.toLowerCase().includes(needle) || l.ean.includes(needle) || l.shopTitler.some((t) => t.toLowerCase().includes(needle)) || (l.bcSku ?? "").toLowerCase().includes(needle));
+  }, [lines, grp, brand, lev, hero, q]);
+
+  return (
+    <div>
+      <div className="flex gap-2 flex-wrap mb-4">
+        {([["", "Alle shops"], ...BRAND_ORDER.map((b) => [b, BRANDS[b].navn])] as [string, string][]).map(([b, label]) => {
+          const n = lines.filter((l) => (!b || l.brands.includes(b as Brand)) && ["bestil_nu", "bestil_14", "bestil_45", "book_po"].includes(l.status)).length;
+          const on = brand === b;
+          return <button key={b} onClick={() => setBrand(b)} className={`card !rounded-2xl px-4 md:px-5 py-3 text-left transition ${on ? "!bg-[var(--ink)] text-white" : "hover:-translate-y-0.5"}`}>
+            <span className="flex items-center gap-2 font-extrabold text-base">{b && <i className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: BRANDS[b as Brand].farve }} />}{label}</span>
+            <span className={`block text-[.65rem] font-semibold mt-0.5 ${on ? "text-white/70" : "text-[var(--muted)]"}`}><b className="num">{n}</b> at handle på</span>
+          </button>;
+        })}
+      </div>
+      <div className="flex gap-1.5 flex-wrap mb-4">
+        {GRUPPER.map((x) => <button key={x.slug} onClick={() => setG(x.slug)} className={`rounded-full px-3 py-1.5 text-xs font-bold whitespace-nowrap transition ${g === x.slug ? "bg-[var(--ink)] text-white" : "bg-white hover:bg-[#eeeae2]"}`}>{x.label} <span className={`num ml-1 ${g === x.slug ? "text-white/70" : "text-[var(--muted)]"}`}>{counts[x.slug]}</span></button>)}
+      </div>
+      <div className="flex flex-wrap gap-2 mb-4 items-center">
+        <input ref={inputRef} value={q} onChange={(e) => setQ(e.target.value)} placeholder="Søg vare, EAN eller BC-nr.  ( / )" className="card !rounded-xl px-4 py-2.5 text-sm font-medium w-full md:w-80 outline-none focus:ring-2 ring-[var(--ink)]" />
+        <select value={lev} onChange={(e) => setLev(e.target.value)} className="card !rounded-xl px-3 py-2.5 text-sm font-semibold max-w-[220px]"><option value="">Alle leverandører</option>{leverandoerer.map((l) => <option key={l} value={l}>{l}</option>)}</select>
+        <label className="card !rounded-xl px-3 py-2.5 text-sm font-semibold flex items-center gap-2 cursor-pointer"><input type="checkbox" checked={hero} onChange={(e) => setHero(e.target.checked)} /> Kun hero</label>
+        <span className="text-xs font-semibold text-[var(--muted)] ml-auto num">{rows.length} linjer</span>
+      </div>
+
+      {brand ? <Tabel rows={rows} dag0={lines[0]?.dag0 ?? ""} /> : (
+        <div className="flex flex-col gap-8">
+          {BRAND_ORDER.map((b) => {
+            const br = rows.filter((l) => l.brands.includes(b));
+            if (!br.length) return null;
+            const nu = br.filter((l) => l.status === "bestil_nu").length;
+            return (
+              <section key={b}>
+                <div className="flex items-center justify-between mb-3">
+                  <h2 className="font-extrabold text-xl flex items-center gap-2"><i className="inline-block w-3 h-3 rounded-full" style={{ background: BRANDS[b].farve }} />{BRANDS[b].navn}<span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)] ml-1">{BRANDS[b].land}</span></h2>
+                  <div className="flex items-center gap-3 text-xs font-semibold text-[var(--muted)]">{nu > 0 && <span className="chip !text-[.6rem]" style={{ background: LINE_STATUS_META.bestil_nu.farve, color: "#fff" }}>Bestil nu {nu}</span>}<span className="num">{br.length} linjer</span><button onClick={() => setBrand(b)} className="font-bold text-[var(--ink)] underline">Kun {BRANDS[b].kort} →</button></div>
+                </div>
+                <Tabel rows={br.slice(0, visAlle[b] ? undefined : 8)} dag0={lines[0]?.dag0 ?? ""} brand={b} />
+                {br.length > 8 && !visAlle[b] && <button onClick={() => setVisAlle((v) => ({ ...v, [b]: true }))} className="mt-2 text-sm font-bold text-[var(--muted)] hover:text-[var(--ink)]">Vis alle {br.length} linjer for {BRANDS[b].navn} ↓</button>}
+              </section>
+            );
+          })}
+          {rows.length === 0 && <p className="card p-8 text-center font-semibold text-[var(--muted)]">Ingen linjer matcher.</p>}
+        </div>
+      )}
     </div>
   );
 }
