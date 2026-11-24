@@ -24,7 +24,7 @@ export function Shell({ children, active, title, intro, aside }: { children: Rea
   const ol = f.opsummeringLinjer;
   const nav = (
     <>
-      <NavItem href="/" label="Skal bestilles" count={ol.bestil_nu + ol.bestil_14 + ol.bestil_30 + ol.book_po} color={LINE_STATUS_META.bestil_nu.farve} active={active === "indkoeb"} />
+      <NavItem href="/" label="Skal bestilles" count={f.linjer.filter((l) => ["bestil_nu", "bestil_14", "bestil_30", "book_po"].includes(l.status) || (l.status === "for_nyt" && l.dage.bestilSenest != null && l.dage.bestilSenest <= 30)).length} color={LINE_STATUS_META.bestil_nu.farve} active={active === "indkoeb"} />
       <NavItem href="/forslag" label="Pr. leverandør" count={f.forslagEan.reduce((a, g) => a + g.linjer.length, 0)} active={active === "forslag"} />
       <NavItem href="/paa-vej" label="På vej" active={active === "paa-vej"} />
       <div className="h-px bg-white/10 my-3 hidden md:block" />
