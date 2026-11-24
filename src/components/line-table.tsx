@@ -198,10 +198,21 @@ export function LineTable({ lines, gruppe = "alle", shopStatus }: { lines: LineL
     }
     setValgt(new Set()); setBesked(`${ok} ${ok === 1 ? "vare" : "varer"} opdateret`); setTimeout(() => setBesked(null), 3000);
   };
+  // Klik på forsidens kort (/?g=nu) eller et link med ?brand= skal virke selv om tabellen allerede er på siden
+  const spKey = sp.toString();
+  const lastWritten = useRef<string | null>(null);
+  useEffect(() => {
+    if (lastWritten.current !== null && spKey === lastWritten.current) return; // vores egen URL-opdatering – ikke en navigation
+    const ng = sp.get("g") ?? gruppe; if (ng !== g) setG(ng);
+    const nb = sp.get("brand") ?? ""; if (nb !== brand) setBrand(nb);
+    const nq = sp.get("q") ?? ""; if (nq !== q) setQ(nq);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [spKey]);
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const p = new URLSearchParams();
     if (q) p.set("q", q); if (brand) p.set("brand", brand); if (lev) p.set("lev", lev); if (hero) p.set("hero", "1"); if (g !== "alle") p.set("g", g);
+    lastWritten.current = p.toString();
     router.replace(`${pathname}${p.toString() ? `?${p}` : ""}`, { scroll: false });
   }, [q, brand, lev, hero, g, pathname, router]);
   useEffect(() => { const h = (e: KeyboardEvent) => { if (e.key === "/" && document.activeElement?.tagName !== "INPUT") { e.preventDefault(); inputRef.current?.focus(); } }; window.addEventListener("keydown", h); return () => window.removeEventListener("keydown", h); }, []);
