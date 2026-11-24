@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getForecast, FANER } from "@/lib/data";
-import type { Status } from "@/lib/forecast/types";
+
 import { STATUS_META } from "@/lib/forecast/types";
 import { LINE_STATUS_META } from "@/lib/forecast/purchase";
 
@@ -32,7 +32,7 @@ export function Shell({ children, active, title, intro, aside }: { children: Rea
       <p className="hidden md:block px-3 pb-1 text-[.6rem] font-bold uppercase tracking-[.18em] text-white/35">Shops (e-com)</p>
       <NavItem href="/shops" label="Overblik pr. shop" active={active === "shops"} />
       {FANER.filter((t) => ["udsolgt", "kritisk", "bestil-nu", "obs", "alle"].includes(t.slug)).map((t) => {
-        const count = t.status ? t.status.reduce((a, s) => a + f.opsummering[s as Status], 0) : f.rows.length;
+        const count = t.status ? f.linjer.filter((l) => l.shops.some((s) => t.status!.includes(s.status))).length : f.linjer.length;
         return <NavItem key={t.slug} href={`/fane/${t.slug}`} label={t.label} count={count} color={t.status ? STATUS_META[t.status[0]].farve : undefined} active={active === t.slug} />;
       })}
       <div className="h-px bg-white/10 my-3 hidden md:block" />

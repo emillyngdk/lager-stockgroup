@@ -9,6 +9,8 @@ export const dynamic = "force-static";
 export default function Forside() {
   const f = getForecast();
   const o = f.opsummering;
+  // EAN-niveau: antal varer (EAN) hvor mindst én shop har statussen – samme tal som i menuen
+  const ean = (st: string[]) => f.linjer.filter((l) => l.shops.some((x) => st.includes(x.status))).length;
   const brands = Object.keys(BRANDS) as Brand[];
   const forslagLinjer = f.forslag.reduce((a, l) => a + l.linjer.length, 0);
   const top = (b: Brand) => f.rows.filter((r) => r.brand === b && ["udsolgt", "kritisk", "bestil_nu"].includes(r.status) && r.velocity.base > 0.5)
@@ -29,10 +31,10 @@ export default function Forside() {
       </header>
 
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
-        <BigNumber label="Udsolgt" value={o.udsolgt} sub="0 tilgængeligt lige nu" href="/fane/udsolgt" color={STATUS_META.udsolgt.farve} />
-        <BigNumber label="Kritisk" value={o.kritisk} sub="Tør før næste levering" href="/fane/kritisk" color={STATUS_META.kritisk.farve} />
-        <BigNumber label="Bestil nu" value={o.bestil_nu} sub="PO afsted inden 14 dage" href="/fane/bestil-nu" color={STATUS_META.bestil_nu.farve} />
-        <BigNumber label="OBS" value={o.obs} sub="Hold øje de næste 45 dage" href="/fane/obs" color="#b58900" />
+        <BigNumber label="Udsolgt" value={ean(["udsolgt"])} sub="0 tilgængeligt lige nu" href="/fane/udsolgt" color={STATUS_META.udsolgt.farve} />
+        <BigNumber label="Kritisk" value={ean(["kritisk"])} sub="Tør før næste levering" href="/fane/kritisk" color={STATUS_META.kritisk.farve} />
+        <BigNumber label="Bestil nu" value={ean(["bestil_nu"])} sub="PO afsted inden 14 dage" href="/fane/bestil-nu" color={STATUS_META.bestil_nu.farve} />
+        <BigNumber label="OBS" value={ean(["obs"])} sub="Hold øje de næste 45 dage" href="/fane/obs" color="#b58900" />
       </section>
 
       <section className="grid md:grid-cols-2 xl:grid-cols-5 gap-3 md:gap-4 mb-8">
@@ -90,9 +92,9 @@ export default function Forside() {
         <div className="card p-5">
           <p className="text-[.7rem] font-bold uppercase tracking-widest text-[var(--muted)]">Resten af sortimentet</p>
           <ul className="mt-2 text-sm font-medium flex flex-col gap-1">
-            <li><Link href="/fane/ok" className="flex justify-between"><span>OK</span><b className="num">{o.ok}</b></Link></li>
-            <li><Link href="/fane/overlager" className="flex justify-between"><span>Overlager</span><b className="num">{o.overlager}</b></Link></li>
-            <li><Link href="/fane/nyheder" className="flex justify-between"><span>Nyheder (under 14 dage)</span><b className="num">{o.for_nyt}</b></Link></li>
+            <li><Link href="/fane/ok" className="flex justify-between"><span>OK</span><b className="num">{ean(["ok"])}</b></Link></li>
+            <li><Link href="/fane/overlager" className="flex justify-between"><span>Overlager</span><b className="num">{ean(["overlager"])}</b></Link></li>
+            <li><Link href="/fane/nyheder" className="flex justify-between"><span>Nyheder (under 14 dage)</span><b className="num">{ean(["for_nyt"])}</b></Link></li>
             <li><Link href="/uden-kobling" className="flex justify-between"><span>Uden kobling til BC</span><b className="num">{f.udenKobling.length}</b></Link></li>
           </ul>
         </div>

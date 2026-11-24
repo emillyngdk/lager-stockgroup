@@ -32,13 +32,16 @@ export function LineStatusChip({ status, small }: { status: LineStatus; small?: 
   return <span className={`chip ${small ? "!text-[.62rem] !px-2" : ""}`} style={{ background: m.farve, color: m.tekst }}>{m.label}</span>;
 }
 
-export function ShopDots({ shops, withText }: { shops: { brand: Brand; velocity?: number; ecom?: number; dageTilUdsolgt?: number | null }[]; withText?: boolean }) {
+const SHOP_STATUS_FARVE: Record<string, string> = { udsolgt: "var(--ink)", kritisk: "var(--kritisk)", bestil_nu: "var(--bestil)", obs: "#b58900", ok: "var(--ok)", overlager: "var(--overlager)", for_nyt: "#9B6BFF" };
+export function ShopDots({ shops, withText, withDays }: { shops: { brand: Brand; velocity?: number; ecom?: number; dageTilUdsolgt?: number | null; status?: string }[]; withText?: boolean; withDays?: boolean }) {
   return (
-    <span className="inline-flex items-center gap-1.5 flex-wrap">
+    <span className={`inline-flex items-center flex-wrap ${withDays ? "gap-2" : "gap-1.5"}`}>
       {BRAND_ORDER.filter((b) => shops.some((s) => s.brand === b)).map((b) => {
-        const s = shops.find((x) => x.brand === b)!;
-        return <span key={b} className="inline-flex items-center gap-1 text-[.65rem] font-bold uppercase tracking-wide text-[var(--muted)]" title={`${BRANDS[b].navn}${s.velocity != null ? ` · ${fmtTal(s.velocity, 1)} stk/dag` : ""}`}>
-          <i className="inline-block w-2 h-2 rounded-full" style={{ background: BRANDS[b].farve }} />{withText && BRANDS[b].kort}
+        const ss = shops.filter((x) => x.brand === b); const s = ss.slice().sort((a, c) => (a.dageTilUdsolgt ?? 9999) - (c.dageTilUdsolgt ?? 9999))[0];
+        const farve = withDays && s.status ? SHOP_STATUS_FARVE[s.status] ?? "var(--muted)" : "var(--muted)";
+        const dage = s.dageTilUdsolgt == null ? "365+" : `${s.dageTilUdsolgt} d`;
+        return <span key={b} className={`inline-flex items-center gap-1 text-[.65rem] font-bold uppercase tracking-wide ${withDays ? "rounded-md px-1.5 py-0.5 bg-[var(--bg)]" : ""}`} style={{ color: farve }} title={`${BRANDS[b].navn}${s.velocity != null ? ` · ${fmtTal(s.velocity, 1)} stk/dag` : ""}${s.ecom != null ? ` · ${fmtTal(s.ecom)} på lokation` : ""}${withDays ? ` · tør om ${dage}` : ""}`}>
+          <i className="inline-block w-2 h-2 rounded-full" style={{ background: BRANDS[b].farve }} />{(withText || withDays) && BRANDS[b].kort}{withDays && <span className="num normal-case tracking-normal font-semibold">{dage}</span>}
         </span>;
       })}
     </span>
@@ -96,7 +99,7 @@ function Tabel({ rows, dag0, brand, valgt, toggle, onHandling, fjernet }: { rows
                     <td className="pl-3 pr-1 py-3" onClick={(e) => e.stopPropagation()}><input type="checkbox" checked={valgt.has(l.ean)} onChange={() => toggle(l.ean)} aria-label="Vælg" /></td>
                     <td className="px-3 py-3 max-w-[300px]">
                       <Link href={`/linje/${l.ean}`} className="block font-bold truncate text-[.95rem]">{l.titel}</Link>
-                      <span className="flex items-center gap-2 mt-0.5">{brand && new Set(l.brands).size > 1 ? <span className="text-[.65rem] font-bold text-[var(--overlager)]">Også i {[...new Set(l.brands)].filter((x) => x !== brand).map((x) => BRANDS[x].kort).join(" + ")}</span> : <ShopDots shops={l.shops} withText />}<span className="num text-[.65rem] text-[var(--muted)]">{l.ean}</span>{l.hero && <span className="text-[.6rem] font-bold tracking-wider text-[var(--bestil)]">HERO</span>}{l.dataKvalitet === "lav" && <span className="text-[.6rem] font-bold tracking-wider text-white bg-[var(--kritisk)] rounded px-1.5 py-0.5" title={l.advarsler[0]}>KUN {Math.min(365, l.velocity.salgsdage)} D DATA</span>}</span>
+                      <span className="flex items-center gap-2 mt-0.5"><ShopDots shops={l.shops} withDays /><span className="num text-[.65rem] text-[var(--muted)]">{l.ean}</span>{l.hero && <span className="text-[.6rem] font-bold tracking-wider text-[var(--bestil)]">HERO</span>}{l.dataKvalitet === "lav" && <span className="text-[.6rem] font-bold tracking-wider text-white bg-[var(--kritisk)] rounded px-1.5 py-0.5" title={l.advarsler[0]}>KUN {Math.min(365, l.velocity.salgsdage)} D DATA</span>}</span>
                     </td>
                     <td className="px-3 py-3 whitespace-nowrap">{l.status === "for_nyt" ? <span className="font-extrabold text-[var(--bestil)]" title="For lidt salgsdata til en automatisk dato">Vurdér<span className="block text-[.65rem] font-semibold text-[var(--muted)]">{Math.min(365, l.velocity.salgsdage)} d data</span></span> : <BestilSenest dato={l.datoer.bestilSenest} dag0={dag0} dage={l.dage.bestilSenest} big />}</td>
                     <td className="px-3 py-3 text-right whitespace-nowrap">
@@ -153,7 +156,8 @@ function Tabel({ rows, dag0, brand, valgt, toggle, onHandling, fjernet }: { rows
   );
 }
 
-export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; gruppe?: string }) {
+/** shopStatus: vis kun linjer hvor mindst én shop har en af disse e-com-statusser (Shops-fanerne). Linjen er stadig ét EAN. */
+export function LineTable({ lines, gruppe = "alle", shopStatus }: { lines: LineLite[]; gruppe?: string; shopStatus?: string[] | null }) {
   const router = useRouter(); const pathname = usePathname(); const sp = useSearchParams();
   const [q, setQ] = useState(sp.get("q") ?? "");
   const [brand, setBrand] = useState(sp.get("brand") ?? "");
@@ -206,12 +210,12 @@ export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; grupp
   const counts = useMemo(() => Object.fromEntries(GRUPPER.map((x) => [x.slug, effLines.filter((l) => x.status.includes(l.status)).length])), [effLines]);
   const rows = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    return effLines.filter((l) => grp.status.includes(l.status))
+    return effLines.filter((l) => shopStatus ? (!shopStatus.length || l.shops.some((s) => shopStatus.includes(s.status) && (!brand || s.brand === brand))) : grp.status.includes(l.status))
       .filter((l) => !brand || l.brands.includes(brand as Brand))
       .filter((l) => !lev || l.leverandoer === lev)
       .filter((l) => !hero || l.hero)
       .filter((l) => !needle || l.titel.toLowerCase().includes(needle) || l.ean.includes(needle) || l.shopTitler.some((t) => t.toLowerCase().includes(needle)) || (l.bcSku ?? "").toLowerCase().includes(needle));
-  }, [effLines, grp, brand, lev, hero, q]);
+  }, [effLines, grp, brand, lev, hero, q, shopStatus]);
   const erFjernet = g === "fjernet";
   const tabelProps = { dag0, valgt, toggle, onHandling, fjernet: erFjernet };
 
@@ -219,17 +223,19 @@ export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; grupp
     <div>
       <div className="flex gap-2 flex-wrap mb-4">
         {([["", "Alle shops"], ...BRAND_ORDER.map((b) => [b, BRANDS[b].navn])] as [string, string][]).map(([b, label]) => {
-          const n = effLines.filter((l) => (!b || l.brands.includes(b as Brand)) && ["bestil_nu", "bestil_14", "bestil_45", "book_po"].includes(l.status)).length;
+          const n = shopStatus
+            ? effLines.filter((l) => (!b || l.brands.includes(b as Brand)) && (!shopStatus.length || l.shops.some((s) => shopStatus.includes(s.status) && (!b || s.brand === b)))).length
+            : effLines.filter((l) => (!b || l.brands.includes(b as Brand)) && ["bestil_nu", "bestil_14", "bestil_45", "book_po"].includes(l.status)).length;
           const on = brand === b;
           return <button key={b} onClick={() => setBrand(b)} className={`card !rounded-2xl px-4 md:px-5 py-3 text-left transition ${on ? "!bg-[var(--ink)] text-white" : "hover:-translate-y-0.5"}`}>
             <span className="flex items-center gap-2 font-extrabold text-base">{b && <i className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: BRANDS[b as Brand].farve }} />}{label}</span>
-            <span className={`block text-[.65rem] font-semibold mt-0.5 ${on ? "text-white/70" : "text-[var(--muted)]"}`}><b className="num">{n}</b> at handle på</span>
+            <span className={`block text-[.65rem] font-semibold mt-0.5 ${on ? "text-white/70" : "text-[var(--muted)]"}`}><b className="num">{n}</b> {shopStatus ? "varer" : "at handle på"}</span>
           </button>;
         })}
       </div>
-      <div className="flex gap-1.5 flex-wrap mb-4">
+      {!shopStatus && <div className="flex gap-1.5 flex-wrap mb-4">
         {GRUPPER.map((x) => <button key={x.slug} onClick={() => setG(x.slug)} className={`rounded-full px-3 py-1.5 text-xs font-bold whitespace-nowrap transition ${g === x.slug ? "bg-[var(--ink)] text-white" : "bg-white hover:bg-[#eeeae2]"}`}>{x.label} <span className={`num ml-1 ${g === x.slug ? "text-white/70" : "text-[var(--muted)]"}`}>{counts[x.slug]}</span></button>)}
-      </div>
+      </div>}
       <div className="flex flex-wrap gap-2 mb-4 items-center">
         <input ref={inputRef} value={q} onChange={(e) => setQ(e.target.value)} placeholder="Søg vare, EAN eller BC-nr.  ( / )" className="card !rounded-xl px-4 py-2.5 text-sm font-medium w-full md:w-80 outline-none focus:ring-2 ring-[var(--ink)]" />
         <select value={lev} onChange={(e) => setLev(e.target.value)} className="card !rounded-xl px-3 py-2.5 text-sm font-semibold max-w-[220px]"><option value="">Alle leverandører</option>{leverandoerer.map((l) => <option key={l} value={l}>{l}</option>)}</select>
