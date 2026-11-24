@@ -37,3 +37,15 @@ export const FANER: { slug: string; status?: Status[]; label: string; beskrivels
 ];
 
 export { fmtDato, fmtTal } from "./format";
+
+// ---------- v2: indkøbslinjer ----------
+import type { PurchaseLine } from "./forecast/purchase";
+import type { LineLite } from "./types-lite";
+export type { LineLite };
+export function getLines(): PurchaseLine[] { return getForecast().linjer; }
+export function getLine(ean: string): PurchaseLine | undefined { return getForecast().linjer.find((l) => l.ean === ean); }
+export function liteLine(l: PurchaseLine): LineLite {
+  const { demandPrDag: _d, projektion, forklaring: _f, paaVej, shops, ...rest } = l; void _d; void _f;
+  const { events: _e, ...pv } = paaVej; void _e;
+  return { ...rest, paaVej: pv, dag0: projektion.dag0, shops: shops.map(({ brand, key, velocity, ecom, dageTilUdsolgt, status, hero }) => ({ brand, key, velocity, ecom, dageTilUdsolgt, status, hero })) };
+}

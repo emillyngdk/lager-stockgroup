@@ -122,4 +122,8 @@ export interface ForecastOutput {
   opsummering: Record<Status, number> & { total: number };
   prBrand: Record<Brand, Record<Status, number>>;
   forslag: { leverandoer: string; linjer: { key: string; brand: Brand; titel: string; ean: string; bestilSenest: string | null; foreslaaetStk: number; foreslaaetColli: number; status: Status; begrundelse: string }[] }[];
+  // v2: indkøbslinjer pr. EAN
+  linjer: import("./purchase").PurchaseLine[];
+  opsummeringLinjer: Record<import("./purchase").LineStatus, number>;
+  forslagEan: { leverandoer: string; linjer: { ean: string; titel: string; brands: Brand[]; bestilSenest: string | null; foreslaaetStk: number; foreslaaetColli: number; raekkerTil: string | null; status: import("./purchase").LineStatus; begrundelse: string }[] }[];
 }

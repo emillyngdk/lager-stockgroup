@@ -44,7 +44,7 @@ export default async function Vare({ params }: { params: Promise<{ key: string }
       </div>
 
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-6">
-        <Big label="Dage til udsolgt" value={dK === null ? "180+" : fmtTal(dK)} sub={`uden leveringer: ${r.dage.tilUdsolgt === null ? "400+" : fmtTal(r.dage.tilUdsolgt)} dage`} color={colorDays} />
+        <Big label="Dage til udsolgt" value={dK === null ? "180+" : fmtTal(dK)} sub={`uden leveringer: ${r.dage.tilUdsolgt === null ? "2 år+" : fmtTal(r.dage.tilUdsolgt)} dage`} color={colorDays} />
         <Big label="Udsolgt-dato" value={fmtDato(r.datoer.udsolgtMedPaaVej)} sub={`optimistisk: ${fmtDato(r.datoer.udsolgtOptimistisk)}`} />
         <Big label="Bestil senest" value={bestilNu ? "Nu" : fmtDato(r.datoer.bestilSenest)} sub={`lead time ${r.genbestilling.leadTime} dage`} color={bestilNu ? "var(--kritisk)" : undefined} />
         <Big label="Foreslået mængde" value={r.genbestilling.foreslaaetStk > 0 ? fmtTal(r.genbestilling.foreslaaetStk) : "–"} sub={r.genbestilling.foreslaaetStk > 0 ? `${r.genbestilling.foreslaaetColli} colli à ${r.genbestilling.stkPrColli ?? "?"} · ${r.genbestilling.daekningsdage} dages dækning` : "intet behov ud over det bestilte"} />

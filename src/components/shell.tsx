@@ -3,14 +3,8 @@ import Image from "next/image";
 import { getForecast, FANER } from "@/lib/data";
 import type { Status } from "@/lib/forecast/types";
 import { STATUS_META } from "@/lib/forecast/types";
+import { LINE_STATUS_META } from "@/lib/forecast/purchase";
 
-const EXTRA = [
-  { slug: "paa-vej", label: "På vej" },
-  { slug: "universelle", label: "Universelle" },
-  { slug: "forslag", label: "Ugens forslag" },
-  { slug: "uden-kobling", label: "Uden kobling" },
-  { slug: "om", label: "Sådan regnes der" },
-];
 
 function NavItem({ href, label, count, color, active }: { href: string; label: string; count?: number; color?: string; active: boolean }) {
   return (
@@ -27,15 +21,24 @@ export function Shell({ children, active, title, intro, aside }: { children: Rea
   const ageH = (Date.now() - koert.getTime()) / 36e5;
   const stale = ageH > 30;
   const opdateret = koert.toLocaleString("da-DK", { timeZone: "Europe/Copenhagen", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+  const fjernet = f.linjer.filter((l) => ["udgaar", "skjult", "ikke_indkoeb"].includes(l.status)).length;
+  const ol = f.opsummeringLinjer;
   const nav = (
     <>
-      <NavItem href="/" label="Forside" active={active === "forside"} />
-      {FANER.map((t) => {
+      <NavItem href="/" label="Indkøb" count={ol.bestil_nu + ol.bestil_14 + ol.bestil_45 + ol.book_po} color={LINE_STATUS_META.bestil_nu.farve} active={active === "indkoeb"} />
+      <NavItem href="/forslag" label="Leverandører" count={f.forslagEan.reduce((a, g) => a + g.linjer.length, 0)} active={active === "forslag"} />
+      <NavItem href="/paa-vej" label="På vej" active={active === "paa-vej"} />
+      <div className="h-px bg-white/10 my-3 hidden md:block" />
+      <p className="hidden md:block px-3 pb-1 text-[.6rem] font-bold uppercase tracking-[.18em] text-white/35">Shops (e-com)</p>
+      <NavItem href="/shops" label="Overblik pr. shop" active={active === "shops"} />
+      {FANER.filter((t) => ["udsolgt", "kritisk", "bestil-nu", "obs", "alle"].includes(t.slug)).map((t) => {
         const count = t.status ? t.status.reduce((a, s) => a + f.opsummering[s as Status], 0) : f.rows.length;
         return <NavItem key={t.slug} href={`/fane/${t.slug}`} label={t.label} count={count} color={t.status ? STATUS_META[t.status[0]].farve : undefined} active={active === t.slug} />;
       })}
       <div className="h-px bg-white/10 my-3 hidden md:block" />
-      {EXTRA.map((t) => <NavItem key={t.slug} href={`/${t.slug}`} label={t.label} count={t.slug === "uden-kobling" ? f.udenKobling.length : t.slug === "universelle" ? f.universelle.length : t.slug === "forslag" ? f.forslag.reduce((a, l) => a + l.linjer.length, 0) : undefined} active={active === t.slug} />)}
+      <NavItem href="/uden-kobling" label="Uden kobling" count={f.udenKobling.length} active={active === "uden-kobling"} />
+      <NavItem href="/fjernet" label="Fjernede varer" count={fjernet} active={active === "fjernet"} />
+      <NavItem href="/om" label="Sådan regnes der" active={active === "om"} />
     </>
   );
   return (
@@ -59,7 +62,7 @@ export function Shell({ children, active, title, intro, aside }: { children: Rea
             Tallene er {Math.round(ageH)} timer gamle – den daglige opdatering er ikke kørt. Sidst kørt {koert.toLocaleString("da-DK", { timeZone: "Europe/Copenhagen" })}.
           </div>
         )}
-        <main className="max-w-[1240px] px-4 md:px-10 py-6 md:py-10">
+        <main className="max-w-[1400px] px-4 md:px-8 py-6 md:py-10">
           {title && (
             <header className="mb-6 md:mb-8 flex flex-wrap items-end justify-between gap-4">
               <div>

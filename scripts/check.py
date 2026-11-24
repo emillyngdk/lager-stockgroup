@@ -44,10 +44,13 @@ for b in ("gladkokken", "casper", "herman", "tomi"):
 hist = sorted(glob.glob(os.path.join(ROOT, "data", "history", "*.json")))
 if hist:
     prev = json.load(open(hist[-1], encoding="utf-8"))
+    prev = prev["rows"] if isinstance(prev, dict) else prev
     n_prev = len(prev)
     if n_prev and len([v for v in snap["variants"] if v.get("ean")]) < 0.8 * n_prev:
         warnings.append(f"Varianter med EAN faldet markant ift. {os.path.basename(hist[-1])} ({n_prev} rækker sidst)")
 
+if "linjer" not in json.load(open(os.path.join(ROOT, "data", "forecast.json"), encoding="utf-8")) if os.path.exists(os.path.join(ROOT, "data", "forecast.json")) else False:
+    problems.append("forecast.json mangler 'linjer' (indkøbslinjer)")
 for w in warnings: print("ADVARSEL:", w)
 for p in problems: print("FEJL:", p)
 print(f"OK: {len(snap['variants'])} varianter, {len(snap['bc_stock'])} BC-SKU'er, {len(snap['po_lines'])} PO-linjer, salg for {sorted(snap['sales'])}")

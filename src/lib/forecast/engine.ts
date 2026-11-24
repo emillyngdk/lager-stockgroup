@@ -1,3 +1,4 @@
+import { buildPurchaseLines, LINE_STATUS_META, type PurchaseLine, type LineOverride, type LineStatus } from "./purchase";
 import {
   AgeGroup, Brand, BRANDS, Config, DEFAULT_CONFIG, ForecastOutput, ForecastRow, InboundEvent, Override, PoLine,
   Snapshot, Status, UniversalRow, Variant,
@@ -368,7 +369,18 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
 
   rows.sort((a, b) => STATUS_ORDER[a.status] - STATUS_ORDER[b.status] || (a.status === "udsolgt" ? b.velocity.base - a.velocity.base : (a.dage.tilUdsolgtMedPaaVej ?? 9999) - (b.dage.tilUdsolgtMedPaaVej ?? 9999)));
 
-  return { kørt: new Date().toISOString(), dag0, config: cfg, kilder: snap.sources, saeson: seasonMeta, rows, universelle, udenKobling, opsummering, prBrand, forslag };
+  // --- v2: indkøbslinjer pr. EAN ---
+  const linjer = buildPurchaseLines(rows, snap, cfg, dag0, seasonFor, overrides as Record<string, LineOverride>, poByEan);
+  const opsLinjer = Object.fromEntries(Object.keys(LINE_STATUS_META).map((k) => [k, 0])) as Record<LineStatus, number>;
+  for (const l of linjer) opsLinjer[l.status]++;
+  const forslagEanMap: Record<string, ForecastOutput["forslagEan"][0]["linjer"]> = {};
+  for (const l of linjer) {
+    if (!["bestil_nu", "bestil_14", "bestil_45"].includes(l.status) || l.genbestilling.foreslaaetStk <= 0) continue;
+    (forslagEanMap[l.leverandoer || "Ukendt leverandør"] ??= []).push({ ean: l.ean, titel: l.titel, brands: l.brands, bestilSenest: l.datoer.bestilSenest, foreslaaetStk: l.genbestilling.foreslaaetStk, foreslaaetColli: l.genbestilling.foreslaaetColli, raekkerTil: l.datoer.raekkerTil, status: l.status, begrundelse: l.statusAarsag });
+  }
+  const forslagEan = Object.entries(forslagEanMap).map(([leverandoer, linjer]) => ({ leverandoer, linjer: linjer.sort((a, b) => (a.bestilSenest || "9999").localeCompare(b.bestilSenest || "9999")) })).sort((a, b) => b.linjer.length - a.linjer.length);
+
+  return { kørt: new Date().toISOString(), dag0, config: cfg, kilder: snap.sources, saeson: seasonMeta, rows, universelle, udenKobling, opsummering, prBrand, forslag, linjer, opsummeringLinjer: opsLinjer, forslagEan };
 }
 
 const STATUS_ORDER: Record<Status, number> = { udsolgt: 0, kritisk: 1, bestil_nu: 2, obs: 3, ok: 4, overlager: 5, for_nyt: 6, uden_kobling: 7 };

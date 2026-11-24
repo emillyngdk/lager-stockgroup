@@ -70,6 +70,20 @@ Store svar kopieres som fil (navngiv `sales_<brand>_d30_full.json`). Inline-svar
 
 `dagsserie_*.json` er sæsongrundlaget og ligger fast i repoet. Opdatér den kun manuelt (max 400 dage pr. kald).
 
+## 5a. Delt tilstand fra sitet (planer, udgår, lead time, MOQ)
+
+Indkøberne gemmer planer og flag på sitet. De ligger i Vercel Blob og hentes FØR forecasten:
+
+```
+Vercel-værktøjet web_fetch_vercel_url: https://lager-stockgroup.vercel.app/api/state?token=<ETL_TOKEN>
+```
+`ETL_TOKEN` står i Vercel-projektets miljøvariabler (`filter_project_envs` på prj_5uH0VjvMvE8jPlCjuxWnZi2s6XA7) – værdien er krypteret dér,
+så brug den token der står i den planlagte opgaves prompt. Gem svarets JSON uændret som `data/state.json`
+(filen er gitignored). Svarer API'et ikke, så kør videre uden (ingen planer/flag i dag) og skriv det i svaret.
+
+`run-forecast.ts` læser `data/state.json`: overrides (udgår, skjul_til, ikke_indkoeb, lead_time, moq, eu, kategori) går ind i motoren,
+og planer lægges oven på linjerne. En plan skifter selv fra *Planlagt* til *Bestilt*, når en PO, der ikke var kendt da planen blev gemt, dukker op i BC.
+
 ## 5b. Danske produktnavne (Herman og Tomi)
 
 `data/titles_da.json` oversætter hollandske og finske produktnavne til dansk (nøgle `brand:product_id`).
@@ -82,20 +96,24 @@ Når `run-forecast.ts` melder "mangler dansk navn", så oversæt de nye produkte
 python3 scripts/parse_shopify.py
 python3 scripts/normalize.py
 python3 scripts/check.py          # stopper ved manglende sider – ret før du går videre
-npx tsx scripts/run-forecast.ts   # skriver data/forecast.json + data/history/<dato>.json
+# data/state.json hentet i trin 5a
+npx tsx scripts/run-forecast.ts   # skriver data/forecast.json (rows + linjer) + data/history/<dato>.json
 npx next build --turbopack        # skal lykkes før push (SITE_PASSWORD=x er nok lokalt)
 git add -A && git commit -m "Data <dato>: <kort status, fx 'udsolgt 40, kritisk 68'>" && git push
 ```
 Vercel bygger ved push. Tjek bagefter med Vercel `list_deployments` (projekt `prj_5uH0VjvMvE8jPlCjuxWnZi2s6XA7`,
 team `team_1PhaTsGH0YHOJzCJ84DU7AhB`) at seneste deployment er READY.
 
-## 7. Mandag: ugens forslag på mail
+## 7. Mails
 
-Om mandagen sendes `data/forecast.json → forslag` som mail til **martin@stockgroup.dk** og **elm@shop-group.dk**
-(Microsoft 365 `outlook_send_mail`; Gmail som nødløsning). Emne: `Ugens indkøbsforslag – uge <nr>`.
-Indhold: 3–4 linjer opsummering (udsolgt / kritisk / bestil nu), derefter én blok pr. leverandør med
-vare · EAN · bestil senest · foreslået stk/colli, og link til https://lager-stockgroup.vercel.app/forslag.
-`python3 scripts/mail_forslag.py` skriver HTML'en til `data/mail.html`, så den kan sendes som den er.
+**Hver dag – nye Bestil nu-linjer.** `python3 scripts/mail_kritisk.py --kun-nye` skriver `data/mail_kritisk.html`
+med de indkøbslinjer, der er kommet på *Bestil nu* siden forrige kørsel. Exit 2 = ingen nye, send intet.
+Ellers send HTML'en med Gmail `send_message` (fra Emils Gmail) til **martin@stockgroup.dk** og **elm@shop-group.dk**,
+emne `Nye varer at bestille – <dato>`, med logoet som inline-vedhæftning: `attachments: [{content: "sha256:<sha256 af public/stock-group-white.png>:<absolut sti>", filename: "stock-group.png", mimeType: "image/png", inline: true}]`
+(`sha256sum public/stock-group-white.png`), og `src="cid:att0"` står allerede i HTML'en.
+
+**Mandag – ugens forslag.** `python3 scripts/mail_forslag.py` skriver `data/mail.html` (én linje pr. EAN, pr. leverandør, planlagte mængder
+i stedet for forslag). Send til samme to modtagere, emne `Ugens indkøbsforslag – uge <nr>`.
 
 ## Hvis noget går galt
 
