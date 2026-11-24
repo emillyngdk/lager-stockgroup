@@ -18,7 +18,9 @@ for (const v of snap.variants) {
   if (da) v.title = da; else manglerOversaettelse++;
 }
 // Delt tilstand fra sitet (planer + overrides sat i UI). Hentes af den daglige opdatering til data/state.json.
-const statePath = path.join(root, "data", "state.json");
+// data/state.json = hentet i dag fra sitet; data/state.snapshot.json = sidst kendte kopi (committes), så udgåede varer aldrig dukker op igen hvis API'et svigter
+const statePath = fs.existsSync(path.join(root, "data", "state.json")) ? path.join(root, "data", "state.json") : path.join(root, "data", "state.snapshot.json");
+if (statePath.endsWith("state.json")) fs.copyFileSync(statePath, path.join(root, "data", "state.snapshot.json")); else console.log("OBS: data/state.json mangler – bruger sidst kendte state.snapshot.json");
 type Plan = { stk: number; colli: number; bestilDato: string; leadTime: number; af?: string; note?: string; oprettet: string; status: "planlagt" | "bestilt"; po?: string; poKendt?: string[] };
 const state: { plans: Record<string, Plan>; overrides: Record<string, Override> } = fs.existsSync(statePath) ? JSON.parse(fs.readFileSync(statePath, "utf8")) : { plans: {}, overrides: {} };
 for (const [ean, ov] of Object.entries(state.overrides ?? {})) overrides[ean] = { ...(overrides[ean] ?? {}), ...ov };

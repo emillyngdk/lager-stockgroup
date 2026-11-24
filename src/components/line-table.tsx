@@ -24,7 +24,7 @@ const GRUPPER: { slug: string; label: string; status: LineStatus[] }[] = [
   { slug: "daekket", label: "Dækket", status: ["daekket"] },
   { slug: "over", label: "Overlager", status: ["overlager"] },
   { slug: "nyt", label: "Nyheder", status: ["for_nyt"] },
-  { slug: "fjernet", label: "Fjernet", status: ["udgaar", "skjult", "ikke_indkoeb"] },
+  { slug: "fjernet", label: "Skjult", status: ["skjult", "ikke_indkoeb"] },
 ];
 
 export function LineStatusChip({ status, small }: { status: LineStatus; small?: boolean }) {
@@ -165,7 +165,8 @@ export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; grupp
     if (o?.udgaar) status = "udgaar"; else if (o?.ikke_indkoeb) status = "ikke_indkoeb"; else if (o?.skjul_til && o.skjul_til >= dag0) status = "skjult";
     else if (p) status = p.status; else if (["udgaar", "ikke_indkoeb", "skjult", "planlagt", "bestilt"].includes(l.status) && o === undefined && !p && Object.keys(overrides).length + Object.keys(plans).length > 0) status = l.status;
     return status === l.status ? l : { ...l, status };
-  }), [lines, overrides, plans, dag0]);
+  }).filter((l) => l.status !== "udgaar"), [lines, overrides, plans, dag0]); // udgåede varer vises aldrig i indkøbsoversigten – kun under /fjernet
+  const antalUdgaaet = useMemo(() => lines.filter((l) => l.status === "udgaar" || overrides[l.ean]?.udgaar).length, [lines, overrides]);
   const toggle = (ean: string) => setValgt((v) => { const n = new Set(v); if (n.has(ean)) n.delete(ean); else n.add(ean); return n; });
   const onHandling = async (eans: string[], h: Handling) => {
     const navn = askNavn(localStorage.getItem("lager_navn") ?? ""); if (!navn) return;
@@ -219,7 +220,7 @@ export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; grupp
         <input ref={inputRef} value={q} onChange={(e) => setQ(e.target.value)} placeholder="Søg vare, EAN eller BC-nr.  ( / )" className="card !rounded-xl px-4 py-2.5 text-sm font-medium w-full md:w-80 outline-none focus:ring-2 ring-[var(--ink)]" />
         <select value={lev} onChange={(e) => setLev(e.target.value)} className="card !rounded-xl px-3 py-2.5 text-sm font-semibold max-w-[220px]"><option value="">Alle leverandører</option>{leverandoerer.map((l) => <option key={l} value={l}>{l}</option>)}</select>
         <label className="card !rounded-xl px-3 py-2.5 text-sm font-semibold flex items-center gap-2 cursor-pointer"><input type="checkbox" checked={hero} onChange={(e) => setHero(e.target.checked)} /> Kun hero</label>
-        <span className="text-xs font-semibold text-[var(--muted)] ml-auto num">{rows.length} linjer</span>
+        <span className="text-xs font-semibold text-[var(--muted)] ml-auto num">{rows.length} linjer{antalUdgaaet > 0 && <> · <Link href="/fjernet" className="underline">{antalUdgaaet} udgået</Link></>}</span>
       </div>
 
       {(valgt.size > 0 || besked) && (

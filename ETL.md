@@ -81,6 +81,9 @@ Vercel-værktøjet web_fetch_vercel_url: https://lager-stockgroup.vercel.app/api
 så brug den token der står i den planlagte opgaves prompt. Gem svarets JSON uændret som `data/state.json`
 (filen er gitignored). Svarer API'et ikke, så kør videre uden (ingen planer/flag i dag) og skriv det i svaret.
 
+`run-forecast.ts` kopierer selv `data/state.json` til `data/state.snapshot.json` (den committes), og bruger snapshot'et hvis dagens hentning fejlede –
+så en vare, der er markeret udgået, dukker aldrig op igen, selv om API'et er nede en morgen.
+
 `run-forecast.ts` læser `data/state.json`: overrides (udgår, skjul_til, ikke_indkoeb, lead_time, moq, eu, kategori) går ind i motoren,
 og planer lægges oven på linjerne. En plan skifter selv fra *Planlagt* til *Bestilt*, når en PO, der ikke var kendt da planen blev gemt, dukker op i BC.
 
