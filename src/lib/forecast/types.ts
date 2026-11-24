@@ -30,7 +30,7 @@ export interface Config {
   horizonDays: number;
   transferDays: number;       // Vejle -> shoplokation
   receivingDays: number;      // levering til lager -> salgbar
-  leadTimeDefault: { asia: number; eu: number };
+  leadTimeDefault: { hybrid: number; asia: number; eu: number };
   coverageDays: { asia: number; eu: number };
   zHero: number;
   zNormal: number;
@@ -47,7 +47,7 @@ export const DEFAULT_CONFIG: Config = {
   horizonDays: 180,
   transferDays: 0,
   receivingDays: 3,
-  leadTimeDefault: { asia: 100, eu: 21 },
+  leadTimeDefault: { hybrid: 180, asia: 150, eu: 30 },
   coverageDays: { asia: 120, eu: 90 },
   zHero: 1.65,
   zNormal: 1.28,

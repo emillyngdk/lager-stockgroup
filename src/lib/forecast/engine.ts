@@ -243,8 +243,10 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
     // genbestilling
     const poLev = (poByEan[v.ean] || [])[0];
     const region = supplierRegion(poLev?.leverandoer ?? null, poLev?.eu_leverandoer ?? false);
-    const leadTime = ov.lead_time ?? cfg.leadTimeDefault[region];
-    const leadTimeKilde = ov.lead_time ? "manuel" : `standard ${region === "eu" ? "EU" : "Asien"}`;
+    const erHybrid = /hybrid/i.test(v.title) || /hybrid/i.test(v.title_original ?? "") || /hybrid/i.test(bc?.navn ?? "");
+    const ltKey = region === "eu" ? "eu" : erHybrid ? "hybrid" : "asia";
+    const leadTime = ov.lead_time ?? cfg.leadTimeDefault[ltKey];
+    const leadTimeKilde = ov.lead_time ? "manuel" : region === "eu" ? "EU-leverandør, ca. 30 dage" : erHybrid ? "Hybrid, 6 mdr." : "øvrige varer, 5 mdr.";
     const hero = ov.service_level ? ov.service_level === "hero" : heroSet.has(`${v.brand}:${v.product_id}`);
     const z = hero ? cfg.zHero : cfg.zNormal;
     const sigma = vel.base * cfg.cvByAge[vel.grp];
