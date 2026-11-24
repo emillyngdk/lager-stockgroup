@@ -222,8 +222,11 @@ export function buildPurchaseLines(
     let behovLead = 0, behovDaekning = 0;
     for (let d = 1; d <= leadTime + daekning; d++) { if (d <= leadTime) behovLead += demandPrDag[d]; behovDaekning += demandPrDag[d]; }
     const reorderPoint = Math.ceil(behovLead + sikkerhed);
-    let bsDag: number | null = null;
-    for (let d = 0; d <= HORIZON; d++) if (opt[d] <= reorderPoint) { bsDag = d; break; }
+    // Bestil senest: den dag lageret (inkl. alt på vej) rammer sikkerhedslageret, minus lead time + modtagelse.
+    // (Ikke "første dag under reorder point" – det slog falsk ud når en PO landede om få dage og dækkede længe.)
+    let bsDag: number | null = null, sikkerhedsDag: number | null = null;
+    for (let d = 0; d <= HORIZON; d++) if (opt[d] <= sikkerhed) { sikkerhedsDag = d; break; }
+    if (sikkerhedsDag !== null) bsDag = Math.max(0, sikkerhedsDag - leadTime - cfg.receivingDays);
     const cll = bc?.stk_pr_colli || poLev?.stk_pr_colli || null;
     const moq = ov?.moq ?? null;
     let foreslaaetStk = Math.max(0, Math.ceil(behovDaekning + sikkerhed - tilgaengeligt - paaVejSikker - paaVejUsikker));
@@ -262,10 +265,10 @@ export function buildPurchaseLines(
     else if (base <= 0.05 && rs.every((r) => r.alder.dage > 90)) { status = "overlager"; aarsag = tilgaengeligt > 0 ? "Ingen salg de sidste 60 dage" : "Ingen salg og intet på lager – udgået?"; }
     else if (bs <= 0 && foreslaaetStkRund === 0 && foersteUsikker) { status = "book_po"; aarsag = `Tør ${dK === Infinity ? "ikke" : "om " + dK + " dage"} – ubooket PO ${foersteUsikker.po} dækker behovet men kommer først ${foersteUsikker.dato}: book eller fremryk den`; }
     else if (bs <= 0 && foreslaaetStkRund === 0 && foersteSikker && dK < leadTime) { status = "book_po"; aarsag = `Tør om ${dK} dage, men bekræftet levering ${foersteSikker} dækker behovet – fremryk den hvis muligt`; }
-    else if (bs <= 0) { status = "bestil_nu"; aarsag = tilgaengeligt <= 0 ? `0 tilgængeligt i alle shops${foersteSikker ? ` – næste bekræftede levering ${foersteSikker}` : foersteUsikker ? ` – kun ubooket PO ${foersteUsikker.po} (${foersteUsikker.dato})` : " og intet på vej"}` : `Reorder point (${reorderPoint} stk) er nået – ny PO skal afsted nu for at nå hjem inden ${leadTime} dage`; }
+    else if (bs <= 0) { status = "bestil_nu"; aarsag = tilgaengeligt <= 0 ? `0 tilgængeligt i alle shops${foersteSikker ? ` – næste bekræftede levering ${foersteSikker}` : foersteUsikker ? ` – kun ubooket PO ${foersteUsikker.po} (${foersteUsikker.dato})` : " og intet på vej"}` : `Lageret inkl. det der er på vej rammer sikkerhedslageret om ${sikkerhedsDag} dage – en ny PO tager ${leadTime + cfg.receivingDays} dage, så den skal afsted nu`; }
     else if (dK <= leadTime + cfg.receivingDays && !foersteUsikker) { status = "bestil_nu"; aarsag = `Tør om ${dK} dage – en ny PO tager ${leadTime} dage`; }
-    else if (bs <= cfg.status.bestilNuDays) { status = "bestil_14"; aarsag = `Rammer reorder point om ${bs} dage`; }
-    else if (bs <= cfg.status.obsDays) { status = "bestil_45"; aarsag = `Rammer reorder point om ${bs} dage`; }
+    else if (bs <= cfg.status.bestilNuDays) { status = "bestil_14"; aarsag = `Skal bestilles om ${bs} dage for at nå hjem før lageret rammer sikkerhedslageret (om ${sikkerhedsDag} dage)`; }
+    else if (bs <= cfg.status.obsDays) { status = "bestil_45"; aarsag = `Skal bestilles om ${bs} dage – lageret rammer sikkerhedslageret om ${sikkerhedsDag} dage`; }
     else if ((dTil ?? Infinity) > cfg.status.overlagerDays && paaVejSikker + paaVejUsikker === 0) { status = "overlager"; aarsag = `Over ${cfg.status.overlagerDays} dages dækning uden nye køb`; }
     else { status = "daekket"; aarsag = bs === Infinity ? "Dækket hele horisonten med det der er bestilt" : `Næste bestilling om ${bs} dage`; }
 

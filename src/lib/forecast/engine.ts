@@ -202,6 +202,16 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
       if (afsaeson > 3 * avg365) { daempet = `Normalt niveau dæmpet fra ${r1(afsaeson)} til ${r1(3 * avg365)} stk/dag (3× årsgennemsnittet ${r1(avg365)}) – de seneste uger er kampagnedrevne.`; afsaeson = 3 * avg365; }
     }
 
+    // Udsolgt-korrektion: står varen på 0 i shoppen, viser de seneste uger tabt salg, ikke efterspørgsel.
+    // Så bruges årsgennemsnittet (afsæsonaliseret) som normalt niveau, hvis det er markant højere.
+    let udsolgtKorr: string | null = null;
+    if ((v.shopify_qty ?? 0) <= 0 && vel.salgsdage >= 60 && vel.s365 > 0) {
+      const avg365 = vel.s365 / Math.min(365, vel.salgsdage);
+      let sS = 0; for (let d = 0; d < Math.min(365, vel.salgsdage); d++) sS += S[isoWeek(addDays(dag0, -d))];
+      const avgAfs = avg365 / (sS / Math.min(365, vel.salgsdage));
+      if (avgAfs > 2 * afsaeson && avgAfs > 0.2) { udsolgtKorr = `Udsolgt i shoppen – de seneste uger viser tabt salg. Normalt niveau sat til årsgennemsnittet ${r1(avgAfs)} stk/dag (var ${r1(afsaeson)}).`; afsaeson = avgAfs; vel.base = avgAfs * saesonNu; }
+    }
+
     // lagerpuljer
     const ecom = Math.max(0, v.shopify_qty ?? 0);
     const andel = bcLoc === "NONFOOD" ? (shareOfPool[key] ?? 1) : 1;
@@ -316,6 +326,7 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
       `Foreslået: dækning ${daekning} dage efter modtagelse → ${foreslaaetStkRund} stk${cll ? ` (${foreslaaetColli} colli à ${cll})` : ""}.`,
     ];
     if (daempet) forklaring.push(daempet);
+    if (udsolgtKorr) forklaring.push(udsolgtKorr);
     if (vel.sameProduct > 1) forklaring.push(`Produktet har ${vel.sameProduct} varianter – salget er delt ligeligt (Jullytics rapporterer pr. produkt).`);
 
     rows.push({
