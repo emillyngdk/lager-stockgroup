@@ -7,6 +7,11 @@ import { BRANDS, type Brand } from "@/lib/forecast/types";
 import { LINE_STATUS_META, type LineStatus } from "@/lib/forecast/purchase";
 import { fmtDato, fmtTal } from "@/lib/format";
 import { TrendArrow } from "./ui";
+import { askNavn } from "./line-detail";
+
+type Flag = { udgaar?: boolean; skjul_til?: string | null; ikke_indkoeb?: boolean; af?: string; dato?: string; note?: string };
+type PlanLite = { stk: number; af?: string; status: "planlagt" | "bestilt" };
+export type Handling = "udgaar" | "skjul" | "ikke_indkoeb" | "genindsaet";
 
 const BRAND_ORDER: Brand[] = ["gladkokken", "casper", "herman", "tomi"];
 const GRUPPER: { slug: string; label: string; status: LineStatus[] }[] = [
@@ -53,8 +58,9 @@ export function BestilSenest({ dato, dag0, dage, big }: { dato: string | null; d
 }
 
 
-function Tabel({ rows, dag0, brand }: { rows: LineLite[]; dag0: string; brand?: Brand }) {
+function Tabel({ rows, dag0, brand, valgt, toggle, onHandling, fjernet }: { rows: LineLite[]; dag0: string; brand?: Brand; valgt: Set<string>; toggle: (ean: string) => void; onHandling: (eans: string[], h: Handling) => void; fjernet?: boolean }) {
   const router = useRouter();
+  const [menu, setMenu] = useState<string | null>(null);
   return (
     <div>
 
@@ -62,7 +68,8 @@ function Tabel({ rows, dag0, brand }: { rows: LineLite[]; dag0: string; brand?: 
         <div className="scroll-x">
           <table className="w-full text-sm">
             <thead><tr className="text-left text-[.65rem] uppercase tracking-wider text-[var(--muted)]">
-              <th className="px-4 py-3 font-bold">Vare</th>
+              <th className="pl-3 pr-1 py-3 w-8"><input type="checkbox" aria-label="Vælg alle" checked={rows.length > 0 && rows.every((l) => valgt.has(l.ean))} onChange={() => rows.forEach((l) => { if (rows.every((x) => valgt.has(x.ean))) toggle(l.ean); else if (!valgt.has(l.ean)) toggle(l.ean); })} /></th>
+              <th className="px-3 py-3 font-bold">Vare</th>
               <th className="px-3 py-3 font-bold">Bestil senest</th>
               <th className="px-3 py-3 font-bold text-right">Bestil</th>
               <th className="px-3 py-3 font-bold hidden xl:table-cell">Rækker til</th>
@@ -71,13 +78,15 @@ function Tabel({ rows, dag0, brand }: { rows: LineLite[]; dag0: string; brand?: 
               <th className="px-3 py-3 font-bold text-right hidden xl:table-cell">Tilg.</th>
               <th className="px-3 py-3 font-bold text-right">På vej</th>
               <th className="px-3 py-3 font-bold hidden 2xl:table-cell">Status</th>
+              <th className="px-2 py-3 w-10"></th>
             </tr></thead>
             <tbody>
               {rows.map((l) => {
                 const worst = l.shops.slice().sort((a, b) => (a.dageTilUdsolgt ?? 9999) - (b.dageTilUdsolgt ?? 9999))[0];
                 return (
-                  <tr key={l.ean} className="row-link border-t border-[var(--line)] align-top cursor-pointer" onClick={() => router.push(`/linje/${l.ean}`)}>
-                    <td className="px-4 py-3 max-w-[300px]">
+                  <tr key={l.ean} className={`row-link border-t border-[var(--line)] align-top cursor-pointer ${valgt.has(l.ean) ? "!bg-[#eef0ff]" : ""}`} onClick={() => router.push(`/linje/${l.ean}`)}>
+                    <td className="pl-3 pr-1 py-3" onClick={(e) => e.stopPropagation()}><input type="checkbox" checked={valgt.has(l.ean)} onChange={() => toggle(l.ean)} aria-label="Vælg" /></td>
+                    <td className="px-3 py-3 max-w-[300px]">
                       <Link href={`/linje/${l.ean}`} className="block font-bold truncate text-[.95rem]">{l.titel}</Link>
                       <span className="flex items-center gap-2 mt-0.5">{brand && l.brands.length > 1 ? <span className="text-[.65rem] font-bold text-[var(--overlager)]">Også i {l.brands.filter((x) => x !== brand).map((x) => BRANDS[x].kort).join(" + ")}</span> : <ShopDots shops={l.shops} withText />}<span className="num text-[.65rem] text-[var(--muted)]">{l.ean}</span>{l.hero && <span className="text-[.6rem] font-bold tracking-wider text-[var(--bestil)]">HERO</span>}</span>
                     </td>
@@ -93,6 +102,19 @@ function Tabel({ rows, dag0, brand }: { rows: LineLite[]; dag0: string; brand?: 
                     <td className="px-3 py-3 text-right num font-semibold whitespace-nowrap hidden xl:table-cell">{fmtTal(l.lager.tilgaengeligt)}{l.lager.vejleFrit > 0 && <span className="block text-[.65rem] text-[var(--muted)]">{fmtTal(l.lager.vejleFrit)} i Vejle</span>}</td>
                     <td className="px-3 py-3 text-right num whitespace-nowrap text-xs">{l.paaVej.sikker > 0 && <span className="block font-bold text-[var(--ok)]">+{fmtTal(l.paaVej.sikker)}</span>}{l.paaVej.usikker > 0 && <span className="block text-[#b58900] font-bold" title="Ubooket">+{fmtTal(l.paaVej.usikker)}<span className="text-[.6rem] font-semibold"> ub.</span></span>}{l.paaVej.sikker + l.paaVej.usikker === 0 && <span className="text-[var(--muted)]">0</span>}</td>
                     <td className="px-3 py-3 hidden 2xl:table-cell"><LineStatusChip status={l.status} small /></td>
+                    <td className="px-2 py-3 relative" onClick={(e) => e.stopPropagation()}>
+                      <button onClick={() => setMenu(menu === l.ean ? null : l.ean)} className="rounded-lg px-2 py-1 text-sm font-bold text-[var(--muted)] hover:bg-[var(--bg)] hover:text-[var(--ink)]" aria-label="Handlinger">⋯</button>
+                      {menu === l.ean && (
+                        <div className="absolute right-2 top-10 card p-1.5 w-56 z-20 flex flex-col text-sm" onMouseLeave={() => setMenu(null)}>
+                          {fjernet ? <button onClick={() => { onHandling([l.ean], "genindsaet"); setMenu(null); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Genindsæt på listen</button> : (<>
+                            <button onClick={() => { onHandling([l.ean], "udgaar"); setMenu(null); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Markér som udgår</button>
+                            <button onClick={() => { onHandling([l.ean], "skjul"); setMenu(null); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Skjul i 30 dage</button>
+                            <button onClick={() => { onHandling([l.ean], "ikke_indkoeb"); setMenu(null); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Ikke relevant for indkøb</button>
+                          </>)}
+                          <Link href={`/linje/${l.ean}`} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold text-[var(--muted)]">Åbn linjen →</Link>
+                        </div>
+                      )}
+                    </td>
                   </tr>
                 );
               })}
@@ -114,7 +136,8 @@ function Tabel({ rows, dag0, brand }: { rows: LineLite[]; dag0: string; brand?: 
               <span className="num">{fmtTal(l.velocity.base, 1)} stk/dag · {fmtTal(l.lager.tilgaengeligt)} tilg.</span>
               {l.genbestilling.foreslaaetStk > 0 ? <span className="num font-extrabold text-base text-[var(--ink)]">{fmtTal(l.genbestilling.foreslaaetStk)} stk</span> : <LineStatusChip status={l.status} small />}
             </div>
-          </Link></li>
+          </Link>
+          <div className="flex justify-end -mt-1 pr-2 pb-1"><button onClick={() => onHandling([l.ean], fjernet ? "genindsaet" : "udgaar")} className="text-[.65rem] font-bold text-[var(--muted)] underline">{fjernet ? "Genindsæt" : "Markér udgår"}</button></div></li>
         ))}
       </ul>
     </div>
@@ -129,6 +152,33 @@ export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; grupp
   const [hero, setHero] = useState(sp.get("hero") === "1");
   const [g, setG] = useState(sp.get("g") ?? gruppe);
   const [visAlle, setVisAlle] = useState<Record<string, boolean>>({});
+  const [overrides, setOverrides] = useState<Record<string, Flag>>({});
+  const [plans, setPlans] = useState<Record<string, PlanLite>>({});
+  const [valgt, setValgt] = useState<Set<string>>(new Set());
+  const [besked, setBesked] = useState<string | null>(null);
+  useEffect(() => { fetch("/api/state").then((r) => (r.ok ? r.json() : null)).then((d) => { if (d) { setOverrides(d.overrides ?? {}); setPlans(d.plans ?? {}); } }).catch(() => {}); }, []);
+  const dag0 = lines[0]?.dag0 ?? "";
+  // Effektiv status: flag og planer sat på sitet slår igennem med det samme, før den daglige opdatering
+  const effLines = useMemo(() => lines.map((l) => {
+    const o = overrides[l.ean]; const p = plans[l.ean];
+    let status: LineStatus = l.status;
+    if (o?.udgaar) status = "udgaar"; else if (o?.ikke_indkoeb) status = "ikke_indkoeb"; else if (o?.skjul_til && o.skjul_til >= dag0) status = "skjult";
+    else if (p) status = p.status; else if (["udgaar", "ikke_indkoeb", "skjult", "planlagt", "bestilt"].includes(l.status) && o === undefined && !p && Object.keys(overrides).length + Object.keys(plans).length > 0) status = l.status;
+    return status === l.status ? l : { ...l, status };
+  }), [lines, overrides, plans, dag0]);
+  const toggle = (ean: string) => setValgt((v) => { const n = new Set(v); if (n.has(ean)) n.delete(ean); else n.add(ean); return n; });
+  const onHandling = async (eans: string[], h: Handling) => {
+    const navn = askNavn(localStorage.getItem("lager_navn") ?? ""); if (!navn) return;
+    const tekst = { udgaar: "Markér som udgår", skjul: "Skjul i 30 dage", ikke_indkoeb: "Ikke relevant for indkøb", genindsaet: "Genindsæt" }[h];
+    if (!window.confirm(`${tekst}: ${eans.length} ${eans.length === 1 ? "vare" : "varer"}?${h !== "genindsaet" ? "\n\nVaren forsvinder fra forslag og mails. Fortryd under Fjernede varer." : ""}`)) return;
+    const body = h === "udgaar" ? { udgaar: true } : h === "skjul" ? { skjul_til: new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10) } : h === "ikke_indkoeb" ? { ikke_indkoeb: true } : { udgaar: false, ikke_indkoeb: false, skjul_til: null };
+    let ok = 0;
+    for (const ean of eans) {
+      const r = await fetch(`/api/override/${ean}`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...body, af: navn }) });
+      if (r.ok) { const saved = await r.json(); setOverrides((o) => ({ ...o, [ean]: saved })); ok++; }
+    }
+    setValgt(new Set()); setBesked(`${ok} ${ok === 1 ? "vare" : "varer"} opdateret`); setTimeout(() => setBesked(null), 3000);
+  };
   const inputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     const p = new URLSearchParams();
@@ -138,21 +188,23 @@ export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; grupp
   useEffect(() => { const h = (e: KeyboardEvent) => { if (e.key === "/" && document.activeElement?.tagName !== "INPUT") { e.preventDefault(); inputRef.current?.focus(); } }; window.addEventListener("keydown", h); return () => window.removeEventListener("keydown", h); }, []);
   const leverandoerer = useMemo(() => [...new Set(lines.map((l) => l.leverandoer).filter(Boolean) as string[])].sort(), [lines]);
   const grp = GRUPPER.find((x) => x.slug === g) ?? GRUPPER[0];
-  const counts = useMemo(() => Object.fromEntries(GRUPPER.map((x) => [x.slug, lines.filter((l) => x.status.includes(l.status)).length])), [lines]);
+  const counts = useMemo(() => Object.fromEntries(GRUPPER.map((x) => [x.slug, effLines.filter((l) => x.status.includes(l.status)).length])), [effLines]);
   const rows = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    return lines.filter((l) => grp.status.includes(l.status))
+    return effLines.filter((l) => grp.status.includes(l.status))
       .filter((l) => !brand || l.brands.includes(brand as Brand))
       .filter((l) => !lev || l.leverandoer === lev)
       .filter((l) => !hero || l.hero)
       .filter((l) => !needle || l.titel.toLowerCase().includes(needle) || l.ean.includes(needle) || l.shopTitler.some((t) => t.toLowerCase().includes(needle)) || (l.bcSku ?? "").toLowerCase().includes(needle));
-  }, [lines, grp, brand, lev, hero, q]);
+  }, [effLines, grp, brand, lev, hero, q]);
+  const erFjernet = g === "fjernet";
+  const tabelProps = { dag0, valgt, toggle, onHandling, fjernet: erFjernet };
 
   return (
     <div>
       <div className="flex gap-2 flex-wrap mb-4">
         {([["", "Alle shops"], ...BRAND_ORDER.map((b) => [b, BRANDS[b].navn])] as [string, string][]).map(([b, label]) => {
-          const n = lines.filter((l) => (!b || l.brands.includes(b as Brand)) && ["bestil_nu", "bestil_14", "bestil_45", "book_po"].includes(l.status)).length;
+          const n = effLines.filter((l) => (!b || l.brands.includes(b as Brand)) && ["bestil_nu", "bestil_14", "bestil_45", "book_po"].includes(l.status)).length;
           const on = brand === b;
           return <button key={b} onClick={() => setBrand(b)} className={`card !rounded-2xl px-4 md:px-5 py-3 text-left transition ${on ? "!bg-[var(--ink)] text-white" : "hover:-translate-y-0.5"}`}>
             <span className="flex items-center gap-2 font-extrabold text-base">{b && <i className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: BRANDS[b as Brand].farve }} />}{label}</span>
@@ -170,7 +222,18 @@ export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; grupp
         <span className="text-xs font-semibold text-[var(--muted)] ml-auto num">{rows.length} linjer</span>
       </div>
 
-      {brand ? <Tabel rows={rows} dag0={lines[0]?.dag0 ?? ""} /> : (
+      {(valgt.size > 0 || besked) && (
+        <div className="sticky top-2 z-30 mb-3 card !bg-[var(--ink)] text-white px-4 py-3 flex flex-wrap items-center gap-3 text-sm">
+          {valgt.size > 0 ? <><b className="num">{valgt.size} valgt</b>
+            {erFjernet ? <button onClick={() => onHandling([...valgt], "genindsaet")} className="rounded-lg bg-white text-[var(--ink)] font-bold px-3 py-1.5">Genindsæt</button> : (<>
+              <button onClick={() => onHandling([...valgt], "udgaar")} className="rounded-lg bg-white text-[var(--ink)] font-bold px-3 py-1.5">Markér som udgår</button>
+              <button onClick={() => onHandling([...valgt], "skjul")} className="rounded-lg bg-white/15 font-bold px-3 py-1.5">Skjul i 30 dage</button>
+              <button onClick={() => onHandling([...valgt], "ikke_indkoeb")} className="rounded-lg bg-white/15 font-bold px-3 py-1.5">Ikke relevant for indkøb</button>
+            </>)}
+            <button onClick={() => setValgt(new Set())} className="ml-auto text-white/70 font-semibold">Fravælg</button></> : <span className="font-bold text-[#7ee2a8]">{besked}</span>}
+        </div>
+      )}
+      {brand ? <Tabel rows={rows} brand={brand as Brand} {...tabelProps} /> : (
         <div className="flex flex-col gap-8">
           {BRAND_ORDER.map((b) => {
             const br = rows.filter((l) => l.brands.includes(b));
@@ -182,7 +245,7 @@ export function LineTable({ lines, gruppe = "alle" }: { lines: LineLite[]; grupp
                   <h2 className="font-extrabold text-xl flex items-center gap-2"><i className="inline-block w-3 h-3 rounded-full" style={{ background: BRANDS[b].farve }} />{BRANDS[b].navn}<span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)] ml-1">{BRANDS[b].land}</span></h2>
                   <div className="flex items-center gap-3 text-xs font-semibold text-[var(--muted)]">{nu > 0 && <span className="chip !text-[.6rem]" style={{ background: LINE_STATUS_META.bestil_nu.farve, color: "#fff" }}>Bestil nu {nu}</span>}<span className="num">{br.length} linjer</span><button onClick={() => setBrand(b)} className="font-bold text-[var(--ink)] underline">Kun {BRANDS[b].kort} →</button></div>
                 </div>
-                <Tabel rows={br.slice(0, visAlle[b] ? undefined : 8)} dag0={lines[0]?.dag0 ?? ""} brand={b} />
+                <Tabel rows={br.slice(0, visAlle[b] ? undefined : 8)} brand={b} {...tabelProps} />
                 {br.length > 8 && !visAlle[b] && <button onClick={() => setVisAlle((v) => ({ ...v, [b]: true }))} className="mt-2 text-sm font-bold text-[var(--muted)] hover:text-[var(--ink)]">Vis alle {br.length} linjer for {BRANDS[b].navn} ↓</button>}
               </section>
             );

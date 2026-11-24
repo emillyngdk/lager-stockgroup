@@ -14,7 +14,7 @@ export function useNavn(): [string, (n: string) => void] {
   return [navn, (n: string) => { localStorage.setItem("lager_navn", n); setNavn(n); }];
 }
 
-function askNavn(current: string): string | null {
+export function askNavn(current: string): string | null {
   const n = window.prompt("Hvem er du? (vises på planen)", current || "");
   if (n === null) return null;
   const t = n.trim();
