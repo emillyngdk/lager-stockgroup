@@ -1,26 +1,35 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f7f5f0;
+  --card: #ffffff;
+  --ink: #141414;
+  --muted: #6b6b6b;
+  --line: #e8e4dc;
+  --udsolgt: #141414;
+  --kritisk: #e5322d;
+  --bestil: #f5820d;
+  --obs: #f2b705;
+  --ok: #1e9e5a;
+  --overlager: #5b6cff;
+  --nyt: #9b6bff;
+  --graa: #8a8a8a;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+html { background: var(--bg); color: var(--ink); }
+body { font-family: "Poppins", Inter, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+h1, h2, h3 { letter-spacing: -0.02em; }
+.display { font-weight: 800; text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.95; }
+.num { font-variant-numeric: tabular-nums; }
+.card { background: var(--card); border-radius: 20px; box-shadow: 0 1px 2px rgba(20,20,20,.04), 0 8px 24px -16px rgba(20,20,20,.18); }
+.chip { display:inline-flex; align-items:center; gap:.35rem; border-radius:999px; padding:.2rem .6rem; font-size:.72rem; font-weight:700; letter-spacing:.02em; text-transform:uppercase; white-space:nowrap }
+.row-link { transition: background .12s }
+.row-link:hover { background: #fbfaf7 }
+table { border-collapse: separate; border-spacing: 0 }
+thead th { position: sticky; top: 0; background: #fff; z-index: 1 }
+.scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch }
+.bar { height: 6px; border-radius: 999px; background: #eeeae2; overflow: hidden }
+.bar > i { display:block; height:100%; border-radius:999px }
+kbd { font-family: inherit; font-size: .7rem; border: 1px solid var(--line); border-radius: 6px; padding: 0 .35rem; color: var(--muted) }
+::selection { background: #f2b705; color: #141414 }

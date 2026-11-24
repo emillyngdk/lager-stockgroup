@@ -1,103 +1,106 @@
-import Image from "next/image";
+import Link from "next/link";
+import { Shell } from "@/components/shell";
+import { BigNumber, StatusChip, Dage } from "@/components/ui";
+import { getForecast, fmtDato, fmtTal } from "@/lib/data";
+import { BRANDS, STATUS_META, type Brand, type Status } from "@/lib/forecast/types";
 
-export default function Home() {
+export const dynamic = "force-static";
+
+export default function Forside() {
+  const f = getForecast();
+  const o = f.opsummering;
+  const brands = Object.keys(BRANDS) as Brand[];
+  const forslagLinjer = f.forslag.reduce((a, l) => a + l.linjer.length, 0);
+  const top = (b: Brand) => f.rows.filter((r) => r.brand === b && ["udsolgt", "kritisk", "bestil_nu"].includes(r.status) && r.velocity.base > 0.5)
+    .sort((x, y) => (x.dage.tilUdsolgtMedPaaVej ?? 9999) - (y.dage.tilUdsolgtMedPaaVej ?? 9999)).slice(0, 3);
+  const univ = f.universelle.filter((u) => ["udsolgt", "kritisk", "bestil_nu"].includes(u.status)).slice(0, 3);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <Shell active="forside">
+      <header className="mb-6 md:mb-8 flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h1 className="display text-4xl md:text-6xl">Hvad brænder?</h1>
+          <p className="mt-2 text-sm md:text-base font-medium text-[var(--muted)]">{fmtTal(f.rows.length)} varer forecastet på tværs af fire shops · {fmtDato(f.dag0)}</p>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+        <Link href="/forslag" className="card px-5 py-4 flex items-center gap-4 hover:-translate-y-0.5 transition-transform">
+          <span className="display num text-4xl">{forslagLinjer}</span>
+          <span className="text-sm font-semibold leading-tight">linjer i<br />ugens forslag →</span>
+        </Link>
+      </header>
+
+      <section className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-8">
+        <BigNumber label="Udsolgt" value={o.udsolgt} sub="0 tilgængeligt lige nu" href="/fane/udsolgt" color={STATUS_META.udsolgt.farve} />
+        <BigNumber label="Kritisk" value={o.kritisk} sub="Tør før næste levering" href="/fane/kritisk" color={STATUS_META.kritisk.farve} />
+        <BigNumber label="Bestil nu" value={o.bestil_nu} sub="PO afsted inden 14 dage" href="/fane/bestil-nu" color={STATUS_META.bestil_nu.farve} />
+        <BigNumber label="OBS" value={o.obs} sub="Hold øje de næste 45 dage" href="/fane/obs" color="#b58900" />
+      </section>
+
+      <section className="grid md:grid-cols-2 xl:grid-cols-5 gap-3 md:gap-4 mb-8">
+        {brands.map((b) => {
+          const s = f.prBrand[b];
+          const t = top(b);
+          return (
+            <div key={b} className="card p-5 flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <h2 className="font-extrabold text-lg flex items-center gap-2"><i className="inline-block w-2.5 h-2.5 rounded-full" style={{ background: BRANDS[b].farve }} />{BRANDS[b].navn}</h2>
+                <span className="text-[.65rem] font-bold uppercase tracking-wider text-[var(--muted)]">{BRANDS[b].land}</span>
+              </div>
+              <div className="flex gap-1.5 flex-wrap">
+                {(["udsolgt", "kritisk", "bestil_nu", "obs", "ok"] as Status[]).map((st) => (
+                  <Link key={st} href={`/fane/${st.replace("_", "-")}?brand=${b}`} className="chip !text-[.6rem]" style={{ background: s[st] ? STATUS_META[st].farve : "#eeeae2", color: s[st] ? STATUS_META[st].tekst : "#8a8a8a" }}>{STATUS_META[st].label} {s[st]}</Link>
+                ))}
+              </div>
+              <ul className="flex flex-col divide-y divide-[var(--line)]">
+                {t.length === 0 && <li className="py-2 text-sm font-semibold text-[var(--ok)]">Intet brænder lige nu 🎉</li>}
+                {t.map((r) => (
+                  <li key={r.key}><Link href={`/vare/${encodeURIComponent(r.key)}`} className="py-2 flex items-center justify-between gap-3">
+                    <span className="min-w-0"><span className="block text-sm font-semibold truncate">{r.titel}</span><span className="text-[.65rem] text-[var(--muted)] num">{fmtTal(r.velocity.base, 1)} stk/dag · {fmtTal(r.lager.tilgaengeligt)} tilg.</span></span>
+                    <span className="text-right shrink-0"><Dage n={r.dage.tilUdsolgtMedPaaVej} /><span className="block text-[.55rem] font-bold uppercase text-[var(--muted)]">dage</span></span>
+                  </Link></li>
+                ))}
+              </ul>
+            </div>
+          );
+        })}
+        <div className="card p-5 flex flex-col gap-3">
+          <div className="flex items-center justify-between"><h2 className="font-extrabold text-lg">Universelle</h2><Link href="/universelle" className="text-xs font-bold text-[var(--overlager)]">Alle {f.universelle.length} →</Link></div>
+          <p className="text-xs text-[var(--muted)] font-medium">Samme EAN i flere shops – trækker på den fælles pulje i Vejle.</p>
+          <ul className="flex flex-col divide-y divide-[var(--line)]">
+            {univ.length === 0 && <li className="py-2 text-sm font-semibold text-[var(--ok)]">Alle universelle er dækket</li>}
+            {univ.map((u) => (
+              <li key={u.ean} className="py-2 flex items-center justify-between gap-3">
+                <span className="min-w-0"><span className="block text-sm font-semibold truncate">{u.titel}</span><span className="text-[.65rem] text-[var(--muted)] num">{u.brands.map((b) => BRANDS[b].kort).join(" + ")} · {fmtTal(u.velocitySum, 1)} stk/dag</span></span>
+                <StatusChip status={u.status} small />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="grid md:grid-cols-3 gap-3 md:gap-4">
+        <div className="card p-5">
+          <p className="text-[.7rem] font-bold uppercase tracking-widest text-[var(--muted)]">Datakilder</p>
+          <ul className="mt-2 text-sm font-medium flex flex-col gap-1">
+            <li>BC lager og PO'er: <span className="num font-bold">{f.kilder.bc_laest ?? "–"}</span></li>
+            <li>Shopify-lager: <span className="num font-bold">{fmtDato(f.kilder.shopify_hentet)}</span></li>
+            <li>Salg: Jullytics 7/30/60 dage</li>
+            <li>Sæson: {f.saeson.kilde}</li>
+          </ul>
+        </div>
+        <div className="card p-5">
+          <p className="text-[.7rem] font-bold uppercase tracking-widest text-[var(--muted)]">Resten af sortimentet</p>
+          <ul className="mt-2 text-sm font-medium flex flex-col gap-1">
+            <li><Link href="/fane/ok" className="flex justify-between"><span>OK</span><b className="num">{o.ok}</b></Link></li>
+            <li><Link href="/fane/overlager" className="flex justify-between"><span>Overlager</span><b className="num">{o.overlager}</b></Link></li>
+            <li><Link href="/fane/nyheder" className="flex justify-between"><span>Nyheder (under 14 dage)</span><b className="num">{o.for_nyt}</b></Link></li>
+            <li><Link href="/uden-kobling" className="flex justify-between"><span>Uden kobling til BC</span><b className="num">{f.udenKobling.length}</b></Link></li>
+          </ul>
+        </div>
+        <div className="card p-5">
+          <p className="text-[.7rem] font-bold uppercase tracking-widest text-[var(--muted)]">Sådan læser du tallene</p>
+          <p className="mt-2 text-sm font-medium leading-relaxed">“Dage til udsolgt” regner med det der er på lager plus bekræftede leveringer. “Bestil senest” er dagen hvor en ny PO skal afsted, givet lead time og det der allerede er bestilt – også det der ikke er booket endnu. <Link href="/om" className="font-bold underline">Hele regnestykket →</Link></p>
+        </div>
+      </section>
+    </Shell>
   );
 }
