@@ -5,9 +5,12 @@ import type { PurchaseLine } from "@/lib/forecast/purchase";
 import { Calculator } from "./calculator";
 import { fmtDato, fmtTal } from "@/lib/format";
 import { ask, hvemErDu } from "./dialog";
+import { visToast } from "./toast";
+import { poTilstand, PO_OPRETTET_DAGE } from "@/lib/overlay";
+import { markerPoOprettet, saetFlag, PO_NULSTIL } from "@/lib/handlinger";
 
 export type Plan = { stk: number; colli: number; bestilDato: string; leadTime: number; note?: string; af?: string; oprettet: string; status: "planlagt" | "bestilt"; po?: string };
-export type Flag = { udgaar?: boolean; skjul_til?: string | null; ikke_indkoeb?: boolean; note?: string; af?: string; dato?: string; lead_time?: number; coverage_days?: number; moq?: number; eu?: boolean; kategori?: "hybrid" | "standard"; leverandoer?: string };
+export type Flag = { udgaar?: boolean; skjul_til?: string | null; ikke_indkoeb?: boolean; note?: string; af?: string; dato?: string; lead_time?: number; coverage_days?: number; moq?: number; eu?: boolean; kategori?: "hybrid" | "standard"; leverandoer?: string; po_oprettet?: string; po_kendt?: string[]; po_paavej?: number; po_nr?: string };
 
 export function useNavn(): [string, (n: string) => void] {
   const [navn, setNavn] = useState("");
@@ -47,6 +50,17 @@ export function LineDetail({ line, receivingDays, leverandoerer = [] }: { line: 
     if (r.ok) { setFlag(await r.json()); setMenu(false); setMsg("Gemt – slår igennem på listen ved næste opdatering i morgen tidlig"); router.refresh(); } else setMsg("Kunne ikke gemme");
   };
   const fjernet = flag?.udgaar || flag?.ikke_indkoeb || (flag?.skjul_til && flag.skjul_til >= line.projektion.dag0);
+  const pv = line.paaVej.sikker + line.paaVej.usikker;
+  const po = poTilstand(flag, line.poNumre ?? [], pv, line.projektion.dag0);
+  const poOprettet = async () => {
+    setMenu(false);
+    const af = await who(); if (!af) return; setNavn(af);
+    const v = await ask({ title: "PO oprettet?", text: `${line.titel}\n\nForsvinder fra listen i ${PO_OPRETTET_DAGE} dage. Dukker der ikke en ny PO op i BC inden da, kommer den tilbage.`, ok: "✓ PO oprettet", fields: [{ key: "po", label: "PO-nummer (valgfrit)", placeholder: "fx 108512" }] });
+    if (!v) return;
+    const saved = await markerPoOprettet([{ ean: line.ean, poNumre: line.poNumre ?? [], paaVejStk: pv }], af, v.po);
+    if (saved[line.ean]) { setFlag(saved[line.ean] as Flag); visToast({ tekst: "PO oprettet – varen er væk fra listen", fortryd: fortrydPo }); } else setMsg("Kunne ikke gemme");
+  };
+  const fortrydPo = async () => { const af = navn || (await hvemErDu()); if (!af) return; const saved = await saetFlag([line.ean], { ...PO_NULSTIL }, af); setFlag((saved[line.ean] as Flag) ?? null); setMenu(false); };
 
   return (
     <div className="flex flex-col gap-4">
@@ -54,12 +68,19 @@ export function LineDetail({ line, receivingDays, leverandoerer = [] }: { line: 
         {plan && <span className="chip" style={{ background: plan.status === "bestilt" ? "#1e9e5a" : "#5b6cff", color: "#fff" }}>{plan.status === "bestilt" ? `Bestilt · PO ${plan.po ?? ""}` : "Planlagt"} · {fmtTal(plan.stk)} stk{plan.af ? ` · ${plan.af}` : ""} · {fmtDato(plan.oprettet.slice(0, 10))}</span>}
         {plan && <button onClick={slet} className="text-xs font-bold text-[var(--muted)] underline">fjern plan</button>}
         {fjernet && <span className="chip" style={{ background: "#8a8a8a", color: "#fff" }}>{flag?.udgaar ? "Udgår" : flag?.ikke_indkoeb ? "Ikke relevant for indkøb" : `Skjult til ${fmtDato(flag!.skjul_til!)}`}{flag?.af ? ` · ${flag.af}` : ""}</span>}
+        {po && <span className="chip" style={{ background: po.tilstand === "udloebet" ? "var(--kritisk)" : po.tilstand === "fundet" ? "#1e9e5a" : "#5b6cff", color: "#fff" }}>{po.tilstand === "afventer" ? `PO oprettet ${fmtDato(po.dato)}${po.af ? ` · ${po.af}` : ""} · tjekkes til ${fmtDato(po.frist)}` : po.tilstand === "fundet" ? `PO ${po.nyPo ?? ""} fundet i BC` : `PO markeret ${fmtDato(po.dato)} – ikke fundet i BC`}</span>}
+        {po?.tilstand === "afventer" && <button onClick={fortrydPo} className="text-xs font-bold text-[var(--muted)] underline">fortryd</button>}
+        {!po && !fjernet && !plan && <button onClick={poOprettet} className="rounded-full bg-[var(--ok)] text-white font-extrabold px-4 py-1.5 text-sm hover:brightness-110">✓ PO oprettet</button>}
         {msg && <span className="text-xs font-bold text-[var(--ok)]">{msg}</span>}
         <div className="relative ml-auto">
           <button onClick={() => setMenu((m) => !m)} className="card !rounded-xl px-3 py-2 text-sm font-bold" aria-label="Handlinger">⋯</button>
           {menu && (
             <div className="absolute right-0 mt-2 card p-2 w-72 z-20 flex flex-col text-sm">
               {!fjernet ? (<>
+                {po?.tilstand === "afventer"
+                  ? <button onClick={fortrydPo} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-bold">Fortryd “PO oprettet”<span className="block text-xs font-medium text-[var(--muted)]">Varen kommer tilbage på listen</span></button>
+                  : <button onClick={poOprettet} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-bold">✓ PO oprettet<span className="block text-xs font-medium text-[var(--muted)]">Væk fra listen i {PO_OPRETTET_DAGE} dage, tilbage hvis BC ikke viser en ny PO</span></button>}
+                <div className="h-px bg-[var(--line)] my-1" />
                 <button onClick={() => setFlagRemote({ udgaar: true }, "Markér som udgår?", `${line.titel} fjernes fra indkøbslisten, forslag og mails – også i fremtidige kørsler. Fortryd under Fjernede varer.`, true)} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Markér som udgår<span className="block text-xs font-medium text-[var(--muted)]">Ingen forslag, ingen mail. Restlager vises stadig.</span></button>
                 <button onClick={async () => { setMenu(false); const v = await ask({ title: "Skjul indtil dato", text: "Varen forsvinder fra listen indtil datoen og kommer selv tilbage bagefter.", fields: [{ key: "dato", label: "Skjul til", type: "date", value: new Date(Date.now() + 30 * 864e5).toISOString().slice(0, 10), required: true }], ok: "Videre" }); if (v?.dato) setFlagRemote({ skjul_til: v.dato }, `Skjul til ${fmtDato(v.dato)}?`, line.titel); }} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Skjul indtil dato<span className="block text-xs font-medium text-[var(--muted)]">Fx fordi en PO er på vej men ikke i BC endnu.</span></button>
                 <button onClick={() => setFlagRemote({ ikke_indkoeb: true }, "Ikke relevant for indkøb?", `${line.titel} fjernes fra indkøbslisten, men bliver i Shops-visningen.`)} className="text-left px-3 py-2 rounded-lg hover:bg-[var(--bg)] font-semibold">Ikke relevant for indkøb<span className="block text-xs font-medium text-[var(--muted)]">Holdes af shoppen selv (dropship, gavekort).</span></button>

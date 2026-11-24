@@ -3,9 +3,11 @@ import Image from "next/image";
 import { getForecast } from "@/lib/data";
 
 import { LINE_STATUS_META } from "@/lib/forecast/purchase";
+import { paaListen } from "@/lib/overlay";
+import { LiveListeCount } from "./live-count";
 
 
-function NavItem({ href, label, count, color, active }: { href: string; label: string; count?: number; color?: string; active: boolean }) {
+function NavItem({ href, label, count, color, active }: { href: string; label: string; count?: React.ReactNode; color?: string; active: boolean }) {
   return (
     <Link href={href} className={`nav-item flex items-center justify-between gap-3 rounded-xl px-3 py-2 text-sm font-semibold whitespace-nowrap ${active ? "bg-white text-[var(--ink)]" : "text-white/75 hover:bg-white/10 hover:text-white"}`}>
       <span className="flex items-center gap-2.5">{color && <i className="inline-block w-2 h-2 rounded-full ring-2 ring-white/10" style={{ background: color }} />}{label}</span>
@@ -21,11 +23,13 @@ export function Shell({ children, active, title, intro, aside }: { children: Rea
   const stale = ageH > 30;
   const opdateret = koert.toLocaleString("da-DK", { timeZone: "Europe/Copenhagen", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
   const fjernet = f.linjer.filter((l) => ["udgaar", "skjult", "ikke_indkoeb"].includes(l.status)).length;
-  const ol = f.opsummeringLinjer;
+  // Alt der kan stå på listen (før manuelle flag) – menuens tal regnes live ud fra det
+  const levBase = f.linjer.filter((l) => paaListen(l.grundStatus ?? l.status, l.dage.bestilSenest) && (l.grundStatus ?? l.status) !== "book_po" && l.genbestilling.foreslaaetStk > 0).map((l) => ({ e: l.ean, s: l.grundStatus ?? l.status, b: l.dage.bestilSenest, p: l.poNumre ?? [], v: l.paaVej.sikker + l.paaVej.usikker }));
+  const listeBase = f.linjer.filter((l) => paaListen(l.grundStatus ?? l.status, l.dage.bestilSenest)).map((l) => ({ e: l.ean, s: l.grundStatus ?? l.status, b: l.dage.bestilSenest, p: l.poNumre ?? [], v: l.paaVej.sikker + l.paaVej.usikker }));
   const nav = (
     <>
-      <NavItem href="/" label="Skal bestilles" count={f.linjer.filter((l) => ["bestil_nu", "bestil_14", "bestil_30", "book_po"].includes(l.status) || (l.status === "for_nyt" && l.dage.bestilSenest != null && l.dage.bestilSenest <= 30)).length} color={LINE_STATUS_META.bestil_nu.farve} active={active === "indkoeb"} />
-      <NavItem href="/forslag" label="Pr. leverandør" count={f.forslagEan.reduce((a, g) => a + g.linjer.length, 0)} active={active === "forslag"} />
+      <NavItem href="/" label="Skal bestilles" count={<LiveListeCount base={listeBase} dag0={f.dag0} initial={f.linjer.filter((l) => paaListen(l.status, l.dage.bestilSenest)).length} />} color={LINE_STATUS_META.bestil_nu.farve} active={active === "indkoeb"} />
+      <NavItem href="/forslag" label="Pr. leverandør" count={<LiveListeCount base={levBase} dag0={f.dag0} initial={f.linjer.filter((l) => paaListen(l.status, l.dage.bestilSenest) && l.status !== "book_po" && l.genbestilling.foreslaaetStk > 0).length} />} active={active === "forslag"} />
       <NavItem href="/paa-vej" label="På vej" active={active === "paa-vej"} />
       <div className="h-px bg-white/10 my-3 hidden md:block" />
       <p className="hidden md:block px-3 pb-1 text-[.6rem] font-bold uppercase tracking-[.18em] text-white/35">Sortiment</p>

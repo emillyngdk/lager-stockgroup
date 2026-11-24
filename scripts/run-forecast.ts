@@ -34,12 +34,14 @@ for (const l of out.linjer) {
   const ny = l.paaVej.events.find((e) => !kendte.has(e.po) && e.dato >= p.bestilDato);
   const status: "planlagt" | "bestilt" = p.status === "bestilt" || ny ? "bestilt" : "planlagt";
   l.plan = { stk: p.stk, colli: p.colli, bestilDato: p.bestilDato, leadTime: p.leadTime, af: p.af, note: p.note, oprettet: p.oprettet, status, po: p.po ?? ny?.po };
-  if (!["udgaar", "skjult", "ikke_indkoeb"].includes(l.status)) { l.status = status; l.statusAarsag = status === "bestilt" ? `Bestilt – PO ${l.plan.po ?? ""} fundet i BC efter planen (${p.stk} stk${p.af ? `, ${p.af}` : ""})` : `Planlagt ${p.stk} stk${p.af ? ` af ${p.af}` : ""} den ${p.oprettet.slice(0, 10)} – afventer PO i BC`; }
+  if (!["udgaar", "skjult", "ikke_indkoeb", "po_oprettet"].includes(l.status)) { l.status = status; l.statusAarsag = status === "bestilt" ? `Bestilt – PO ${l.plan.po ?? ""} fundet i BC efter planen (${p.stk} stk${p.af ? `, ${p.af}` : ""})` : `Planlagt ${p.stk} stk${p.af ? ` af ${p.af}` : ""} den ${p.oprettet.slice(0, 10)} – afventer PO i BC`; }
   if (status === "bestilt") bestilt++; else planlagt++;
 }
 out.opsummeringLinjer = Object.fromEntries(Object.keys(out.opsummeringLinjer).map((k) => [k, out.linjer.filter((l) => l.status === k).length])) as typeof out.opsummeringLinjer;
 for (const g of out.forslagEan) for (const x of g.linjer) { const l = out.linjer.find((y) => y.ean === x.ean); if (l?.plan) { x.foreslaaetStk = l.plan.stk; x.foreslaaetColli = l.plan.colli; x.status = l.status; x.begrundelse = l.statusAarsag; } }
-out.forslagEan = out.forslagEan.map((g) => ({ ...g, linjer: g.linjer.filter((x) => !["udgaar", "skjult", "ikke_indkoeb", "bestilt"].includes(x.status)) })).filter((g) => g.linjer.length);
+out.forslagEan = out.forslagEan.map((g) => ({ ...g, linjer: g.linjer.filter((x) => !["udgaar", "skjult", "ikke_indkoeb", "bestilt", "po_oprettet"].includes(x.status)) })).filter((g) => g.linjer.length);
+const poAfv = out.linjer.filter((l) => l.poOprettet?.tilstand === "afventer").length, poFundet = out.linjer.filter((l) => l.poOprettet?.tilstand === "fundet").length, poRetur = out.linjer.filter((l) => l.poOprettet?.tilstand === "udloebet").length;
+if (poAfv + poFundet + poRetur) console.log(`PO oprettet: ${poAfv} afventer BC, ${poFundet} fundet i BC, ${poRetur} tilbage på listen (ingen PO efter 7 dage)`);
 if (planlagt + bestilt) console.log(`planer: ${planlagt} planlagt, ${bestilt} bestilt`);
 fs.writeFileSync(path.join(root, "data", "forecast.json"), JSON.stringify(out));
 // historik til præcisionsmåling

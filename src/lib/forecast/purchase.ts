@@ -7,9 +7,10 @@
  */
 import { BRANDS, type Brand, type Config, type ForecastRow, type Override, type PoLine, type Snapshot, type AgeGroup } from "./types";
 import { addDays, isoWeek } from "./engine";
+import { effektivStatus, paaListen, PO_OPRETTET_DAGE as PO_DAGE, type PoTilstand } from "../overlay";
 
 export type LineStatus =
-  | "bestil_nu" | "bestil_14" | "bestil_30" | "book_po" | "planlagt" | "bestilt" | "daekket" | "overlager" | "for_nyt"
+  | "bestil_nu" | "bestil_14" | "bestil_30" | "book_po" | "po_oprettet" | "planlagt" | "bestilt" | "daekket" | "overlager" | "for_nyt"
   | "udgaar" | "skjult" | "ikke_indkoeb";
 
 export const LINE_STATUS_META: Record<LineStatus, { label: string; farve: string; tekst: string; orden: number; kort: string }> = {
@@ -17,6 +18,7 @@ export const LINE_STATUS_META: Record<LineStatus, { label: string; farve: string
   bestil_14: { label: "Bestil", farve: "#F5820D", tekst: "#FFFFFF", orden: 1, kort: "14 d" },
   bestil_30: { label: "Bestil", farve: "#F2B705", tekst: "#141414", orden: 2, kort: "30 d" },
   book_po: { label: "Book PO", farve: "#F2B705", tekst: "#141414", orden: 3, kort: "Book" },
+  po_oprettet: { label: "PO oprettet", farve: "#5B6CFF", tekst: "#FFFFFF", orden: 4, kort: "PO" },
   planlagt: { label: "Planlagt", farve: "#5B6CFF", tekst: "#FFFFFF", orden: 4, kort: "Plan" },
   bestilt: { label: "Bestilt", farve: "#1E9E5A", tekst: "#FFFFFF", orden: 5, kort: "Bestilt" },
   daekket: { label: "Dækket", farve: "#1E9E5A", tekst: "#FFFFFF", orden: 6, kort: "OK" },
@@ -30,6 +32,7 @@ export const LINE_STATUS_META: Record<LineStatus, { label: string; farve: string
 export interface LineOverride extends Override {
   moq?: number; kategori?: "hybrid" | "standard"; eu?: boolean; leverandoer?: string;
   skjul_til?: string | null; ikke_indkoeb?: boolean; af?: string; dato?: string;
+  po_oprettet?: string; po_kendt?: string[]; po_paavej?: number; po_nr?: string;
 }
 
 export interface LineShop {
@@ -43,6 +46,11 @@ export interface LineEvent { dato: string; stk: number; sikker: boolean; po: str
 export interface PurchaseLine {
   ean: string; bcSku: string | null; titel: string; shopTitler: string[]; brands: Brand[]; shops: LineShop[];
   status: LineStatus; statusAarsag: string; hero: boolean;
+  /** status før manuelle flag (udgår/skjult/PO oprettet/plan) – sitet lægger flag ovenpå live */
+  grundStatus: LineStatus;
+  /** alle åbne PO-numre på EAN'et (bruges til at se om en ny PO er dukket op) */
+  poNumre: string[];
+  poOprettet: PoTilstand | null;
   leverandoer: string | null; indkoeber: string | null;
   velocity: { base: number; afsaeson: number; trend: number; solgt365: number | null; salgsdage: number; snitPrDag: number | null };
   /** Hvor meget kan man stole på forslaget? lav = under 30 dages salgsdata, middel = under 90, ok = 90+ */
@@ -262,11 +270,7 @@ export function buildPurchaseLines(
     const foersteSikker = events.find((e) => e.sikker)?.dato ?? null;
     const foersteUsikker = events.find((e) => !e.sikker) ?? null;
     let status: LineStatus; let aarsag: string;
-    const skjult = ov?.skjul_til && ov.skjul_til >= dag0;
-    if (ov?.udgaar) { status = "udgaar"; aarsag = `Markeret som udgår${ov.af ? ` af ${ov.af}` : ""}${ov.note ? ` – ${ov.note}` : ""}`; }
-    else if (ov?.ikke_indkoeb) { status = "ikke_indkoeb"; aarsag = `Holdes af shoppen selv${ov.note ? ` – ${ov.note}` : ""}`; }
-    else if (skjult) { status = "skjult"; aarsag = `Skjult til ${ov!.skjul_til}${ov?.note ? ` – ${ov.note}` : ""}`; }
-    else if (rs.every((r) => r.alder.gruppe === "nyhed")) { status = "for_nyt"; aarsag = "Under 14 dage i salg i alle shops – for lidt data"; }
+    if (rs.every((r) => r.alder.gruppe === "nyhed")) { status = "for_nyt"; aarsag = "Under 14 dage i salg i alle shops – for lidt data"; }
     else if (base <= 0.05 && rs.every((r) => r.alder.dage > 90)) { status = "overlager"; aarsag = tilgaengeligt > 0 ? "Ingen salg de sidste 60 dage" : "Ingen salg og intet på lager – udgået?"; }
     else if (foreslaaetStkRund === 0 && udenUbooketRund > 0 && foersteUsikker) { status = "book_po"; aarsag = `Tør ${dK === Infinity ? "ikke" : "om " + dK + " dage"} – ubooket PO ${foersteUsikker.po} dækker behovet men kommer først ${foersteUsikker.dato}: book eller fremryk den`; }
     else if (foreslaaetStkRund === 0 && udenUbooketRund === 0) { status = base <= 0.05 ? "overlager" : "daekket"; aarsag = base <= 0.05 ? "Ingen efterspørgsel at regne på – intet at bestille" : "Intet behov ud over det der er på lager og bestilt"; }
@@ -276,6 +280,20 @@ export function buildPurchaseLines(
     else if ((dTil ?? Infinity) > cfg.status.overlagerDays && paaVejSikker + paaVejUsikker === 0) { status = "overlager"; aarsag = `Over ${cfg.status.overlagerDays} dages dækning uden nye køb`; }
     else { status = "daekket"; aarsag = (hulFoer !== null ? `Tør om ${hulFoer} dage indtil næste levering${foersteSikker ? ` ${foersteSikker}` : ""} – kan ikke nås med en ny PO (${tidligstNy} dage); derefter ` : "") + (bs === Infinity ? "dækket hele horisonten med det der er bestilt" : `næste bestilling om ${bs} dage`); }
 
+    // --- manuelle flag ovenpå grundstatus (samme regel som sitet bruger live) ---
+    const grundStatus = status;
+    const poNumre = [...new Set((poByEan[ean] || []).map((x) => x.po))];
+    const eff = effektivStatus(grundStatus, bsDag, ov ?? null, null, poNumre, paaVejSikker + paaVejUsikker, dag0);
+    const poOprettet = eff.po;
+    if (eff.status !== grundStatus) {
+      status = eff.status;
+      if (status === "udgaar") aarsag = `Markeret som udgår${ov?.af ? ` af ${ov.af}` : ""}${ov?.note ? ` – ${ov.note}` : ""}`;
+      else if (status === "ikke_indkoeb") aarsag = `Holdes af shoppen selv${ov?.note ? ` – ${ov.note}` : ""}`;
+      else if (status === "skjult") aarsag = `Skjult til ${ov?.skjul_til}${ov?.note ? ` – ${ov.note}` : ""}`;
+      else if (status === "bestilt") aarsag = `PO ${poOprettet?.nyPo ?? ""} fundet i BC efter “PO oprettet” ${poOprettet?.dato} – dækker behovet, afventer booking`;
+      else if (status === "po_oprettet") aarsag = `PO oprettet ${poOprettet!.dato}${poOprettet!.af ? ` af ${poOprettet!.af}` : ""}${poOprettet!.poNr ? ` (PO ${poOprettet!.poNr})` : ""} – venter på at den dukker op i BC. Kommer tilbage på listen ${poOprettet!.frist}, hvis den ikke gør.`;
+    }
+
     const salgsdage = Math.max(...rs.map((r) => r.alder.salgsdage));
     const solgt365Sum = rs.some((r) => r.oekonomi.solgt365 != null) ? rs.reduce((a, r) => a + (r.oekonomi.solgt365 ?? 0), 0) : null;
     const dataKvalitet: PurchaseLine["dataKvalitet"] = salgsdage < 30 ? "lav" : salgsdage < 90 ? "middel" : "ok";
@@ -283,6 +301,8 @@ export function buildPurchaseLines(
     if (dataKvalitet === "lav") advarsler.push(`Kun ${salgsdage} dages salgsdata – forslaget bygger på en meget kort periode og kan være langt fra det rigtige. Tjek tallet med egen vurdering før du bestiller.`);
     else if (dataKvalitet === "middel") advarsler.push(`${salgsdage} dages salgsdata – varen er ny, og sæsonmønstret er endnu ikke kendt.`);
     if (rs.some((r) => r.forklaring.some((f) => f.startsWith("Normalt niveau dæmpet")))) advarsler.push("De seneste ugers salg er kampagnedrevet (Black Week) – normalt niveau er dæmpet til 3× årsgennemsnittet.");
+    if (poOprettet?.tilstand === "udloebet" && paaListen(status, bsDag)) advarsler.unshift(grundStatus === "book_po" ? `Markeret booket ${poOprettet.dato}${poOprettet.af ? ` af ${poOprettet.af}` : ""}, men PO'en står stadig som ikke booket i BC efter ${PO_DAGE} dage.` : `Markeret “PO oprettet” ${poOprettet.dato}${poOprettet.af ? ` af ${poOprettet.af}` : ""}, men der er ikke dukket en ny PO op i BC på ${PO_DAGE} dage – tjek at den er oprettet.`);
+    if (poOprettet?.tilstand === "fundet" && paaListen(status, bsDag)) advarsler.unshift(`PO ${poOprettet.nyPo ?? ""} er fundet i BC, men dækker ikke hele behovet – der mangler stadig ${foreslaaetStkRund} stk.`);
     if (!leverandoer) advarsler.push("Ingen leverandør kendt (ingen åben PO). Sæt leverandøren under ⋯ → Sæt leverandør, så kommer varen med på leverandørens liste.");
     const unitCost = rs.find((r) => r.oekonomi.unitCost != null && r.brand === "casper")?.oekonomi.unitCost ?? rs.find((r) => r.oekonomi.unitCost != null)?.oekonomi.unitCost ?? null;
 
@@ -296,7 +316,7 @@ export function buildPurchaseLines(
 
     lines.push({
       ean, bcSku: bc?.bc_sku ?? null, titel, shopTitler: [...new Set(rs.map((r) => r.titelOriginal ?? r.titel))], brands: rs.map((r) => r.brand), shops,
-      status, statusAarsag: aarsag, hero, leverandoer, indkoeber: poLev?.indkoeber ?? null,
+      status, statusAarsag: aarsag, hero, grundStatus, poNumre, poOprettet, leverandoer, indkoeber: poLev?.indkoeber ?? null,
       velocity: { base: r1(base), afsaeson: r1(afsaeson), trend: Math.round(trend * 100) / 100, solgt365: solgt365Sum, salgsdage, snitPrDag: solgt365Sum != null && salgsdage > 0 ? r1(solgt365Sum / Math.min(365, salgsdage)) : null },
       dataKvalitet, advarsler,
       lager: { ecomSum, vejleFrit: Math.round(vejleFrit), vejleOptimistisk: Math.round(vejleOpt), tredjepart: Math.round(tredjepart), tredjepartOptimistisk: Math.round(tredjepartOpt), reserveretShopGroup: resSG, reserveretB2b: resB2b, bestiltB2b: bestB2b, tilgaengeligt: Math.round(tilgaengeligt), tilgaengeligtOptimistisk: Math.round(tilgaengeligtOpt), prLokation },

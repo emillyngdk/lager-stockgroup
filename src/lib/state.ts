@@ -7,7 +7,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 export type Plan = { stk: number; colli: number; bestilDato: string; leadTime: number; note?: string; af?: string; oprettet: string; opdateret: string; status: "planlagt" | "bestilt"; po?: string; poKendt?: string[] };
-export type Flag = { udgaar?: boolean; skjul_til?: string | null; ikke_indkoeb?: boolean; note?: string; af?: string; dato?: string; lead_time?: number; coverage_days?: number; moq?: number; eu?: boolean; kategori?: "hybrid" | "standard"; service_level?: "hero" | "normal"; leverandoer?: string };
+export type Flag = { udgaar?: boolean; skjul_til?: string | null; ikke_indkoeb?: boolean; note?: string; af?: string; dato?: string; lead_time?: number; coverage_days?: number; moq?: number; eu?: boolean; kategori?: "hybrid" | "standard"; service_level?: "hero" | "normal"; leverandoer?: string; po_oprettet?: string; po_kendt?: string[]; po_paavej?: number; po_nr?: string };
 export type LogEntry = { tid: string; ean: string; af?: string; hvad: string };
 export interface State { plans: Record<string, Plan>; overrides: Record<string, Flag>; log: LogEntry[]; opdateret: string }
 
