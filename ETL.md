@@ -115,8 +115,9 @@ Ellers send HTML'en med Gmail `send_message` (fra Emils Gmail) til **martin@stoc
 emne `Nye varer at bestille – <dato>`, med logoet som inline-vedhæftning: `attachments: [{content: "sha256:<sha256 af public/stock-group-white.png>:<absolut sti>", filename: "stock-group.png", mimeType: "image/png", inline: true}]`
 (`sha256sum public/stock-group-white.png`), og `src="cid:att0"` står allerede i HTML'en.
 
-**Mandag – ugens forslag.** `python3 scripts/mail_forslag.py` skriver `data/mail.html` (én linje pr. EAN, pr. leverandør, planlagte mængder
-i stedet for forslag). Send til samme to modtagere, emne `Ugens indkøbsforslag – uge <nr>`.
+**Mandag – ugens forslag.** `python3 scripts/mail_forslag.py` skriver `data/mail.html`: hele “Skal bestilles”-listen (alt der skal bestilles
+inden 2 mdr.), én linje pr. EAN, grupperet pr. leverandør (“Leverandør ikke sat” sidst), med knapper til sitet og Excel-udtrækket.
+Send til samme to modtagere, emne `Ugens indkøbsforslag – uge <nr>`, med logoet som inline-vedhæftning præcis som ovenfor (`cid:att0`).
 
 ## Hvis noget går galt
 
