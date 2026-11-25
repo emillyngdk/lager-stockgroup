@@ -67,7 +67,7 @@ export interface PurchaseLine {
   datoer: { udsolgt: string | null; medPaaVej: string | null; optimistisk: string | null; bestilSenest: string | null; raekkerTil: string | null };
   genbestilling: {
     leadTime: number; leadTimeKilde: string; kategori: "hybrid" | "standard"; eu: boolean; daekningsdage: number; sikkerhedslager: number; reorderPoint: number;
-    behovLeadTime: number; behovDaekning: number; foreslaaetStk: number; foreslaaetColli: number; foreslaaetUdenUbooket: number; behovFoerMoq?: number; stkPrColli: number | null; moq: number | null; z: number; sigma: number;
+    behovLeadTime: number; behovDaekning: number; ankomstDag?: number; lagerVedAnkomst?: number; behovEfterAnkomst?: number; tabtFoerAnkomst?: number; senereLeveringer?: number; foreslaaetStk: number; foreslaaetColli: number; foreslaaetUdenUbooket: number; behovFoerMoq?: number; stkPrColli: number | null; moq: number | null; z: number; sigma: number;
     raekkerDage: number | null; // dage efter modtagelse den foreslåede mængde rækker
   };
   fordeling: { brand: Brand; stk: number }[];
@@ -116,6 +116,9 @@ export function raekkerTil(line: { demandPrDag: number[]; paaVej: { events: Line
   if (hit === null) return { dag: null, dato: null, dageEfterModtagelse: null };
   return { dag: hit, dato: addDays(dag0, hit), dageEfterModtagelse: qDag !== null ? Math.max(0, hit - qDag) : null };
 }
+
+/** Ét døgns salg med tabt salg: lageret kan ikke gå længere under 0 end det allerede var (restordrer), salget mens det er udsolgt er tabt. */
+export function tabtSalg(s: number, demand: number): number { return Math.max(Math.min(0, s), s - demand); }
 
 /** Fordel en mængde Q på shops efter deres andel af behovet, fratrukket det de selv har på lokation. */
 export function fordel(line: { shops: LineShop[]; demandPrDag: number[]; genbestilling: { leadTime: number; daekningsdage: number } }, q: number): { brand: Brand; stk: number }[] {
@@ -204,7 +207,9 @@ export function buildPurchaseLines(
     for (let d = 1; d <= HORIZON; d++) {
       const dato = addDays(dag0, d);
       for (const e of events) if (e.dato === dato) { if (e.sikker) { sK += e.stk; sO += e.stk; } else sO += e.stk; }
-      sK -= demandPrDag[d]; sO -= demandPrDag[d]; sN -= demandPrDag[d];
+      // Tabt salg: er varen udsolgt, sælger den 0, til der kommer varer igen – efterspørgslen hober sig ikke op.
+      // (Et negativt lager fra start = solgt på forhånd/restordre; det skal stadig leveres og ligger fast.)
+      sK = tabtSalg(sK, demandPrDag[d]); sO = tabtSalg(sO, demandPrDag[d]); sN -= demandPrDag[d];
       kons[d] = Math.max(0, sK); opt[d] = Math.max(0, sO);
       if (dTil === null && sN <= 0) dTil = d;
       if (dKons === null && sK <= 0) dKons = d;
@@ -249,13 +254,25 @@ export function buildPurchaseLines(
     const cll = bc?.stk_pr_colli || poLev?.stk_pr_colli || null;
     const moq = ov?.moq || cfg.moqStandard || null; // varens egen MOQ vinder over standarden
     const moqKilde = ov?.moq ? "varens egen" : "standard";
-    let foreslaaetStk = Math.max(0, Math.ceil(behovDaekning + sikkerhed - tilgaengeligt - paaVejSikker - paaVejUsikker));
+    // Mængde: det der skal være på hylden fra den dag en ny ordre lander (dag A = lead time + modtagelse) og "dækning" dage frem,
+    // minus det lageret har den dag (efter tabt salg i et evt. hul før) og minus PO'er der lander senere.
+    // Salg der er tabt mens varen er udsolgt før dag A, bestilles altså ikke hjem.
+    const A = Math.min(HORIZON, tidligstNy);
+    const dagNr = (dato: string) => Math.round((Date.parse(dato) - Date.parse(dag0)) / 864e5);
+    let behovEfterA = 0;
+    for (let d = A + 1; d <= Math.min(HORIZON, A + daekning); d++) behovEfterA += demandPrDag[d];
+    const senereAlle = events.filter((e) => dagNr(e.dato) > A).reduce((a, e) => a + e.stk, 0);
+    const senereSikre = events.filter((e) => e.sikker && dagNr(e.dato) > A).reduce((a, e) => a + e.stk, 0);
+    const lagerVedA = opt[A], lagerVedAKons = kons[A];
+    let tabtFoerA = 0; // salg der går tabt, fordi varen er udsolgt før en ny ordre kan lande (alle PO'er kommer til tiden)
+    { let st = tilgaengeligtOpt; for (let d = 1; d <= A; d++) { for (const e of events) if (dagNr(e.dato) === d) st += e.stk; tabtFoerA += Math.max(0, demandPrDag[d] - Math.max(0, st)); st = tabtSalg(st, demandPrDag[d]); } }
+    let foreslaaetStk = Math.max(0, Math.ceil(behovEfterA + sikkerhed - lagerVedA - senereAlle));
     const behovFoerMoq = foreslaaetStk;
     if (foreslaaetStk > 0 && moq && foreslaaetStk < moq) foreslaaetStk = moq;
     const foreslaaetColli = cll ? Math.ceil(foreslaaetStk / cll) : 0;
     const foreslaaetStkRund = cll ? foreslaaetColli * cll : foreslaaetStk;
     // alternativ: hvis de ubookede PO'er ikke kommer (bruges som startværdi i beregneren når forslaget er 0)
-    let udenUbooket = Math.max(0, Math.ceil(behovDaekning + sikkerhed - tilgaengeligt - paaVejSikker));
+    let udenUbooket = Math.max(0, Math.ceil(behovEfterA + sikkerhed - lagerVedAKons - senereSikre));
     if (udenUbooket > 0 && moq && udenUbooket < moq) udenUbooket = moq;
     const udenUbooketRund = cll ? Math.ceil(udenUbooket / cll) * cll : udenUbooket;
 
@@ -327,7 +344,7 @@ export function buildPurchaseLines(
     forklaring.push(`Lead time ${leadTime} dage (${leadTimeKilde}). Behov i lead time ${Math.round(behovLead)} stk + sikkerhedslager ${sikkerhed} stk (z ${z}, σ ${r1(sigma)}) = reorder point ${reorderPoint} stk.`);
     const fmtStk = (n: number) => Math.round(n).toLocaleString("da-DK");
     const moqLoeftet = behovFoerMoq > 0 && moq != null && behovFoerMoq < moq;
-    forklaring.push(`Foreslået: behov i lead time + ${daekning} dages dækning (${Math.round(behovDaekning)} stk) + sikkerhed − tilgængeligt − på vej = ${behovFoerMoq} stk${moqLoeftet ? ` → løftet til MOQ ${fmtStk(moq!)} stk (${moqKilde})` : ""}${cll ? ` = ${foreslaaetStkRund} stk (${foreslaaetColli} colli à ${cll})` : ""}.`);
+    forklaring.push(`Foreslået: en ny ordre lander tidligst om ${A} dage. Da er der ca. ${fmtStk(lagerVedA)} stk på lager${tabtFoerA >= 1 ? ` (udsolgt i en periode før – ca. ${fmtStk(tabtFoerA)} stk tabt salg bestilles ikke hjem)` : ""}. Behov de næste ${daekning} dage ${fmtStk(behovEfterA)} stk + sikkerhed ${fmtStk(sikkerhed)} − lager ved ankomst${senereAlle ? ` − ${fmtStk(senereAlle)} stk på vej der lander senere` : ""} = ${fmtStk(behovFoerMoq)} stk${moqLoeftet ? ` → løftet til MOQ ${fmtStk(moq!)} stk (${moqKilde})` : ""}${cll ? ` = ${fmtStk(foreslaaetStkRund)} stk (${foreslaaetColli} colli à ${cll})` : ""}.`);
     if (moqLoeftet && foreslaaetStkRund > 0) {
       const mdr = forv12 > 0 ? foreslaaetStkRund / (forv12 / 12) : Infinity;
       if (mdr > 12) advarsler.push(`MOQ ${fmtStk(moq!)} stk: behovet er kun ${fmtStk(behovFoerMoq)} stk, og ${fmtStk(foreslaaetStkRund)} stk svarer til ${mdr === Infinity ? "mere end flere års" : `ca. ${Math.round(mdr)} måneders`} salg. Overvej en lavere MOQ på varen (⋯ → Sæt MOQ) eller om den skal bestilles.`);
@@ -344,7 +361,7 @@ export function buildPurchaseLines(
       paaVej: { sikker: paaVejSikker, usikker: paaVejUsikker, foersteSikker, foersteUsikker: foersteUsikker?.dato ?? null, events },
       dage: { tilUdsolgt: dTil, medPaaVej: dKons, optimistisk: dOpt, bestilSenest: bsDag },
       datoer: { udsolgt: dTil !== null ? addDays(dag0, dTil) : null, medPaaVej: dKons !== null ? addDays(dag0, dKons) : null, optimistisk: dOpt !== null ? addDays(dag0, dOpt) : null, bestilSenest: bestilDato, raekkerTil: rt.dato },
-      genbestilling: { leadTime, leadTimeKilde, kategori, eu, daekningsdage: daekning, sikkerhedslager: sikkerhed, reorderPoint, behovLeadTime: Math.round(behovLead), behovDaekning: Math.round(behovDaekning), foreslaaetStk: foreslaaetStkRund, foreslaaetColli, foreslaaetUdenUbooket: udenUbooketRund, behovFoerMoq, stkPrColli: cll, moq, z, sigma: r1(sigma), raekkerDage: rt.dageEfterModtagelse },
+      genbestilling: { leadTime, leadTimeKilde, kategori, eu, daekningsdage: daekning, sikkerhedslager: sikkerhed, reorderPoint, behovLeadTime: Math.round(behovLead), behovDaekning: Math.round(behovDaekning), ankomstDag: A, lagerVedAnkomst: Math.round(lagerVedA), behovEfterAnkomst: Math.round(behovEfterA), tabtFoerAnkomst: Math.round(tabtFoerA), senereLeveringer: senereAlle, foreslaaetStk: foreslaaetStkRund, foreslaaetColli, foreslaaetUdenUbooket: udenUbooketRund, behovFoerMoq, stkPrColli: cll, moq, z, sigma: r1(sigma), raekkerDage: rt.dageEfterModtagelse },
       fordeling: foreslaaetStkRund > 0 ? fordel(lineStub, foreslaaetStkRund) : [],
       oekonomi: { unitCost, valuta: costValuta, lagervaerdi: unitCost != null ? Math.round(unitCost * tilgaengeligt) : null },
       demandPrDag: demandPrDag.map((x) => Math.round(x * 10) / 10),

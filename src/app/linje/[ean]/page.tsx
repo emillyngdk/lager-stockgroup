@@ -105,8 +105,13 @@ export default async function LinjeSide({ params }: { params: Promise<{ ean: str
             {l.velocity.solgtAarsrate != null && l.velocity.solgt365 != null && Math.abs(l.velocity.solgtAarsrate - l.velocity.solgt365) > 0.05 * l.velocity.solgt365 && <li className="flex justify-between"><span>Omregnet til 12 mdr. (nye shops ganget op)</span><b className="num">{fmtTal(l.velocity.solgtAarsrate)} stk</b></li>}
             <li className="flex justify-between font-bold border-t border-[var(--line)] pt-2"><span>Modellen regner med, næste 12 mdr.</span><b className="num">{fmtTal(l.velocity.forventet12)} stk · {fmtTal(l.velocity.forventet12 / 365, 1)} stk/dag i snit</b></li>
             <li className="flex justify-between"><span>Behov i lead time ({g.leadTime} d)</span><b className="num">{fmtTal(g.behovLeadTime)} stk</b></li>
-            <li className="flex justify-between"><span>Behov i lead time + {g.daekningsdage} d dækning</span><b className="num">{fmtTal(g.behovDaekning)} stk</b></li>
             <li className="flex justify-between"><span>Sikkerhedslager (z {g.z}, σ {g.sigma})</span><b className="num">{fmtTal(g.sikkerhedslager)} stk</b></li>
+            {g.ankomstDag != null && <>
+              <li className="flex justify-between border-t border-[var(--line)] pt-2"><span>Lager når en ny ordre lander (om {g.ankomstDag} d)</span><b className="num">{fmtTal(g.lagerVedAnkomst ?? 0)} stk</b></li>
+              {(g.tabtFoerAnkomst ?? 0) >= 1 && <li className="flex justify-between"><span>Tabt salg mens varen er udsolgt før da</span><b className="num text-[var(--muted)]">{fmtTal(g.tabtFoerAnkomst ?? 0)} stk · bestilles ikke</b></li>}
+              <li className="flex justify-between"><span>Salg i {g.daekningsdage} d dækning derefter</span><b className="num">{fmtTal(g.behovEfterAnkomst ?? 0)} stk</b></li>
+              {(g.senereLeveringer ?? 0) > 0 && <li className="flex justify-between"><span>PO&apos;er der lander senere</span><b className="num">−{fmtTal(g.senereLeveringer ?? 0)} stk</b></li>}
+            </>}
             <li className="flex justify-between font-bold border-t border-[var(--line)] pt-2"><span>Reorder point</span><b className="num">{fmtTal(g.reorderPoint)} stk</b></li>
           </ul>
         </div>

@@ -1,4 +1,4 @@
-import { buildPurchaseLines, LINE_STATUS_META, type PurchaseLine, type LineOverride, type LineStatus } from "./purchase";
+import { buildPurchaseLines, tabtSalg, LINE_STATUS_META, type PurchaseLine, type LineOverride, type LineStatus } from "./purchase";
 import {
   AgeGroup, Brand, BRANDS, Config, DEFAULT_CONFIG, ForecastOutput, ForecastRow, InboundEvent, Override, PoLine,
   Snapshot, Status, UniversalRow, Variant,
@@ -237,20 +237,37 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
         ? `Normalt niveau ${r1(afsaeson)} stk/dag = de seneste ${N} dages salg, sæsonrenset. Sommervare uden for sæson: forslaget antager, at næste sommer bliver som den sidste.`
         : `Normalt niveau ${r1(afsaeson)} stk/dag = halvt de seneste ${N} dages salg (${r1(aar)}/dag sæsonrenset) + halvt de seneste 60 dage uden kampagneuger (${r1(nylig)}/dag).`;
     } else {
+      // Ung vare: uden et år at sæsonrense med siger kampagneuger (Black Week) for lidt om normalen, og de første uger efter
+      // lancering ("honeymoon") sælger langt over. Har varen mindst 30 rene dage blandt de seneste 60, bruges kun dem:
+      // kampagnevinduer og det ældste vindue (hvor lanceringen ligger) springes over. Ellers den gamle vægtning.
+      const rene = win.filter((w) => w.a <= 60 && avgIdx(w.a, w.b) <= cfg.peakIndex);
+      const reneDage = rene.reduce((a, w) => a + (w.b - w.a + 1), 0);
+      let brug = reneDage >= 30 ? win.filter((w) => avgIdx(w.a, w.b) <= cfg.peakIndex) : win;
+      // Lanceringsuger: ligger det ældste vindue (sæsonrenset) mere end 1,5× over de seneste rene dage, er det lanceringen der løfter – spring det over.
+      let honeymoon = false;
+      const gl = brug.find((w) => w.a > 60);
+      if (reneDage >= 30 && gl) {
+        const nyligRenset = rene.reduce((a, w) => a + (w.b - w.a + 1) * w.r / avgIdx(w.a, w.b), 0) / reneDage;
+        if (gl.r / avgIdx(gl.a, gl.b) > 1.5 * nyligRenset) { brug = brug.filter((w) => w !== gl); honeymoon = true; }
+      }
       let num = 0, den = 0;
-      for (const w of win) { const ai = avgIdx(w.a, w.b); const wt = (w.b - w.a + 1) * straf(ai) * (w.a > 60 ? 0.5 : 1); num += wt * w.r / Math.max(ai, 1); den += wt; }
+      for (const w of brug) { const ai = avgIdx(w.a, w.b); const wt = (w.b - w.a + 1) * straf(ai) * (w.a > 60 ? 0.5 : 1); num += wt * w.r / Math.max(ai, 1); den += wt; }
       const haircut = cfg.launchHaircut.find(([d]) => N < d)?.[1] ?? 1;
       afsaeson = haircut * (den > 0 ? num / den : 0);
       // Ung sommervare: de seneste uger ligger uden for sæson og siger intet. Brug hele periodens snit, uden at skrive det op.
       const ungSommer = saesonKlasse === "sommer" && harAar;
       if (ungSommer) afsaeson = haircut * (vel.s365 / N) / Math.max(avgIdx(1, N), 1);
-      niveauTekst = ungSommer ? `Normalt niveau ${r1(afsaeson)} stk/dag = snittet af de ${N} dage varen har været til salg. Ny sommervare: den har kun én (halv) sæson bag sig, så tallet er usikkert.` : `Normalt niveau ${r1(afsaeson)} stk/dag = snit af ${N} dages salg, hvor kampagneuger næsten ikke tæller. Varen har under ${cfg.matureDays} dages data, så tallet er ikke sæsonopskrevet${haircut < 1 ? ` og er skåret ${Math.round((1 - haircut) * 100)} % (lanceringsuger sælger over normalen)` : ""}.`;
+      niveauTekst = ungSommer ? `Normalt niveau ${r1(afsaeson)} stk/dag = snittet af de ${N} dage varen har været til salg. Ny sommervare: den har kun én (halv) sæson bag sig, så tallet er usikkert.` : `Normalt niveau ${r1(afsaeson)} stk/dag = snit af ${N} dages salg, hvor kampagneuger næsten ikke tæller. ${reneDage >= 30 && brug.length < win.length ? `Kampagneuger${honeymoon ? " og de første uger efter lancering (de solgte langt over normalen)" : ""} er sprunget over. ` : ""}Varen har under ${cfg.matureDays} dages data, så tallet er ikke sæsonopskrevet${haircut < 1 ? ` og er skåret ${Math.round((1 - haircut) * 100)} % (lanceringsuger sælger over normalen)` : ""}.`;
     }
     // Udsolgt-korrektion: står varen på 0 i shoppen, viser de seneste uger tabt salg, ikke efterspørgsel.
     // Så bruges hele periodens salg (sæsonrenset) som normalt niveau, hvis det er højere.
     let udsolgtKorr: string | null = null;
     if ((v.shopify_qty ?? 0) <= 0 && N >= 60 && vel.s365 > 0) {
-      const helePerioden = (vel.s365 / N) / (moden ? avgIdx(1, N) : Math.max(avgIdx(1, N), 1));
+      // Ung vare: hele perioden indeholder lanceringsugerne – brug i stedet det bedste rene vindue fra før den blev udsolgt.
+      const reneFoer = win.filter((w) => w.a > 7 && w.a <= 60 && avgIdx(w.a, w.b) <= cfg.peakIndex);
+      const reneDageFoer = reneFoer.reduce((a, w) => a + (w.b - w.a + 1), 0);
+      const reneSnit = reneDageFoer > 0 ? reneFoer.reduce((a, w) => a + (w.b - w.a + 1) * w.r / Math.max(avgIdx(w.a, w.b), 1), 0) / reneDageFoer : 0;
+      const helePerioden = moden ? (vel.s365 / N) / avgIdx(1, N) : reneDageFoer >= 14 ? reneSnit : (vel.s365 / N) / Math.max(avgIdx(1, N), 1) * 0.75;
       if (helePerioden > afsaeson * 1.05 && helePerioden > 0.2) { udsolgtKorr = `Udsolgt i shoppen – de seneste uger viser tabt salg. Normalt niveau sat til hele periodens snit ${r1(helePerioden)} stk/dag (var ${r1(afsaeson)}).`; afsaeson = helePerioden; vel.base = Math.max(vel.base, helePerioden * saesonNu); }
     }
 
@@ -295,7 +312,7 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
       const w = isoWeek(dato);
       const demand = afsaeson * S[w];
       for (const e of events) if (e.dato === dato) { if (e.sikker) { sK += e.stk; sO += e.stk; } else sO += e.stk; }
-      sK -= demand; sO -= demand; stockNoInbound -= demand;
+      sK = tabtSalg(sK, demand); sO = tabtSalg(sO, demand); stockNoInbound -= demand; // udsolgt = tabt salg, ikke opsparet behov
       kons[d] = Math.max(0, sK); opt[d] = Math.max(0, sO);
       if (dageTilUdsolgt === null && stockNoInbound <= 0) dageTilUdsolgt = d;
       if (dageMedPaaVej === null && sK <= 0) dageMedPaaVej = d;
@@ -332,7 +349,12 @@ export function runForecast(snap: Snapshot, overrides: Record<string, Override> 
     // bestil senest = første dag hvor projektionen med ALLE åbne PO'er (de er jo bestilt) <= reorder point
     let bestilSenestDag: number | null = null;
     for (let d = 0; d <= H; d++) if (opt[d] <= reorderPoint) { bestilSenestDag = d; break; }
-    const foreslaaetStk = Math.max(0, Math.ceil(demandCover + sikkerhed - tilgaengeligt - paaVejSikker - paaVejUsikker));
+    // som på indkøbslinjerne: lager den dag en ny ordre lander (efter tabt salg) + behov i dækningen efter − PO'er der lander senere
+    const ankomst = Math.min(H, leadTime + cfg.receivingDays);
+    let demandEfter = 0;
+    for (let d = ankomst + 1; d <= Math.min(H, ankomst + daekning); d++) demandEfter += afsaeson * S[isoWeek(addDays(dag0, d))];
+    const senere = events.filter((e) => e.dato > addDays(dag0, ankomst)).reduce((a, e) => a + e.stk, 0);
+    const foreslaaetStk = Math.max(0, Math.ceil(demandEfter + sikkerhed - opt[ankomst] - senere));
     const cll = bc?.stk_pr_colli || poLev?.stk_pr_colli || null;
     const foreslaaetColli = cll ? Math.ceil(foreslaaetStk / cll) : 0;
     const foreslaaetStkRund = cll ? foreslaaetColli * cll : foreslaaetStk;

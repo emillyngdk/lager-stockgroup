@@ -67,6 +67,14 @@ def est_ny(s, T, ix):
             if a > 60: continue
             ai = snit_idx(ix, T, a, b); w = (b - a + 1) * straf(ai); num += w * r / ai; den += w
         return 0.5 * aar + 0.5 * (num / den if den else aar)
+    # ung vare: kun rene dage (ingen kampagneuger) blandt de seneste 60, hvis der er mindst 30 – lanceringsugerne springes over
+    rene = [(a, b, r) for a, b, r in vs if a <= 60 and snit_idx(ix, T, a, b) <= TOP]
+    rd = sum(b - a + 1 for a, b, r in rene)
+    if rd >= 30:
+        vs = [(a, b, r) for a, b, r in vs if snit_idx(ix, T, a, b) <= TOP]  # kampagneuger ud
+        gl = [(a, b, r) for a, b, r in vs if a > 60]
+        nylig = sum((b - a + 1) * r / snit_idx(ix, T, a, b) for a, b, r in rene) / rd
+        if gl and gl[0][2] / snit_idx(ix, T, gl[0][0], gl[0][1]) > 1.5 * nylig: vs = [x for x in vs if x[0] <= 60]  # lanceringsuger ud
     num = den = 0.0
     for a, b, r in vs:  # ung vare: sæsonen kendes ikke – et lavt indeks må ikke puste niveauet op
         ai = snit_idx(ix, T, a, b); w = (b - a + 1) * straf(ai) * (0.5 if a > 60 else 1.0)

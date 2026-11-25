@@ -81,7 +81,7 @@ export async function GET() {
     `Trukket ${new Date().toLocaleString("da-DK", { timeZone: "Europe/Copenhagen" })} · lagerdata fra ${f.dag0}`,
     "",
     "Én linje pr. EAN – mængden dækker alle shops, der sælger varen.",
-    "Foreslået stk = forventet salg i lead time + dækningsperioden + sikkerhedslager − det der er tilgængeligt − alt der er på vej.",
+    "Foreslået stk = salget i dækningsperioden fra den dag en ny ordre tidligst lander + sikkerhedslager − det der er på lager den dag − PO\u2019er der lander senere. Er varen udsolgt før da, er det salg tabt og bestilles ikke hjem.",
     "MOQ: alle forslag er mindst 1.000 stk, medmindre varen har sin egen MOQ (⋯ → Sæt MOQ på sitet). “Behov før MOQ” er det, beregningen selv kom frem til.",
     "Den gule kolonne “Bestil stk (ret selv)” er din: ret tallet, så følger Colli og Ordreværdi med.",
     "Kostpris er shoppens kostpris fra Shopify i den valuta, der står i kolonnen Valuta (DKK, NOK eller EUR) – derfor er der ingen samlet ordreværdi.",
