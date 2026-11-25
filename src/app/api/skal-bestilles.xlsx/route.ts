@@ -32,6 +32,8 @@ export async function GET() {
     { h: "Bestil senest", w: 14, fmt: "dd-mm-yyyy", get: (x) => dato(x.l.datoer.bestilSenest) },
     { h: "Foreslået stk", w: 14, fmt: "#,##0", get: (x) => x.l.genbestilling.foreslaaetStk },
     { h: "Bestil stk (ret selv)", w: 18, fmt: "#,##0", get: (x) => x.l.genbestilling.foreslaaetStk },
+    { h: "Behov før MOQ", w: 14, fmt: "#,##0", get: (x) => x.l.genbestilling.behovFoerMoq ?? null },
+    { h: "MOQ", w: 9, fmt: "#,##0", get: (x) => x.l.genbestilling.moq ?? null },
     { h: "Stk pr. colli", w: 12, fmt: "#,##0", get: (x) => x.l.genbestilling.stkPrColli ?? null },
     { h: "Colli", w: 9, fmt: "#,##0", get: () => null }, // formel
     { h: "Kostpris", w: 11, fmt: "#,##0.00", get: (x) => x.l.oekonomi.unitCost ?? null },
@@ -80,6 +82,7 @@ export async function GET() {
     "",
     "Én linje pr. EAN – mængden dækker alle shops, der sælger varen.",
     "Foreslået stk = forventet salg i lead time + dækningsperioden + sikkerhedslager − det der er tilgængeligt − alt der er på vej.",
+    "MOQ: alle forslag er mindst 1.000 stk, medmindre varen har sin egen MOQ (⋯ → Sæt MOQ på sitet). “Behov før MOQ” er det, beregningen selv kom frem til.",
     "Den gule kolonne “Bestil stk (ret selv)” er din: ret tallet, så følger Colli og Ordreværdi med.",
     "Kostpris er shoppens kostpris fra Shopify i den valuta, der står i kolonnen Valuta (DKK, NOK eller EUR) – derfor er der ingen samlet ordreværdi.",
     "Forventet salg 12 mdr er det tal, forslaget står og falder med. Er du uenig i det, så skru mængden tilsvarende.",

@@ -67,7 +67,7 @@ export interface PurchaseLine {
   datoer: { udsolgt: string | null; medPaaVej: string | null; optimistisk: string | null; bestilSenest: string | null; raekkerTil: string | null };
   genbestilling: {
     leadTime: number; leadTimeKilde: string; kategori: "hybrid" | "standard"; eu: boolean; daekningsdage: number; sikkerhedslager: number; reorderPoint: number;
-    behovLeadTime: number; behovDaekning: number; foreslaaetStk: number; foreslaaetColli: number; foreslaaetUdenUbooket: number; stkPrColli: number | null; moq: number | null; z: number; sigma: number;
+    behovLeadTime: number; behovDaekning: number; foreslaaetStk: number; foreslaaetColli: number; foreslaaetUdenUbooket: number; behovFoerMoq?: number; stkPrColli: number | null; moq: number | null; z: number; sigma: number;
     raekkerDage: number | null; // dage efter modtagelse den foreslåede mængde rækker
   };
   fordeling: { brand: Brand; stk: number }[];
@@ -247,8 +247,10 @@ export function buildPurchaseLines(
     let hulFoer: number | null = null; // første dag før tidligstNy hvor lageret er under sikkerhed (info, ikke en indkøbshandling)
     for (let d = 0; d < tidligstNy; d++) if (opt[d] <= sikkerhed) { hulFoer = d; break; }
     const cll = bc?.stk_pr_colli || poLev?.stk_pr_colli || null;
-    const moq = ov?.moq ?? null;
+    const moq = ov?.moq || cfg.moqStandard || null; // varens egen MOQ vinder over standarden
+    const moqKilde = ov?.moq ? "varens egen" : "standard";
     let foreslaaetStk = Math.max(0, Math.ceil(behovDaekning + sikkerhed - tilgaengeligt - paaVejSikker - paaVejUsikker));
+    const behovFoerMoq = foreslaaetStk;
     if (foreslaaetStk > 0 && moq && foreslaaetStk < moq) foreslaaetStk = moq;
     const foreslaaetColli = cll ? Math.ceil(foreslaaetStk / cll) : 0;
     const foreslaaetStkRund = cll ? foreslaaetColli * cll : foreslaaetStk;
@@ -323,7 +325,13 @@ export function buildPurchaseLines(
     forklaring.push(`Tilgængeligt: ${ecomSum} på shop-lokationer + ${Math.round(vejleFrit)} frit i Vejle${tredjepart ? ` + ${Math.round(tredjepart)} på 3PL` : ""} = ${Math.round(tilgaengeligt)} stk. B2B binder ${resB2b} reserveret og ${bestB2b} bestilt.`);
     forklaring.push(`På vej: ${paaVejSikker} stk bekræftet, ${paaVejUsikker} stk ubooket${foersteSikker ? `, første sikre ${foersteSikker}` : ""}.`);
     forklaring.push(`Lead time ${leadTime} dage (${leadTimeKilde}). Behov i lead time ${Math.round(behovLead)} stk + sikkerhedslager ${sikkerhed} stk (z ${z}, σ ${r1(sigma)}) = reorder point ${reorderPoint} stk.`);
-    forklaring.push(`Foreslået: behov i lead time + ${daekning} dages dækning (${Math.round(behovDaekning)} stk) + sikkerhed − tilgængeligt − på vej = ${foreslaaetStkRund} stk${cll ? ` (${foreslaaetColli} colli à ${cll})` : ""}${moq ? `, MOQ ${moq}` : ""}.`);
+    const fmtStk = (n: number) => Math.round(n).toLocaleString("da-DK");
+    const moqLoeftet = behovFoerMoq > 0 && moq != null && behovFoerMoq < moq;
+    forklaring.push(`Foreslået: behov i lead time + ${daekning} dages dækning (${Math.round(behovDaekning)} stk) + sikkerhed − tilgængeligt − på vej = ${behovFoerMoq} stk${moqLoeftet ? ` → løftet til MOQ ${fmtStk(moq!)} stk (${moqKilde})` : ""}${cll ? ` = ${foreslaaetStkRund} stk (${foreslaaetColli} colli à ${cll})` : ""}.`);
+    if (moqLoeftet && foreslaaetStkRund > 0) {
+      const mdr = forv12 > 0 ? foreslaaetStkRund / (forv12 / 12) : Infinity;
+      if (mdr > 12) advarsler.push(`MOQ ${fmtStk(moq!)} stk: behovet er kun ${fmtStk(behovFoerMoq)} stk, og ${fmtStk(foreslaaetStkRund)} stk svarer til ${mdr === Infinity ? "mere end flere års" : `ca. ${Math.round(mdr)} måneders`} salg. Overvej en lavere MOQ på varen (⋯ → Sæt MOQ) eller om den skal bestilles.`);
+    }
     if (rt.dato) forklaring.push(`Den foreslåede mængde rækker til ${rt.dato}${rt.dageEfterModtagelse != null ? ` (${rt.dageEfterModtagelse} dage efter modtagelse)` : ""}.`);
 
     lines.push({
@@ -336,7 +344,7 @@ export function buildPurchaseLines(
       paaVej: { sikker: paaVejSikker, usikker: paaVejUsikker, foersteSikker, foersteUsikker: foersteUsikker?.dato ?? null, events },
       dage: { tilUdsolgt: dTil, medPaaVej: dKons, optimistisk: dOpt, bestilSenest: bsDag },
       datoer: { udsolgt: dTil !== null ? addDays(dag0, dTil) : null, medPaaVej: dKons !== null ? addDays(dag0, dKons) : null, optimistisk: dOpt !== null ? addDays(dag0, dOpt) : null, bestilSenest: bestilDato, raekkerTil: rt.dato },
-      genbestilling: { leadTime, leadTimeKilde, kategori, eu, daekningsdage: daekning, sikkerhedslager: sikkerhed, reorderPoint, behovLeadTime: Math.round(behovLead), behovDaekning: Math.round(behovDaekning), foreslaaetStk: foreslaaetStkRund, foreslaaetColli, foreslaaetUdenUbooket: udenUbooketRund, stkPrColli: cll, moq, z, sigma: r1(sigma), raekkerDage: rt.dageEfterModtagelse },
+      genbestilling: { leadTime, leadTimeKilde, kategori, eu, daekningsdage: daekning, sikkerhedslager: sikkerhed, reorderPoint, behovLeadTime: Math.round(behovLead), behovDaekning: Math.round(behovDaekning), foreslaaetStk: foreslaaetStkRund, foreslaaetColli, foreslaaetUdenUbooket: udenUbooketRund, behovFoerMoq, stkPrColli: cll, moq, z, sigma: r1(sigma), raekkerDage: rt.dageEfterModtagelse },
       fordeling: foreslaaetStkRund > 0 ? fordel(lineStub, foreslaaetStkRund) : [],
       oekonomi: { unitCost, valuta: costValuta, lagervaerdi: unitCost != null ? Math.round(unitCost * tilgaengeligt) : null },
       demandPrDag: demandPrDag.map((x) => Math.round(x * 10) / 10),

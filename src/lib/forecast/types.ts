@@ -40,6 +40,8 @@ export interface Config {
   coverageDays: { asia: number; eu: number };
   /** unge varer (under matureDays): bestil til kortere tid ad gangen, til der er et års data */
   coverageDaysYoung: { asia: number; eu: number };
+  /** Mindste ordre pr. vare i stk (MOQ), når intet andet er sat på varen. Forslag over 0 rundes op hertil. */
+  moqStandard: number;
   zHero: number;
   zNormal: number;
   heroShareOfDb: number;      // top X% af DB = hero
@@ -61,6 +63,7 @@ export const DEFAULT_CONFIG: Config = {
   leadTimeDefault: { hybrid: 180, asia: 150, eu: 30 },
   coverageDays: { asia: 120, eu: 90 },
   coverageDaysYoung: { asia: 60, eu: 45 },
+  moqStandard: 1000,
   zHero: 1.65,
   zNormal: 1.28,
   heroShareOfDb: 0.2,
