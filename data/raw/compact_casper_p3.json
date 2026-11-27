@@ -1,4 +1,1 @@
-{"brand":"casper","compact":true,"nodes":[
-{"id":"gid://shopify/Product/16334175994181","title":"Airfryer Julepakke, DualFry 10,5 L med 2 ekstra skuffer og tilbehør","createdAt":"2026-11-03T07:49:51Z","publishedAt":"2026-11-03T19:36:58Z","productType":"","variants":[{"id":"gid://shopify/ProductVariant/60050761646405","sku":null,"barcode":null,"qty":54,"cost":619.0,"loc":{"Stockgroup":null}}]},
-{"id":"gid://shopify/Product/16334176092485","title":"Andestegspakken, airfryer med skærebræt og forskærerkniv","createdAt":"2026-11-03T07:49:52Z","publishedAt":"2026-11-03T19:36:59Z","productType":"","variants":[{"id":"gid://shopify/ProductVariant/60050761777477","sku":null,"barcode":null,"qty":404,"cost":905.5,"loc":{"Stockgroup":null}}]}
-]}
+{"brand":"casper","compact":true,"nodes":[{"id":"gid://shopify/Product/16334176092485","title":"Andestegspakken, airfryer med skærebræt og forskærerkniv","createdAt":"2026-11-03T07:49:52Z","publishedAt":"2026-11-03T19:36:59Z","productType":"","variants":[{"id":"gid://shopify/ProductVariant/60050761777477","sku":null,"barcode":null,"qty":356,"cost":905.5,"loc":{"Stockgroup":null}}]}]}
