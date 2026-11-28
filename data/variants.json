@@ -27,10 +27,10 @@
 "variant_id": "46739541164357",
 "sku": "5740007809514",
 "barcode": "5740007809514",
-"shopify_qty": 740,
+"shopify_qty": 690,
 "unit_cost": 160.5,
 "levels": {
-"Stockgroup": 740
+"Stockgroup": 690
 },
 "ean": "5740007809514",
 "components": null
@@ -45,10 +45,10 @@
 "variant_id": "46739541229893",
 "sku": "5740007809538",
 "barcode": "5740007809538",
-"shopify_qty": 459,
+"shopify_qty": 423,
 "unit_cost": 160.5,
 "levels": {
-"Stockgroup": 459
+"Stockgroup": 423
 },
 "ean": "5740007809538",
 "components": null
@@ -63,10 +63,10 @@
 "variant_id": "46739541262661",
 "sku": "5740007809552",
 "barcode": "5740007809552",
-"shopify_qty": 553,
+"shopify_qty": 501,
 "unit_cost": 160.5,
 "levels": {
-"Stockgroup": 553
+"Stockgroup": 501
 },
 "ean": "5740007809552",
 "components": null
@@ -81,10 +81,10 @@
 "variant_id": "46739541295429",
 "sku": "5740007809576",
 "barcode": "5740007809576",
-"shopify_qty": 368,
+"shopify_qty": 331,
 "unit_cost": 100.32,
 "levels": {
-"Stockgroup": 368
+"Stockgroup": 331
 },
 "ean": "5740007809576",
 "components": null
@@ -99,10 +99,10 @@
 "variant_id": "46741755429189",
 "sku": "5740007812583",
 "barcode": "5740007812583",
-"shopify_qty": 2829,
+"shopify_qty": 2491,
 "unit_cost": 112.2,
 "levels": {
-"Stockgroup": 2829
+"Stockgroup": 2491
 },
 "ean": "5740007812583",
 "components": null
@@ -117,10 +117,10 @@
 "variant_id": "46741789245765",
 "sku": "5740007812569",
 "barcode": "5740007812569",
-"shopify_qty": 2529,
+"shopify_qty": 2083,
 "unit_cost": 135.03,
 "levels": {
-"Stockgroup": 2529
+"Stockgroup": 2083
 },
 "ean": "5740007812569",
 "components": null
@@ -135,10 +135,10 @@
 "variant_id": "46739541852485",
 "sku": "5740007809859",
 "barcode": "5740007809859",
-"shopify_qty": 71,
+"shopify_qty": 744,
 "unit_cost": 179.77,
 "levels": {
-"Stockgroup": 71
+"Stockgroup": 744
 },
 "ean": "5740007809859",
 "components": null
@@ -153,10 +153,10 @@
 "variant_id": "46741385740613",
 "sku": "5740007809873",
 "barcode": "5740007809873",
-"shopify_qty": 1557,
+"shopify_qty": 1344,
 "unit_cost": 125.21,
 "levels": {
-"Stockgroup": 1557
+"Stockgroup": 1344
 },
 "ean": "5740007809873",
 "components": null
@@ -171,10 +171,10 @@
 "variant_id": "46741529362757",
 "sku": "5740007809897",
 "barcode": "5740007809897",
-"shopify_qty": 499,
+"shopify_qty": 1050,
 "unit_cost": 150.11,
 "levels": {
-"Stockgroup": 499
+"Stockgroup": 1050
 },
 "ean": "5740007809897",
 "components": null
@@ -189,10 +189,10 @@
 "variant_id": "46741562589509",
 "sku": "5740007809910",
 "barcode": "5740007809910",
-"shopify_qty": 1749,
+"shopify_qty": 1630,
 "unit_cost": 200.64,
 "levels": {
-"Stockgroup": 1749
+"Stockgroup": 1630
 },
 "ean": "5740007809910",
 "components": null
@@ -207,10 +207,10 @@
 "variant_id": "46741683700037",
 "sku": "5740007809934",
 "barcode": "5740007809934",
-"shopify_qty": 282,
+"shopify_qty": 1346,
 "unit_cost": 89.57,
 "levels": {
-"Stockgroup": 282
+"Stockgroup": 1346
 },
 "ean": "5740007809934",
 "components": null
@@ -225,10 +225,10 @@
 "variant_id": "46739542212933",
 "sku": "5740007809996",
 "barcode": "5740007809996",
-"shopify_qty": 1820,
+"shopify_qty": 1727,
 "unit_cost": 159.68,
 "levels": {
-"Stockgroup": 1820
+"Stockgroup": 1727
 },
 "ean": "5740007809996",
 "components": null
@@ -243,10 +243,10 @@
 "variant_id": "47651014082885",
 "sku": "5740007814440",
 "barcode": "5740007814440",
-"shopify_qty": 1818,
+"shopify_qty": 1604,
 "unit_cost": 96.28,
 "levels": {
-"Stockgroup": 1818
+"Stockgroup": 1604
 },
 "ean": "5740007814440",
 "components": null
@@ -261,10 +261,10 @@
 "variant_id": "46835527254341",
 "sku": "5740007810473",
 "barcode": "5740007810473",
-"shopify_qty": 295,
+"shopify_qty": 293,
 "unit_cost": 60.0,
 "levels": {
-"Stockgroup": 295
+"Stockgroup": 293
 },
 "ean": "5740007810473",
 "components": null
@@ -279,10 +279,10 @@
 "variant_id": "46835527287109",
 "sku": "5740007808678",
 "barcode": "5740007808678",
-"shopify_qty": 56,
+"shopify_qty": 55,
 "unit_cost": 24.0,
 "levels": {
-"Stockgroup": 56
+"Stockgroup": 55
 },
 "ean": "5740007808678",
 "components": null
@@ -297,10 +297,10 @@
 "variant_id": "46835527319877",
 "sku": "5740007810398",
 "barcode": "5740007810398",
-"shopify_qty": 1015,
+"shopify_qty": 1013,
 "unit_cost": 24.0,
 "levels": {
-"Stockgroup": 1015
+"Stockgroup": 1013
 },
 "ean": "5740007810398",
 "components": null
@@ -315,10 +315,10 @@
 "variant_id": "46835527450949",
 "sku": "5740007810312",
 "barcode": "5740007810312",
-"shopify_qty": 8,
+"shopify_qty": -3,
 "unit_cost": 12.0,
 "levels": {
-"Stockgroup": 8
+"Stockgroup": -3
 },
 "ean": "5740007810312",
 "components": null
@@ -333,7 +333,7 @@
 "variant_id": "47027956187461",
 "sku": "",
 "barcode": null,
-"shopify_qty": 282,
+"shopify_qty": 1346,
 "unit_cost": 201.94,
 "levels": {
 "Stockgroup": null
@@ -351,7 +351,7 @@
 "variant_id": "47027978568005",
 "sku": "",
 "barcode": null,
-"shopify_qty": 2529,
+"shopify_qty": 2083,
 "unit_cost": 246.34,
 "levels": {
 "Stockgroup": null
@@ -369,7 +369,7 @@
 "variant_id": "47028042989893",
 "sku": "",
 "barcode": null,
-"shopify_qty": 282,
+"shopify_qty": 1346,
 "unit_cost": 335.91,
 "levels": {
 "Stockgroup": null
@@ -387,7 +387,7 @@
 "variant_id": "47028047937861",
 "sku": "",
 "barcode": null,
-"shopify_qty": 71,
+"shopify_qty": 744,
 "unit_cost": 515.08,
 "levels": {
 "Stockgroup": null
@@ -405,7 +405,7 @@
 "variant_id": "47028055966021",
 "sku": "",
 "barcode": null,
-"shopify_qty": 1557,
+"shopify_qty": 1344,
 "unit_cost": 221.49,
 "levels": {
 "Stockgroup": null
@@ -423,7 +423,7 @@
 "variant_id": "47028059144517",
 "sku": "",
 "barcode": null,
-"shopify_qty": 1557,
+"shopify_qty": 1344,
 "unit_cost": 275.32,
 "levels": {
 "Stockgroup": null
@@ -441,7 +441,7 @@
 "variant_id": "47028060684613",
 "sku": "",
 "barcode": null,
-"shopify_qty": 1557,
+"shopify_qty": 1344,
 "unit_cost": 371.6,
 "levels": {
 "Stockgroup": null
@@ -459,7 +459,7 @@
 "variant_id": "47028065730885",
 "sku": "",
 "barcode": null,
-"shopify_qty": 1557,
+"shopify_qty": 1344,
 "unit_cost": 237.41,
 "levels": {
 "Stockgroup": null
@@ -477,7 +477,7 @@
 "variant_id": "47028066910533",
 "sku": "",
 "barcode": null,
-"shopify_qty": 499,
+"shopify_qty": 1050,
 "unit_cost": 285.14,
 "levels": {
 "Stockgroup": null
@@ -495,7 +495,7 @@
 "variant_id": "47028068352325",
 "sku": "",
 "barcode": null,
-"shopify_qty": 1557,
+"shopify_qty": 1344,
 "unit_cost": 522.55,
 "levels": {
 "Stockgroup": null
@@ -513,7 +513,7 @@
 "variant_id": "47028069925189",
 "sku": "",
 "barcode": null,
-"shopify_qty": 71,
+"shopify_qty": 1727,
 "unit_cost": 335.94,
 "levels": {
 "Stockgroup": null
@@ -765,7 +765,7 @@
 "variant_id": "47324771975493",
 "sku": "",
 "barcode": null,
-"shopify_qty": 71,
+"shopify_qty": 1604,
 "unit_cost": 1123.28,
 "levels": {
 "Stockgroup": null
@@ -783,7 +783,7 @@
 "variant_id": "47324878569797",
 "sku": "",
 "barcode": null,
-"shopify_qty": 1749,
+"shopify_qty": 1630,
 "unit_cost": 350.75,
 "levels": {
 "Stockgroup": null
@@ -801,7 +801,7 @@
 "variant_id": "47324928835909",
 "sku": "",
 "barcode": null,
-"shopify_qty": 1749,
+"shopify_qty": 1604,
 "unit_cost": 447.03,
 "levels": {
 "Stockgroup": null
@@ -819,7 +819,7 @@
 "variant_id": "47325019865413",
 "sku": "",
 "barcode": null,
-"shopify_qty": 1749,
+"shopify_qty": 1630,
 "unit_cost": 597.88,
 "levels": {
 "Stockgroup": null
@@ -837,7 +837,7 @@
 "variant_id": "47346986877253",
 "sku": "",
 "barcode": null,
-"shopify_qty": 71,
+"shopify_qty": 1344,
 "unit_cost": 1248.49,
 "levels": {
 "Stockgroup": null
@@ -855,10 +855,10 @@
 "variant_id": "47366253871429",
 "sku": "5740007813993",
 "barcode": "5740007813993",
-"shopify_qty": 53,
+"shopify_qty": 42,
 "unit_cost": 28.0,
 "levels": {
-"Stockgroup": 53
+"Stockgroup": 42
 },
 "ean": "5740007813993",
 "components": null
@@ -873,10 +873,10 @@
 "variant_id": "47366255870277",
 "sku": "5740007814013",
 "barcode": "5740007814013",
-"shopify_qty": 144,
+"shopify_qty": 128,
 "unit_cost": 36.0,
 "levels": {
-"Stockgroup": 144
+"Stockgroup": 128
 },
 "ean": "5740007814013",
 "components": null
@@ -909,10 +909,10 @@
 "variant_id": "47535622750533",
 "sku": "5740007814839",
 "barcode": "5740007814839",
-"shopify_qty": 697,
+"shopify_qty": 639,
 "unit_cost": 158.38,
 "levels": {
-"Stockgroup": 697
+"Stockgroup": 639
 },
 "ean": "5740007814839",
 "components": null
@@ -927,10 +927,10 @@
 "variant_id": "47558812467525",
 "sku": "5740007817663",
 "barcode": "5740007817663",
-"shopify_qty": 188,
+"shopify_qty": 183,
 "unit_cost": 115.98,
 "levels": {
-"Stockgroup": 188
+"Stockgroup": 183
 },
 "ean": "5740007817663",
 "components": null
@@ -945,10 +945,10 @@
 "variant_id": "47619177382213",
 "sku": "5740007815720",
 "barcode": "5740007815720",
-"shopify_qty": 310,
+"shopify_qty": 923,
 "unit_cost": 212.0,
 "levels": {
-"Stockgroup": 310
+"Stockgroup": 923
 },
 "ean": "5740007815720",
 "components": null
@@ -963,10 +963,10 @@
 "variant_id": "47619215688005",
 "sku": "5740007815874",
 "barcode": "5740007815874",
-"shopify_qty": 1306,
+"shopify_qty": 1217,
 "unit_cost": 100.77,
 "levels": {
-"Stockgroup": 1306
+"Stockgroup": 1217
 },
 "ean": "5740007815874",
 "components": null
@@ -981,10 +981,10 @@
 "variant_id": "47619255533893",
 "sku": "5740007814808",
 "barcode": "5740007814808",
-"shopify_qty": 154,
+"shopify_qty": 58,
 "unit_cost": 179.18,
 "levels": {
-"Stockgroup": 154
+"Stockgroup": 58
 },
 "ean": "5740007814808",
 "components": null
@@ -999,10 +999,10 @@
 "variant_id": "47619277521221",
 "sku": "5740007816604",
 "barcode": "5740007816604",
-"shopify_qty": 700,
+"shopify_qty": 647,
 "unit_cost": 40.0,
 "levels": {
-"Stockgroup": 700
+"Stockgroup": 647
 },
 "ean": "5740007816604",
 "components": null
@@ -1017,10 +1017,10 @@
 "variant_id": "47619284730181",
 "sku": "5740007816611",
 "barcode": "5740007816611",
-"shopify_qty": 345,
+"shopify_qty": 329,
 "unit_cost": 40.0,
 "levels": {
-"Stockgroup": 345
+"Stockgroup": 329
 },
 "ean": "5740007816611",
 "components": null
@@ -1035,10 +1035,10 @@
 "variant_id": "47665825186117",
 "sku": "5740007812781",
 "barcode": "5740007812781",
-"shopify_qty": 3775,
+"shopify_qty": 3713,
 "unit_cost": 4.0,
 "levels": {
-"Stockgroup": 3775
+"Stockgroup": 3713
 },
 "ean": "5740007812781",
 "components": null
@@ -1053,10 +1053,10 @@
 "variant_id": "47665950884165",
 "sku": "5740007812811",
 "barcode": "5740007812811",
-"shopify_qty": 110,
+"shopify_qty": 105,
 "unit_cost": 60.0,
 "levels": {
-"Stockgroup": 110
+"Stockgroup": 105
 },
 "ean": "5740007812811",
 "components": null
@@ -1089,7 +1089,7 @@
 "variant_id": "48567880614213",
 "sku": "",
 "barcode": null,
-"shopify_qty": 1557,
+"shopify_qty": 1344,
 "unit_cost": 475.96,
 "levels": {
 "Stockgroup": null
@@ -1107,7 +1107,7 @@
 "variant_id": "48567985635653",
 "sku": "",
 "barcode": null,
-"shopify_qty": 1557,
+"shopify_qty": 1344,
 "unit_cost": 817.61,
 "levels": {
 "Stockgroup": null
@@ -1125,7 +1125,7 @@
 "variant_id": "48807155794245",
 "sku": "",
 "barcode": null,
-"shopify_qty": 697,
+"shopify_qty": 639,
 "unit_cost": 494.28,
 "levels": {
 "Stockgroup": null
@@ -1197,10 +1197,10 @@
 "variant_id": "49819058241861",
 "sku": "5740007822155",
 "barcode": "5740007822155",
-"shopify_qty": 60,
+"shopify_qty": 59,
 "unit_cost": 12.0,
 "levels": {
-"Stockgroup": 60
+"Stockgroup": 59
 },
 "ean": "5740007822155",
 "components": null
@@ -1215,10 +1215,10 @@
 "variant_id": "49819065811269",
 "sku": "5740007822193",
 "barcode": "5740007822193",
-"shopify_qty": 10,
+"shopify_qty": 8,
 "unit_cost": 12.0,
 "levels": {
-"Stockgroup": 10
+"Stockgroup": 8
 },
 "ean": "5740007822193",
 "components": null
@@ -1251,10 +1251,10 @@
 "variant_id": "49819076886853",
 "sku": "5740007822254",
 "barcode": "5740007822254",
-"shopify_qty": 48,
+"shopify_qty": 46,
 "unit_cost": 12.0,
 "levels": {
-"Stockgroup": 48
+"Stockgroup": 46
 },
 "ean": "5740007822254",
 "components": null
@@ -1269,10 +1269,10 @@
 "variant_id": "49819081670981",
 "sku": "5740007822353",
 "barcode": "5740007822353",
-"shopify_qty": 26,
+"shopify_qty": 25,
 "unit_cost": 12.0,
 "levels": {
-"Stockgroup": 26
+"Stockgroup": 25
 },
 "ean": "5740007822353",
 "components": null
@@ -1287,10 +1287,10 @@
 "variant_id": "49819082621253",
 "sku": "5740007822391",
 "barcode": "5740007822391",
-"shopify_qty": 28,
+"shopify_qty": 27,
 "unit_cost": 12.0,
 "levels": {
-"Stockgroup": 28
+"Stockgroup": 27
 },
 "ean": "5740007822391",
 "components": null
@@ -1323,10 +1323,10 @@
 "variant_id": "50103317397829",
 "sku": "5740007819865",
 "barcode": "5740007819865",
-"shopify_qty": 634,
+"shopify_qty": 542,
 "unit_cost": 50.0,
 "levels": {
-"Stockgroup": 634
+"Stockgroup": 542
 },
 "ean": "5740007819865",
 "components": null
@@ -1341,10 +1341,10 @@
 "variant_id": "50103328080197",
 "sku": "5740007821509",
 "barcode": "5740007821509",
-"shopify_qty": 329,
+"shopify_qty": 318,
 "unit_cost": 220.0,
 "levels": {
-"Stockgroup": 329
+"Stockgroup": 318
 },
 "ean": "5740007821509",
 "components": null
@@ -1359,10 +1359,10 @@
 "variant_id": "50171129725253",
 "sku": "5740007822056",
 "barcode": "5740007822056",
-"shopify_qty": 465,
+"shopify_qty": 434,
 "unit_cost": 160.5,
 "levels": {
-"Stockgroup": 465
+"Stockgroup": 434
 },
 "ean": "5740007822056",
 "components": null
@@ -1413,10 +1413,10 @@
 "variant_id": "53623829954885",
 "sku": "5740007820441",
 "barcode": "5740007820441",
-"shopify_qty": 63,
+"shopify_qty": 62,
 "unit_cost": 44.58,
 "levels": {
-"Stockgroup": 63
+"Stockgroup": 62
 },
 "ean": "5740007820441",
 "components": null
@@ -1485,10 +1485,10 @@
 "variant_id": "54427165950277",
 "sku": "D-5740007812569",
 "barcode": "5740007812569",
-"shopify_qty": 4,
+"shopify_qty": 1,
 "unit_cost": 135.03,
 "levels": {
-"Stockgroup": 4
+"Stockgroup": 1
 },
 "ean": "5740007812569",
 "components": null
@@ -1503,10 +1503,10 @@
 "variant_id": "54427180499269",
 "sku": "D-5740007809934",
 "barcode": "5740007809934",
-"shopify_qty": 6,
+"shopify_qty": 2,
 "unit_cost": 89.57,
 "levels": {
-"Stockgroup": 6
+"Stockgroup": 2
 },
 "ean": "5740007809934",
 "components": null
@@ -1593,10 +1593,10 @@
 "variant_id": "54427318878533",
 "sku": "D-5740007822056",
 "barcode": "5740007822056",
-"shopify_qty": 10,
+"shopify_qty": 9,
 "unit_cost": 160.5,
 "levels": {
-"Stockgroup": 10
+"Stockgroup": 9
 },
 "ean": "5740007822056",
 "components": null
@@ -1611,10 +1611,10 @@
 "variant_id": "54527514837317",
 "sku": "5740007826023",
 "barcode": "5740007826023",
-"shopify_qty": 356,
+"shopify_qty": 249,
 "unit_cost": 425.0,
 "levels": {
-"Stockgroup": 356
+"Stockgroup": 249
 },
 "ean": "5740007826023",
 "components": null
@@ -1629,10 +1629,10 @@
 "variant_id": "54654058529093",
 "sku": "5740007825835",
 "barcode": "5740007825835",
-"shopify_qty": 1981,
+"shopify_qty": 1806,
 "unit_cost": 200.0,
 "levels": {
-"Stockgroup": 1981
+"Stockgroup": 1806
 },
 "ean": "5740007825835",
 "components": null
@@ -1647,10 +1647,10 @@
 "variant_id": "54659824648517",
 "sku": "5740007825699",
 "barcode": "5740007825699",
-"shopify_qty": 322,
+"shopify_qty": 320,
 "unit_cost": 24.0,
 "levels": {
-"Stockgroup": 322
+"Stockgroup": 320
 },
 "ean": "5740007825699",
 "components": null
@@ -1665,10 +1665,10 @@
 "variant_id": "54659828646213",
 "sku": "5740007825712",
 "barcode": "5740007825712",
-"shopify_qty": 72,
+"shopify_qty": 66,
 "unit_cost": 24.0,
 "levels": {
-"Stockgroup": 72
+"Stockgroup": 66
 },
 "ean": "5740007825712",
 "components": null
@@ -1683,10 +1683,10 @@
 "variant_id": "54659835560261",
 "sku": "5740007825736",
 "barcode": "5740007825736",
-"shopify_qty": 227,
+"shopify_qty": 224,
 "unit_cost": 24.0,
 "levels": {
-"Stockgroup": 227
+"Stockgroup": 224
 },
 "ean": "5740007825736",
 "components": null
@@ -1701,10 +1701,10 @@
 "variant_id": "54659839721797",
 "sku": "5740007825750",
 "barcode": "5740007825750",
-"shopify_qty": 56,
+"shopify_qty": 53,
 "unit_cost": 24.0,
 "levels": {
-"Stockgroup": 56
+"Stockgroup": 53
 },
 "ean": "5740007825750",
 "components": null
@@ -1719,10 +1719,10 @@
 "variant_id": "54727337836869",
 "sku": "5740007825859",
 "barcode": "5740007825859",
-"shopify_qty": 696,
+"shopify_qty": 682,
 "unit_cost": 332.0,
 "levels": {
-"Stockgroup": 696
+"Stockgroup": 682
 },
 "ean": "5740007825859",
 "components": null
@@ -1737,10 +1737,10 @@
 "variant_id": "54733357384005",
 "sku": "5740007830556",
 "barcode": "5740007830556",
-"shopify_qty": 444,
+"shopify_qty": 437,
 "unit_cost": 585.0,
 "levels": {
-"Stockgroup": 444
+"Stockgroup": 437
 },
 "ean": "5740007830556",
 "components": null
@@ -1755,10 +1755,10 @@
 "variant_id": "54738998559045",
 "sku": "5740007826313",
 "barcode": "5740007826313",
-"shopify_qty": -1,
+"shopify_qty": 0,
 "unit_cost": 33.6,
 "levels": {
-"Stockgroup": -1
+"Stockgroup": 0
 },
 "ean": "5740007826313",
 "components": null
@@ -1791,10 +1791,10 @@
 "variant_id": "54739166298437",
 "sku": "5740007826276",
 "barcode": "5740007826276",
-"shopify_qty": 25,
+"shopify_qty": 21,
 "unit_cost": 44.0,
 "levels": {
-"Stockgroup": 25
+"Stockgroup": 21
 },
 "ean": "5740007826276",
 "components": null
@@ -1845,10 +1845,10 @@
 "variant_id": "55019724636485",
 "sku": "5740007827235",
 "barcode": "5740007827235",
-"shopify_qty": 223,
+"shopify_qty": 222,
 "unit_cost": 23.0,
 "levels": {
-"Stockgroup": 223
+"Stockgroup": 222
 },
 "ean": "5740007827235",
 "components": null
@@ -1881,10 +1881,10 @@
 "variant_id": "55111509475653",
 "sku": "R3-5740007826023",
 "barcode": null,
-"shopify_qty": 317,
+"shopify_qty": 274,
 "unit_cost": 55.0,
 "levels": {
-"Stockgroup": 317
+"Stockgroup": 274
 },
 "ean": null,
 "components": null
@@ -1899,10 +1899,10 @@
 "variant_id": "55111512752453",
 "sku": "R2-5740007826023",
 "barcode": "5740007818875",
-"shopify_qty": 334,
+"shopify_qty": 291,
 "unit_cost": 55.0,
 "levels": {
-"Stockgroup": 334
+"Stockgroup": 291
 },
 "ean": "5740007818875",
 "components": null
@@ -1917,7 +1917,7 @@
 "variant_id": "55111516717381",
 "sku": null,
 "barcode": null,
-"shopify_qty": 317,
+"shopify_qty": 274,
 "unit_cost": 110.0,
 "levels": {
 "Stockgroup": null
@@ -1935,7 +1935,7 @@
 "variant_id": "55150658617669",
 "sku": null,
 "barcode": null,
-"shopify_qty": 317,
+"shopify_qty": 249,
 "unit_cost": 535.0,
 "levels": {
 "Stockgroup": null
@@ -1953,10 +1953,10 @@
 "variant_id": "55284253917509",
 "sku": "5740007828294",
 "barcode": "5740007828294",
-"shopify_qty": 68,
+"shopify_qty": 51,
 "unit_cost": 100.0,
 "levels": {
-"Stockgroup": 68
+"Stockgroup": 51
 },
 "ean": "5740007828294",
 "components": null
@@ -1971,10 +1971,10 @@
 "variant_id": "55321085051205",
 "sku": "5740007830099",
 "barcode": "5740007830099",
-"shopify_qty": 134,
+"shopify_qty": 121,
 "unit_cost": 76.0,
 "levels": {
-"Stockgroup": 134
+"Stockgroup": 121
 },
 "ean": "5740007830099",
 "components": null
@@ -1989,10 +1989,10 @@
 "variant_id": "55392279003461",
 "sku": "5740007830228",
 "barcode": "5740007830228",
-"shopify_qty": 3,
+"shopify_qty": 0,
 "unit_cost": 64.0,
 "levels": {
-"Stockgroup": 3
+"Stockgroup": 0
 },
 "ean": "5740007830228",
 "components": null
@@ -2007,10 +2007,10 @@
 "variant_id": "55535957737797",
 "sku": "5740007830136",
 "barcode": "5740007830136",
-"shopify_qty": 305,
+"shopify_qty": 294,
 "unit_cost": 60.0,
 "levels": {
-"Stockgroup": 305
+"Stockgroup": 294
 },
 "ean": "5740007830136",
 "components": null
@@ -2025,10 +2025,10 @@
 "variant_id": "55620452417861",
 "sku": "5206492030111",
 "barcode": "5206492030111",
-"shopify_qty": 2862,
+"shopify_qty": 2838,
 "unit_cost": 3.5,
 "levels": {
-"Stockgroup": 2862
+"Stockgroup": 2838
 },
 "ean": "5206492030111",
 "components": null
@@ -2061,10 +2061,10 @@
 "variant_id": "55714183577925",
 "sku": "5740007826450",
 "barcode": "5740007826450",
-"shopify_qty": 1195,
+"shopify_qty": 1175,
 "unit_cost": 720.0,
 "levels": {
-"Stockgroup": 1195
+"Stockgroup": 1175
 },
 "ean": "5740007826450",
 "components": null
@@ -2079,10 +2079,10 @@
 "variant_id": "55714279227717",
 "sku": "5740007832765",
 "barcode": "5740007832765",
-"shopify_qty": 1208,
+"shopify_qty": 1046,
 "unit_cost": 135.0,
 "levels": {
-"Stockgroup": 1208
+"Stockgroup": 1046
 },
 "ean": "5740007832765",
 "components": null
@@ -2097,10 +2097,10 @@
 "variant_id": "55714309046597",
 "sku": "5740007832567",
 "barcode": "5740007832567",
-"shopify_qty": 303,
+"shopify_qty": 298,
 "unit_cost": 16.0,
 "levels": {
-"Stockgroup": 303
+"Stockgroup": 298
 },
 "ean": "5740007832567",
 "components": null
@@ -2115,10 +2115,10 @@
 "variant_id": "55714312913221",
 "sku": "5740007832550",
 "barcode": "5740007832550",
-"shopify_qty": 3198,
+"shopify_qty": 3107,
 "unit_cost": 10.67,
 "levels": {
-"Stockgroup": 3198
+"Stockgroup": 3107
 },
 "ean": "5740007832550",
 "components": null
@@ -2133,10 +2133,10 @@
 "variant_id": "55714317304133",
 "sku": "5740007832543",
 "barcode": "5740007832543",
-"shopify_qty": 796,
+"shopify_qty": 774,
 "unit_cost": 16.0,
 "levels": {
-"Stockgroup": 796
+"Stockgroup": 774
 },
 "ean": "5740007832543",
 "components": null
@@ -2151,10 +2151,10 @@
 "variant_id": "55714517320005",
 "sku": "5740007832185",
 "barcode": "5740007832185",
-"shopify_qty": 323,
+"shopify_qty": 75,
 "unit_cost": 228.0,
 "levels": {
-"Stockgroup": 323
+"Stockgroup": 75
 },
 "ean": "5740007832185",
 "components": null
@@ -2169,10 +2169,10 @@
 "variant_id": "55714532360517",
 "sku": "5740007831812",
 "barcode": "5740007831812",
-"shopify_qty": 1075,
+"shopify_qty": 1001,
 "unit_cost": 240.0,
 "levels": {
-"Stockgroup": 1075
+"Stockgroup": 1001
 },
 "ean": "5740007831812",
 "components": null
@@ -2205,10 +2205,10 @@
 "variant_id": "55714563621189",
 "sku": "5740007831706",
 "barcode": "5740007831706",
-"shopify_qty": 101,
+"shopify_qty": 99,
 "unit_cost": 600.0,
 "levels": {
-"Stockgroup": 101
+"Stockgroup": 99
 },
 "ean": "5740007831706",
 "components": null
@@ -2241,10 +2241,10 @@
 "variant_id": "55715987095877",
 "sku": "5740007827235",
 "barcode": "5740007827235",
-"shopify_qty": 223,
+"shopify_qty": 222,
 "unit_cost": 23.0,
 "levels": {
-"Stockgroup": 223
+"Stockgroup": 222
 },
 "ean": "5740007827235",
 "components": null
@@ -2295,10 +2295,10 @@
 "variant_id": "55971785736517",
 "sku": "5740007832369",
 "barcode": "5740007832369",
-"shopify_qty": 274,
+"shopify_qty": 270,
 "unit_cost": 100.32,
 "levels": {
-"Stockgroup": 274
+"Stockgroup": 270
 },
 "ean": "5740007832369",
 "components": null
@@ -2313,10 +2313,10 @@
 "variant_id": "56140068094277",
 "sku": "5740007833281",
 "barcode": "5740007833281",
-"shopify_qty": 3098,
+"shopify_qty": 3028,
 "unit_cost": 4.2,
 "levels": {
-"Stockgroup": 3098
+"Stockgroup": 3028
 },
 "ean": "5740007833281",
 "components": null
@@ -2331,7 +2331,7 @@
 "variant_id": "56140394168645",
 "sku": null,
 "barcode": null,
-"shopify_qty": 550,
+"shopify_qty": 534,
 "unit_cost": 869.3,
 "levels": {
 "Stockgroup": null
@@ -2349,10 +2349,10 @@
 "variant_id": "56148965753157",
 "sku": "5740007832475",
 "barcode": "5740007832475",
-"shopify_qty": 678,
+"shopify_qty": 662,
 "unit_cost": 40.0,
 "levels": {
-"Stockgroup": 678
+"Stockgroup": 662
 },
 "ean": "5740007832475",
 "components": null
@@ -2367,10 +2367,10 @@
 "variant_id": "56183737057605",
 "sku": "5740007816666",
 "barcode": "5740007816666",
-"shopify_qty": 1739,
+"shopify_qty": 1414,
 "unit_cost": 140.0,
 "levels": {
-"Stockgroup": 1739
+"Stockgroup": 1414
 },
 "ean": "5740007816666",
 "components": null
@@ -2385,10 +2385,10 @@
 "variant_id": "56460912034117",
 "sku": "5740007829666",
 "barcode": "5740007829666",
-"shopify_qty": 438,
+"shopify_qty": 425,
 "unit_cost": 60.0,
 "levels": {
-"Stockgroup": 438
+"Stockgroup": 425
 },
 "ean": "5740007829666",
 "components": null
@@ -2403,10 +2403,10 @@
 "variant_id": "56544028459333",
 "sku": "5740007832703",
 "barcode": "5740007832703",
-"shopify_qty": 378,
+"shopify_qty": 348,
 "unit_cost": 32.0,
 "levels": {
-"Stockgroup": 378
+"Stockgroup": 348
 },
 "ean": "5740007832703",
 "components": null
@@ -2439,10 +2439,10 @@
 "variant_id": "56575226806597",
 "sku": "5740007831836",
 "barcode": "5740007831836",
-"shopify_qty": 757,
+"shopify_qty": 616,
 "unit_cost": 43.68,
 "levels": {
-"Stockgroup": 757
+"Stockgroup": 616
 },
 "ean": "5740007831836",
 "components": null
@@ -2457,7 +2457,7 @@
 "variant_id": "56585055338821",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1981,
+"shopify_qty": 1806,
 "unit_cost": 485.14,
 "levels": {
 "Stockgroup": null
@@ -2475,7 +2475,7 @@
 "variant_id": "56586206282053",
 "sku": null,
 "barcode": null,
-"shopify_qty": 740,
+"shopify_qty": 690,
 "unit_cost": 407.73,
 "levels": {
 "Stockgroup": null
@@ -2493,10 +2493,10 @@
 "variant_id": "57180266791237",
 "sku": "5740007834219",
 "barcode": "5740007834219",
-"shopify_qty": 211,
+"shopify_qty": 208,
 "unit_cost": 240.0,
 "levels": {
-"Stockgroup": 211
+"Stockgroup": 208
 },
 "ean": "5740007834219",
 "components": null
@@ -2511,10 +2511,10 @@
 "variant_id": "57180488696133",
 "sku": "5740007833786",
 "barcode": "5740007833786",
-"shopify_qty": 8,
+"shopify_qty": 5,
 "unit_cost": 12.0,
 "levels": {
-"Stockgroup": 8
+"Stockgroup": 5
 },
 "ean": "5740007833786",
 "components": null
@@ -2529,10 +2529,10 @@
 "variant_id": "57263591784773",
 "sku": "5740007834431",
 "barcode": "5740007834431",
-"shopify_qty": 221,
+"shopify_qty": 192,
 "unit_cost": 152.0,
 "levels": {
-"Stockgroup": 221
+"Stockgroup": 192
 },
 "ean": "5740007834431",
 "components": null
@@ -2547,10 +2547,10 @@
 "variant_id": "57281289552197",
 "sku": "5740007837326",
 "barcode": "5740007837326",
-"shopify_qty": 596,
+"shopify_qty": 590,
 "unit_cost": 44.0,
 "levels": {
-"Stockgroup": 596
+"Stockgroup": 590
 },
 "ean": "5740007837326",
 "components": null
@@ -2565,10 +2565,10 @@
 "variant_id": "57355492950341",
 "sku": "5740007831942",
 "barcode": "5740007831942",
-"shopify_qty": 310,
+"shopify_qty": 294,
 "unit_cost": 103.2,
 "levels": {
-"Stockgroup": 310
+"Stockgroup": 294
 },
 "ean": "5740007831942",
 "components": null
@@ -2583,10 +2583,10 @@
 "variant_id": "57356097585477",
 "sku": "5740007831959",
 "barcode": "5740007831959",
-"shopify_qty": 351,
+"shopify_qty": 335,
 "unit_cost": 127.2,
 "levels": {
-"Stockgroup": 351
+"Stockgroup": 335
 },
 "ean": "5740007831959",
 "components": null
@@ -2601,10 +2601,10 @@
 "variant_id": "57356235505989",
 "sku": "5740007831966",
 "barcode": "5740007831966",
-"shopify_qty": 566,
+"shopify_qty": 546,
 "unit_cost": 151.2,
 "levels": {
-"Stockgroup": 566
+"Stockgroup": 546
 },
 "ean": "5740007831966",
 "components": null
@@ -2619,10 +2619,10 @@
 "variant_id": "57356336365893",
 "sku": "5740007831973",
 "barcode": "5740007831973",
-"shopify_qty": 98,
+"shopify_qty": 91,
 "unit_cost": 127.2,
 "levels": {
-"Stockgroup": 98
+"Stockgroup": 91
 },
 "ean": "5740007831973",
 "components": null
@@ -2637,10 +2637,10 @@
 "variant_id": "57356393906501",
 "sku": "5740007831980",
 "barcode": "5740007831980",
-"shopify_qty": 114,
+"shopify_qty": 104,
 "unit_cost": 159.2,
 "levels": {
-"Stockgroup": 114
+"Stockgroup": 104
 },
 "ean": "5740007831980",
 "components": null
@@ -2655,10 +2655,10 @@
 "variant_id": "57356576981317",
 "sku": "5740007831997",
 "barcode": "5740007831997",
-"shopify_qty": 193,
+"shopify_qty": 183,
 "unit_cost": 191.2,
 "levels": {
-"Stockgroup": 193
+"Stockgroup": 183
 },
 "ean": "5740007831997",
 "components": null
@@ -2691,10 +2691,10 @@
 "variant_id": "57403739046213",
 "sku": "5740007840579",
 "barcode": "5740007840579",
-"shopify_qty": 1932,
+"shopify_qty": 1788,
 "unit_cost": 172.0,
 "levels": {
-"Stockgroup": 1932
+"Stockgroup": 1788
 },
 "ean": "5740007840579",
 "components": null
@@ -2709,10 +2709,10 @@
 "variant_id": "57403745239365",
 "sku": "5740007836657",
 "barcode": "5740007836657",
-"shopify_qty": 399,
+"shopify_qty": 382,
 "unit_cost": 100.0,
 "levels": {
-"Stockgroup": 399
+"Stockgroup": 382
 },
 "ean": "5740007836657",
 "components": null
@@ -2745,10 +2745,10 @@
 "variant_id": "57403783020869",
 "sku": "5740007838323",
 "barcode": "5740007838323",
-"shopify_qty": 38,
+"shopify_qty": 0,
 "unit_cost": 80.0,
 "levels": {
-"Stockgroup": 38
+"Stockgroup": 0
 },
 "ean": "5740007838323",
 "components": null
@@ -2763,10 +2763,10 @@
 "variant_id": "57477082906949",
 "sku": "5740007837296",
 "barcode": "5740007837296",
-"shopify_qty": 687,
+"shopify_qty": 665,
 "unit_cost": 60.0,
 "levels": {
-"Stockgroup": 687
+"Stockgroup": 665
 },
 "ean": "5740007837296",
 "components": null
@@ -2781,7 +2781,7 @@
 "variant_id": "57636103848261",
 "sku": null,
 "barcode": null,
-"shopify_qty": 444,
+"shopify_qty": 437,
 "unit_cost": 637.0,
 "levels": {
 "Stockgroup": null
@@ -2817,10 +2817,10 @@
 "variant_id": "57738891690309",
 "sku": "5740007838309",
 "barcode": "5740007838309",
-"shopify_qty": 272,
+"shopify_qty": 227,
 "unit_cost": 18.4,
 "levels": {
-"Stockgroup": 272
+"Stockgroup": 227
 },
 "ean": "5740007838309",
 "components": null
@@ -2835,10 +2835,10 @@
 "variant_id": "57766453969221",
 "sku": "5740007838378",
 "barcode": "5740007838378",
-"shopify_qty": 269,
+"shopify_qty": 255,
 "unit_cost": 24.0,
 "levels": {
-"Stockgroup": 269
+"Stockgroup": 255
 },
 "ean": "5740007838378",
 "components": null
@@ -2853,10 +2853,10 @@
 "variant_id": "57779794936133",
 "sku": "R1-5740007826023",
 "barcode": null,
-"shopify_qty": 58,
+"shopify_qty": 55,
 "unit_cost": null,
 "levels": {
-"Stockgroup": 58
+"Stockgroup": 55
 },
 "ean": null,
 "components": null
@@ -2871,10 +2871,10 @@
 "variant_id": "58023258652997",
 "sku": "R2-5740007830556",
 "barcode": null,
-"shopify_qty": 9,
+"shopify_qty": 8,
 "unit_cost": null,
 "levels": {
-"Stockgroup": 9
+"Stockgroup": 8
 },
 "ean": null,
 "components": null
@@ -2907,7 +2907,7 @@
 "variant_id": "58205024223557",
 "sku": null,
 "barcode": null,
-"shopify_qty": 310,
+"shopify_qty": 294,
 "unit_cost": 230.4,
 "levels": {
 "Stockgroup": null
@@ -2925,7 +2925,7 @@
 "variant_id": "58205173907781",
 "sku": null,
 "barcode": null,
-"shopify_qty": 351,
+"shopify_qty": 335,
 "unit_cost": 278.4,
 "levels": {
 "Stockgroup": null
@@ -2943,7 +2943,7 @@
 "variant_id": "58205191209285",
 "sku": null,
 "barcode": null,
-"shopify_qty": 310,
+"shopify_qty": 294,
 "unit_cost": 381.6,
 "levels": {
 "Stockgroup": null
@@ -2961,7 +2961,7 @@
 "variant_id": "58205208838469",
 "sku": null,
 "barcode": null,
-"shopify_qty": 114,
+"shopify_qty": 104,
 "unit_cost": 350.4,
 "levels": {
 "Stockgroup": null
@@ -2979,7 +2979,7 @@
 "variant_id": "58205225189701",
 "sku": null,
 "barcode": null,
-"shopify_qty": 98,
+"shopify_qty": 91,
 "unit_cost": 286.4,
 "levels": {
 "Stockgroup": null
@@ -2997,7 +2997,7 @@
 "variant_id": "58205236822341",
 "sku": null,
 "barcode": null,
-"shopify_qty": 98,
+"shopify_qty": 91,
 "unit_cost": 477.6,
 "levels": {
 "Stockgroup": null
@@ -3015,7 +3015,7 @@
 "variant_id": "58205244064069",
 "sku": null,
 "barcode": null,
-"shopify_qty": 98,
+"shopify_qty": 91,
 "unit_cost": 859.2,
 "levels": {
 "Stockgroup": null
@@ -3033,10 +3033,10 @@
 "variant_id": "58367222350149",
 "sku": "5740007845925",
 "barcode": "5740007845925",
-"shopify_qty": 207,
+"shopify_qty": 188,
 "unit_cost": 41.0,
 "levels": {
-"Stockgroup": 207
+"Stockgroup": 188
 },
 "ean": "5740007845925",
 "components": null
@@ -3051,10 +3051,10 @@
 "variant_id": "58372654432581",
 "sku": "5740007845949",
 "barcode": "5740007845949",
-"shopify_qty": 285,
+"shopify_qty": 270,
 "unit_cost": 41.0,
 "levels": {
-"Stockgroup": 285
+"Stockgroup": 270
 },
 "ean": "5740007845949",
 "components": null
@@ -3069,7 +3069,7 @@
 "variant_id": "58374836846917",
 "sku": null,
 "barcode": null,
-"shopify_qty": 550,
+"shopify_qty": 534,
 "unit_cost": 1552.3,
 "levels": {
 "Stockgroup": null
@@ -3087,7 +3087,7 @@
 "variant_id": "58417819582789",
 "sku": null,
 "barcode": null,
-"shopify_qty": 207,
+"shopify_qty": 188,
 "unit_cost": null,
 "levels": {
 "Stockgroup": null
@@ -3105,7 +3105,7 @@
 "variant_id": "58419716620613",
 "sku": null,
 "barcode": null,
-"shopify_qty": 207,
+"shopify_qty": 188,
 "unit_cost": null,
 "levels": {
 "Stockgroup": null
@@ -3123,10 +3123,10 @@
 "variant_id": "58427704934725",
 "sku": "5740007840593",
 "barcode": "5740007840593",
-"shopify_qty": 142,
+"shopify_qty": 128,
 "unit_cost": 56.0,
 "levels": {
-"Stockgroup": 142
+"Stockgroup": 128
 },
 "ean": "5740007840593",
 "components": null
@@ -3141,10 +3141,10 @@
 "variant_id": "58427922841925",
 "sku": "5740007839795",
 "barcode": "5740007839795",
-"shopify_qty": 152,
+"shopify_qty": 113,
 "unit_cost": 48.0,
 "levels": {
-"Stockgroup": 152
+"Stockgroup": 113
 },
 "ean": "5740007839795",
 "components": null
@@ -3159,10 +3159,10 @@
 "variant_id": "58454090613061",
 "sku": "5740007839719",
 "barcode": "5740007839719",
-"shopify_qty": 253,
+"shopify_qty": 249,
 "unit_cost": 32.0,
 "levels": {
-"Stockgroup": 253
+"Stockgroup": 249
 },
 "ean": "5740007839719",
 "components": null
@@ -3177,10 +3177,10 @@
 "variant_id": "58522228326725",
 "sku": "5745001275136",
 "barcode": "5745001275136",
-"shopify_qty": 106,
+"shopify_qty": 102,
 "unit_cost": 49.6,
 "levels": {
-"Stockgroup": 106
+"Stockgroup": 102
 },
 "ean": "5745001275136",
 "components": null
@@ -3195,10 +3195,10 @@
 "variant_id": "58522426507589",
 "sku": "5745001275211",
 "barcode": "5745001275211",
-"shopify_qty": 690,
+"shopify_qty": 673,
 "unit_cost": 49.6,
 "levels": {
-"Stockgroup": 690
+"Stockgroup": 673
 },
 "ean": "5745001275211",
 "components": null
@@ -3213,10 +3213,10 @@
 "variant_id": "58522588938565",
 "sku": "5745001275174",
 "barcode": "5745001275174",
-"shopify_qty": 550,
+"shopify_qty": 534,
 "unit_cost": 49.6,
 "levels": {
-"Stockgroup": 550
+"Stockgroup": 534
 },
 "ean": "5745001275174",
 "components": null
@@ -3267,10 +3267,10 @@
 "variant_id": "58547370033477",
 "sku": "5740007843112",
 "barcode": "5740007843112",
-"shopify_qty": 1700,
+"shopify_qty": 1680,
 "unit_cost": 12.0,
 "levels": {
-"Stockgroup": 1700
+"Stockgroup": 1680
 },
 "ean": "5740007843112",
 "components": null
@@ -3339,10 +3339,10 @@
 "variant_id": "58623602655557",
 "sku": "5701020877768",
 "barcode": "5701020877768",
-"shopify_qty": 116,
+"shopify_qty": 115,
 "unit_cost": 104.0,
 "levels": {
-"Stockgroup": 116
+"Stockgroup": 115
 },
 "ean": "5701020877768",
 "components": null
@@ -3357,7 +3357,7 @@
 "variant_id": "58783509938501",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2529,
+"shopify_qty": 2083,
 "unit_cost": 247.23,
 "levels": {
 "Stockgroup": null
@@ -3375,7 +3375,7 @@
 "variant_id": "58783509971269",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1208,
+"shopify_qty": 1046,
 "unit_cost": 247.2,
 "levels": {
 "Stockgroup": null
@@ -3393,7 +3393,7 @@
 "variant_id": "58783510004037",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1208,
+"shopify_qty": 1046,
 "unit_cost": 270.03,
 "levels": {
 "Stockgroup": null
@@ -3411,7 +3411,7 @@
 "variant_id": "58783510036805",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1208,
+"shopify_qty": 1046,
 "unit_cost": 280.7,
 "levels": {
 "Stockgroup": null
@@ -3429,7 +3429,7 @@
 "variant_id": "58783513674053",
 "sku": null,
 "barcode": null,
-"shopify_qty": 566,
+"shopify_qty": 546,
 "unit_cost": 296.87,
 "levels": {
 "Stockgroup": null
@@ -3447,7 +3447,7 @@
 "variant_id": "58783513706821",
 "sku": null,
 "barcode": null,
-"shopify_qty": 697,
+"shopify_qty": 639,
 "unit_cost": 405.61,
 "levels": {
 "Stockgroup": null
@@ -3465,7 +3465,7 @@
 "variant_id": "58783513739589",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1075,
+"shopify_qty": 1001,
 "unit_cost": 375.0,
 "levels": {
 "Stockgroup": null
@@ -3483,7 +3483,7 @@
 "variant_id": "58783513772357",
 "sku": null,
 "barcode": null,
-"shopify_qty": 310,
+"shopify_qty": 294,
 "unit_cost": 381.6,
 "levels": {
 "Stockgroup": null
@@ -3501,10 +3501,10 @@
 "variant_id": "58877116088645",
 "sku": "5740007845802",
 "barcode": "5740007845802",
-"shopify_qty": 1107,
+"shopify_qty": 1105,
 "unit_cost": 28.0,
 "levels": {
-"Stockgroup": 1107
+"Stockgroup": 1105
 },
 "ean": "5740007845802",
 "components": null
@@ -3519,10 +3519,10 @@
 "variant_id": "58877118775621",
 "sku": "5740007845826",
 "barcode": "5740007845826",
-"shopify_qty": 1043,
+"shopify_qty": 1038,
 "unit_cost": 28.0,
 "levels": {
-"Stockgroup": 1043
+"Stockgroup": 1038
 },
 "ean": "5740007845826",
 "components": null
@@ -3537,10 +3537,10 @@
 "variant_id": "58877121462597",
 "sku": "5740007845789",
 "barcode": "5740007845789",
-"shopify_qty": 1117,
+"shopify_qty": 1115,
 "unit_cost": 28.0,
 "levels": {
-"Stockgroup": 1117
+"Stockgroup": 1115
 },
 "ean": "5740007845789",
 "components": null
@@ -3555,10 +3555,10 @@
 "variant_id": "58937433653573",
 "sku": "5740007843037",
 "barcode": "5740007843037",
-"shopify_qty": 389,
+"shopify_qty": 377,
 "unit_cost": 16.0,
 "levels": {
-"Stockgroup": 389
+"Stockgroup": 377
 },
 "ean": "5740007843037",
 "components": null
@@ -3573,10 +3573,10 @@
 "variant_id": "58938557268293",
 "sku": "5740007843679",
 "barcode": "5740007843679",
-"shopify_qty": 227,
+"shopify_qty": 207,
 "unit_cost": 24.0,
 "levels": {
-"Stockgroup": 227
+"Stockgroup": 207
 },
 "ean": "5740007843679",
 "components": null
@@ -3591,10 +3591,10 @@
 "variant_id": "58938561102149",
 "sku": "5740007843693",
 "barcode": "5740007843693",
-"shopify_qty": 103,
+"shopify_qty": 85,
 "unit_cost": 24.0,
 "levels": {
-"Stockgroup": 103
+"Stockgroup": 85
 },
 "ean": "5740007843693",
 "components": null
@@ -3609,10 +3609,10 @@
 "variant_id": "58938582925637",
 "sku": "5740007844379",
 "barcode": "5740007844379",
-"shopify_qty": 2852,
+"shopify_qty": 2826,
 "unit_cost": 16.0,
 "levels": {
-"Stockgroup": 2852
+"Stockgroup": 2826
 },
 "ean": "5740007844379",
 "components": null
@@ -3627,7 +3627,7 @@
 "variant_id": "58938593739077",
 "sku": null,
 "barcode": null,
-"shopify_qty": 103,
+"shopify_qty": 85,
 "unit_cost": null,
 "levels": {
 "Stockgroup": null
@@ -3645,10 +3645,10 @@
 "variant_id": "58938604093765",
 "sku": "5740007842559",
 "barcode": "5740007842559",
-"shopify_qty": 93,
+"shopify_qty": 78,
 "unit_cost": 128.0,
 "levels": {
-"Stockgroup": 93
+"Stockgroup": 78
 },
 "ean": "5740007842559",
 "components": null
@@ -3663,10 +3663,10 @@
 "variant_id": "58974680908101",
 "sku": "5740007842290",
 "barcode": "5740007842290",
-"shopify_qty": 470,
+"shopify_qty": 301,
 "unit_cost": 64.0,
 "levels": {
-"Stockgroup": 470
+"Stockgroup": 301
 },
 "ean": "5740007842290",
 "components": null
@@ -3681,7 +3681,7 @@
 "variant_id": "58982625313093",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1043,
+"shopify_qty": 1038,
 "unit_cost": null,
 "levels": {
 "Stockgroup": null
@@ -3699,7 +3699,7 @@
 "variant_id": "59050642342213",
 "sku": null,
 "barcode": null,
-"shopify_qty": 368,
+"shopify_qty": 331,
 "unit_cost": 742.32,
 "levels": {
 "Stockgroup": null
@@ -3717,7 +3717,7 @@
 "variant_id": "59050642997573",
 "sku": null,
 "barcode": null,
-"shopify_qty": 368,
+"shopify_qty": 331,
 "unit_cost": 421.32,
 "levels": {
 "Stockgroup": null
@@ -3771,10 +3771,10 @@
 "variant_id": "59228689858885",
 "sku": "5740007842061",
 "barcode": "5740007842061",
-"shopify_qty": 923,
+"shopify_qty": 862,
 "unit_cost": 640.0,
 "levels": {
-"Stockgroup": 923
+"Stockgroup": 862
 },
 "ean": "5740007842061",
 "components": null
@@ -3897,10 +3897,10 @@
 "variant_id": "59252085784901",
 "sku": "R3-5740007825125",
 "barcode": null,
-"shopify_qty": 7,
+"shopify_qty": 6,
 "unit_cost": null,
 "levels": {
-"Stockgroup": 7
+"Stockgroup": 6
 },
 "ean": null,
 "components": null
@@ -3915,7 +3915,7 @@
 "variant_id": "59288120656197",
 "sku": null,
 "barcode": null,
-"shopify_qty": 68,
+"shopify_qty": 51,
 "unit_cost": 221.57,
 "levels": {
 "Stockgroup": null
@@ -3933,7 +3933,7 @@
 "variant_id": "59288592318789",
 "sku": null,
 "barcode": null,
-"shopify_qty": 71,
+"shopify_qty": 665,
 "unit_cost": 452.72,
 "levels": {
 "Stockgroup": null
@@ -3951,7 +3951,7 @@
 "variant_id": "59288666276165",
 "sku": null,
 "barcode": null,
-"shopify_qty": 221,
+"shopify_qty": 75,
 "unit_cost": 590.5,
 "levels": {
 "Stockgroup": null
@@ -4005,10 +4005,10 @@
 "variant_id": "59356832497989",
 "sku": "R4-5740007830556",
 "barcode": null,
-"shopify_qty": 5,
+"shopify_qty": 4,
 "unit_cost": null,
 "levels": {
-"Stockgroup": 5
+"Stockgroup": 4
 },
 "ean": null,
 "components": null
@@ -4203,10 +4203,10 @@
 "variant_id": "59476319142213",
 "sku": "5740007843853",
 "barcode": "5740007843853",
-"shopify_qty": 582,
+"shopify_qty": 566,
 "unit_cost": 120.0,
 "levels": {
-"Stockgroup": 582
+"Stockgroup": 566
 },
 "ean": "5740007843853",
 "components": null
@@ -4221,10 +4221,10 @@
 "variant_id": "59477005992261",
 "sku": "5740007845727",
 "barcode": "5740007845727",
-"shopify_qty": 374,
+"shopify_qty": 334,
 "unit_cost": 80.0,
 "levels": {
-"Stockgroup": 374
+"Stockgroup": 334
 },
 "ean": "5740007845727",
 "components": null
@@ -4239,10 +4239,10 @@
 "variant_id": "59477010809157",
 "sku": "5740007846243",
 "barcode": "5740007846243",
-"shopify_qty": 303,
+"shopify_qty": 273,
 "unit_cost": 280.0,
 "levels": {
-"Stockgroup": 303
+"Stockgroup": 273
 },
 "ean": "5740007846243",
 "components": null
@@ -4257,10 +4257,10 @@
 "variant_id": "59477015757125",
 "sku": "5740007846366",
 "barcode": "5740007846366",
-"shopify_qty": 394,
+"shopify_qty": 389,
 "unit_cost": 142.4,
 "levels": {
-"Stockgroup": 394
+"Stockgroup": 389
 },
 "ean": "5740007846366",
 "components": null
@@ -4293,30 +4293,12 @@
 "variant_id": "59477030371653",
 "sku": "5740007846748",
 "barcode": "5740007846748",
-"shopify_qty": 305,
+"shopify_qty": 135,
 "unit_cost": 8.0,
 "levels": {
-"Stockgroup": 305
+"Stockgroup": 135
 },
 "ean": "5740007846748",
-"components": null
-},
-{
-"brand": "casper",
-"product_id": "16215299227973",
-"title": "Dual Airfryer - 11 liter",
-"created_at": "2026-09-29",
-"published_at": "2026-10-28",
-"product_type": "Køkkenmaskiner",
-"variant_id": "59526108578117",
-"sku": "5740007840654",
-"barcode": "5740007840654",
-"shopify_qty": 131,
-"unit_cost": 320.0,
-"levels": {
-"Stockgroup": 131
-},
-"ean": "5740007840654",
 "components": null
 },
 {
@@ -4329,10 +4311,10 @@
 "variant_id": "59586740191557",
 "sku": "5740007844737",
 "barcode": "5740007844737",
-"shopify_qty": 760,
+"shopify_qty": 735,
 "unit_cost": 168.0,
 "levels": {
-"Stockgroup": 760
+"Stockgroup": 735
 },
 "ean": "5740007844737",
 "components": null
@@ -4347,10 +4329,10 @@
 "variant_id": "59586833023301",
 "sku": "5740007841866",
 "barcode": "5740007841866",
-"shopify_qty": 236,
+"shopify_qty": 204,
 "unit_cost": 128.0,
 "levels": {
-"Stockgroup": 236
+"Stockgroup": 204
 },
 "ean": "5740007841866",
 "components": null
@@ -4365,10 +4347,10 @@
 "variant_id": "59665286594885",
 "sku": "5740007842962",
 "barcode": "5740007842962",
-"shopify_qty": 343,
+"shopify_qty": 250,
 "unit_cost": 480.0,
 "levels": {
-"Stockgroup": 343
+"Stockgroup": 250
 },
 "ean": "5740007842962",
 "components": null
@@ -4383,7 +4365,7 @@
 "variant_id": "59835525890373",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1818,
+"shopify_qty": 1604,
 "unit_cost": 306.95,
 "levels": {
 "Stockgroup": null
@@ -4401,7 +4383,7 @@
 "variant_id": "59835525923141",
 "sku": null,
 "barcode": null,
-"shopify_qty": 71,
+"shopify_qty": 1604,
 "unit_cost": 436.83,
 "levels": {
 "Stockgroup": null
@@ -4419,7 +4401,7 @@
 "variant_id": "59835525955909",
 "sku": null,
 "barcode": null,
-"shopify_qty": 71,
+"shopify_qty": 616,
 "unit_cost": 748.51,
 "levels": {
 "Stockgroup": null
@@ -4437,7 +4419,7 @@
 "variant_id": "59835525988677",
 "sku": null,
 "barcode": null,
-"shopify_qty": 71,
+"shopify_qty": 382,
 "unit_cost": 1291.0,
 "levels": {
 "Stockgroup": null
@@ -4527,7 +4509,7 @@
 "variant_id": "59951976874309",
 "sku": null,
 "barcode": null,
-"shopify_qty": 310,
+"shopify_qty": 616,
 "unit_cost": null,
 "levels": {
 "Stockgroup": null
@@ -4545,7 +4527,7 @@
 "variant_id": "59951976939845",
 "sku": null,
 "barcode": null,
-"shopify_qty": 272,
+"shopify_qty": 227,
 "unit_cost": null,
 "levels": {
 "Stockgroup": null
@@ -4563,7 +4545,7 @@
 "variant_id": "60050761515333",
 "sku": null,
 "barcode": null,
-"shopify_qty": 700,
+"shopify_qty": 647,
 "unit_cost": 260.0,
 "levels": {
 "Stockgroup": null
@@ -4581,8 +4563,26 @@
 "variant_id": "60050761646405",
 "sku": null,
 "barcode": null,
-"shopify_qty": 172,
+"shopify_qty": 164,
 "unit_cost": 619.0,
+"levels": {
+"Stockgroup": null
+},
+"ean": null,
+"components": null
+},
+{
+"brand": "casper",
+"product_id": "16334176092485",
+"title": "Andestegspakken, airfryer med skærebræt og forskærerkniv",
+"created_at": "2026-11-03",
+"published_at": "2026-11-03",
+"product_type": "",
+"variant_id": "60050761777477",
+"sku": null,
+"barcode": null,
+"shopify_qty": 249,
+"unit_cost": 905.5,
 "levels": {
 "Stockgroup": null
 },
@@ -4599,10 +4599,10 @@
 "variant_id": "55674259538255",
 "sku": "5740007827457",
 "barcode": "5740007827457",
-"shopify_qty": 681,
+"shopify_qty": 1754,
 "unit_cost": 129.82,
 "levels": {
-"Stockgroup": 681
+"Stockgroup": 1754
 },
 "ean": "5740007827457",
 "components": null
@@ -4617,10 +4617,10 @@
 "variant_id": "55674311803215",
 "sku": "5740007827433",
 "barcode": "5740007827433",
-"shopify_qty": 3235,
+"shopify_qty": 2638,
 "unit_cost": 162.28,
 "levels": {
-"Stockgroup": 3235
+"Stockgroup": 2638
 },
 "ean": "5740007827433",
 "components": null
@@ -4635,10 +4635,10 @@
 "variant_id": "55714487894351",
 "sku": "5740007827396",
 "barcode": "5740007827396",
-"shopify_qty": 2693,
+"shopify_qty": 2563,
 "unit_cost": 229.53,
 "levels": {
-"Stockgroup": 2693
+"Stockgroup": 2563
 },
 "ean": "5740007827396",
 "components": null
@@ -4653,10 +4653,10 @@
 "variant_id": "55714491400527",
 "sku": "5740007827419",
 "barcode": "5740007827419",
-"shopify_qty": 3658,
+"shopify_qty": 2979,
 "unit_cost": 194.75,
 "levels": {
-"Stockgroup": 3658
+"Stockgroup": 2979
 },
 "ean": "5740007827419",
 "components": null
@@ -4671,10 +4671,10 @@
 "variant_id": "55714493956431",
 "sku": "5740007827471",
 "barcode": "5740007827471",
-"shopify_qty": 829,
+"shopify_qty": 720,
 "unit_cost": 289.86,
 "levels": {
-"Stockgroup": 829
+"Stockgroup": 720
 },
 "ean": "5740007827471",
 "components": null
@@ -4689,10 +4689,10 @@
 "variant_id": "55714494939471",
 "sku": "5740007827495",
 "barcode": "5740007827495",
-"shopify_qty": 1154,
+"shopify_qty": 894,
 "unit_cost": 216.81,
 "levels": {
-"Stockgroup": 1154
+"Stockgroup": 894
 },
 "ean": "5740007827495",
 "components": null
@@ -4707,10 +4707,10 @@
 "variant_id": "55714495922511",
 "sku": "5740007827518",
 "barcode": "5740007827518",
-"shopify_qty": 700,
+"shopify_qty": 942,
 "unit_cost": 180.87,
 "levels": {
-"Stockgroup": 700
+"Stockgroup": 942
 },
 "ean": "5740007827518",
 "components": null
@@ -4725,10 +4725,10 @@
 "variant_id": "55714503360847",
 "sku": "5740007827532",
 "barcode": "5740007827532",
-"shopify_qty": 302,
+"shopify_qty": 845,
 "unit_cost": 139.1,
 "levels": {
-"Stockgroup": 302
+"Stockgroup": 845
 },
 "ean": "5740007827532",
 "components": null
@@ -4743,10 +4743,10 @@
 "variant_id": "55714519286095",
 "sku": "5740007827556",
 "barcode": "5740007827556",
-"shopify_qty": 980,
+"shopify_qty": 864,
 "unit_cost": 227.21,
 "levels": {
-"Stockgroup": 980
+"Stockgroup": 864
 },
 "ean": "5740007827556",
 "components": null
@@ -4761,10 +4761,10 @@
 "variant_id": "55714527019343",
 "sku": "5740007827570",
 "barcode": "5740007827570",
-"shopify_qty": 2677,
+"shopify_qty": 2513,
 "unit_cost": 259.68,
 "levels": {
-"Stockgroup": 2677
+"Stockgroup": 2513
 },
 "ean": "5740007827570",
 "components": null
@@ -4779,10 +4779,10 @@
 "variant_id": "55714555625807",
 "sku": "5740007827594",
 "barcode": "5740007827594",
-"shopify_qty": 2033,
+"shopify_qty": 1667,
 "unit_cost": 307.25,
 "levels": {
-"Stockgroup": 2033
+"Stockgroup": 1667
 },
 "ean": "5740007827594",
 "components": null
@@ -4797,10 +4797,10 @@
 "variant_id": "55714581807439",
 "sku": "5740007827716",
 "barcode": "5740007827716",
-"shopify_qty": 2038,
+"shopify_qty": 1939,
 "unit_cost": 289.86,
 "levels": {
-"Stockgroup": 2038
+"Stockgroup": 1939
 },
 "ean": "5740007827716",
 "components": null
@@ -4815,10 +4815,10 @@
 "variant_id": "55714585510223",
 "sku": "5740007827730",
 "barcode": "5740007827730",
-"shopify_qty": 1245,
+"shopify_qty": 1202,
 "unit_cost": 481.16,
 "levels": {
-"Stockgroup": 1245
+"Stockgroup": 1202
 },
 "ean": "5740007827730",
 "components": null
@@ -4833,10 +4833,10 @@
 "variant_id": "55714595209551",
 "sku": "5740007827778",
 "barcode": "5740007827778",
-"shopify_qty": 674,
+"shopify_qty": 658,
 "unit_cost": 231.88,
 "levels": {
-"Stockgroup": 674
+"Stockgroup": 658
 },
 "ean": "5740007827778",
 "components": null
@@ -4851,10 +4851,10 @@
 "variant_id": "55714596356431",
 "sku": "5740007827754",
 "barcode": "5740007827754",
-"shopify_qty": 658,
+"shopify_qty": 620,
 "unit_cost": 231.88,
 "levels": {
-"Stockgroup": 658
+"Stockgroup": 620
 },
 "ean": "5740007827754",
 "components": null
@@ -4869,10 +4869,10 @@
 "variant_id": "55714596782415",
 "sku": "5740007827815",
 "barcode": "5740007827815",
-"shopify_qty": 448,
+"shopify_qty": 435,
 "unit_cost": 231.88,
 "levels": {
-"Stockgroup": 448
+"Stockgroup": 435
 },
 "ean": "5740007827815",
 "components": null
@@ -4887,10 +4887,10 @@
 "variant_id": "55714599240015",
 "sku": "5740007827839",
 "barcode": "5740007827839",
-"shopify_qty": 337,
+"shopify_qty": 322,
 "unit_cost": 144.93,
 "levels": {
-"Stockgroup": 337
+"Stockgroup": 322
 },
 "ean": "5740007827839",
 "components": null
@@ -4905,10 +4905,10 @@
 "variant_id": "55714602582351",
 "sku": "5740007827990",
 "barcode": "5740007827990",
-"shopify_qty": 1525,
+"shopify_qty": 1412,
 "unit_cost": 144.93,
 "levels": {
-"Stockgroup": 1525
+"Stockgroup": 1412
 },
 "ean": "5740007827990",
 "components": null
@@ -4941,10 +4941,10 @@
 "variant_id": "55714619162959",
 "sku": "5740007829185",
 "barcode": "5740007829185",
-"shopify_qty": 145,
+"shopify_qty": 132,
 "unit_cost": 57.97,
 "levels": {
-"Stockgroup": 145
+"Stockgroup": 132
 },
 "ean": "5740007829185",
 "components": null
@@ -4959,10 +4959,10 @@
 "variant_id": "55714621555023",
 "sku": "5740007829147",
 "barcode": "5740007829147",
-"shopify_qty": 600,
+"shopify_qty": 588,
 "unit_cost": 174.7,
 "levels": {
-"Stockgroup": 600
+"Stockgroup": 588
 },
 "ean": "5740007829147",
 "components": null
@@ -4977,10 +4977,10 @@
 "variant_id": "55714643476815",
 "sku": "5740007828034",
 "barcode": "5740007828034",
-"shopify_qty": 706,
+"shopify_qty": 685,
 "unit_cost": 194.75,
 "levels": {
-"Stockgroup": 706
+"Stockgroup": 685
 },
 "ean": "5740007828034",
 "components": null
@@ -4995,10 +4995,10 @@
 "variant_id": "55714659008847",
 "sku": "5740007828058",
 "barcode": "5740007828058",
-"shopify_qty": 915,
+"shopify_qty": 900,
 "unit_cost": 259.68,
 "levels": {
-"Stockgroup": 915
+"Stockgroup": 900
 },
 "ean": "5740007828058",
 "components": null
@@ -5031,10 +5031,10 @@
 "variant_id": "55733841953103",
 "sku": "5740007827792",
 "barcode": "5740007827792",
-"shopify_qty": 603,
+"shopify_qty": 588,
 "unit_cost": 231.88,
 "levels": {
-"Stockgroup": 603
+"Stockgroup": 588
 },
 "ean": "5740007827792",
 "components": null
@@ -5049,7 +5049,7 @@
 "variant_id": "55733859844431",
 "sku": null,
 "barcode": null,
-"shopify_qty": 337,
+"shopify_qty": 322,
 "unit_cost": 1903.2,
 "levels": {
 "Stockgroup": null
@@ -5067,7 +5067,7 @@
 "variant_id": "55733996093775",
 "sku": null,
 "barcode": null,
-"shopify_qty": 829,
+"shopify_qty": 720,
 "unit_cost": 1936.68,
 "levels": {
 "Stockgroup": null
@@ -5085,7 +5085,7 @@
 "variant_id": "55734030238031",
 "sku": null,
 "barcode": null,
-"shopify_qty": 980,
+"shopify_qty": 864,
 "unit_cost": 529.5,
 "levels": {
 "Stockgroup": null
@@ -5103,7 +5103,7 @@
 "variant_id": "55734051602767",
 "sku": null,
 "barcode": null,
-"shopify_qty": 681,
+"shopify_qty": 1754,
 "unit_cost": 525.4,
 "levels": {
 "Stockgroup": null
@@ -5121,7 +5121,7 @@
 "variant_id": "55734082404687",
 "sku": null,
 "barcode": null,
-"shopify_qty": 829,
+"shopify_qty": 720,
 "unit_cost": 1002.58,
 "levels": {
 "Stockgroup": null
@@ -5139,7 +5139,7 @@
 "variant_id": "55734103376207",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1154,
+"shopify_qty": 894,
 "unit_cost": 460.5,
 "levels": {
 "Stockgroup": null
@@ -5157,7 +5157,7 @@
 "variant_id": "55734109602127",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1154,
+"shopify_qty": 894,
 "unit_cost": 474.6,
 "levels": {
 "Stockgroup": null
@@ -5175,7 +5175,7 @@
 "variant_id": "55734126051663",
 "sku": null,
 "barcode": null,
-"shopify_qty": 600,
+"shopify_qty": 588,
 "unit_cost": 454.2,
 "levels": {
 "Stockgroup": null
@@ -5193,7 +5193,7 @@
 "variant_id": "55734140764495",
 "sku": null,
 "barcode": null,
-"shopify_qty": 600,
+"shopify_qty": 588,
 "unit_cost": 384.3,
 "levels": {
 "Stockgroup": null
@@ -5211,7 +5211,7 @@
 "variant_id": "55796914127183",
 "sku": null,
 "barcode": null,
-"shopify_qty": 681,
+"shopify_qty": 1754,
 "unit_cost": 314.7,
 "levels": {
 "Stockgroup": null
@@ -5229,7 +5229,7 @@
 "variant_id": "55797453390159",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2677,
+"shopify_qty": 2513,
 "unit_cost": 805.7,
 "levels": {
 "Stockgroup": null
@@ -5247,7 +5247,7 @@
 "variant_id": "55797710258511",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2693,
+"shopify_qty": 2563,
 "unit_cost": 772.4,
 "levels": {
 "Stockgroup": null
@@ -5265,7 +5265,7 @@
 "variant_id": "55797934162255",
 "sku": null,
 "barcode": null,
-"shopify_qty": 302,
+"shopify_qty": 845,
 "unit_cost": 364.9,
 "levels": {
 "Stockgroup": null
@@ -5283,7 +5283,7 @@
 "variant_id": "55798098755919",
 "sku": null,
 "barcode": null,
-"shopify_qty": 829,
+"shopify_qty": 720,
 "unit_cost": 813.48,
 "levels": {
 "Stockgroup": null
@@ -5301,7 +5301,7 @@
 "variant_id": "55798352544079",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1154,
+"shopify_qty": 894,
 "unit_cost": 628.9,
 "levels": {
 "Stockgroup": null
@@ -5319,7 +5319,7 @@
 "variant_id": "55798479814991",
 "sku": null,
 "barcode": null,
-"shopify_qty": 700,
+"shopify_qty": 942,
 "unit_cost": 371.5,
 "levels": {
 "Stockgroup": null
@@ -5337,7 +5337,7 @@
 "variant_id": "55799104307535",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1154,
+"shopify_qty": 894,
 "unit_cost": 846.1,
 "levels": {
 "Stockgroup": null
@@ -5355,7 +5355,7 @@
 "variant_id": "55799158374735",
 "sku": null,
 "barcode": null,
-"shopify_qty": 829,
+"shopify_qty": 720,
 "unit_cost": 1002.58,
 "levels": {
 "Stockgroup": null
@@ -5373,7 +5373,7 @@
 "variant_id": "55799186817359",
 "sku": null,
 "barcode": null,
-"shopify_qty": 980,
+"shopify_qty": 864,
 "unit_cost": 1683.7,
 "levels": {
 "Stockgroup": null
@@ -5391,7 +5391,7 @@
 "variant_id": "55889921573199",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1154,
+"shopify_qty": 894,
 "unit_cost": 403.7,
 "levels": {
 "Stockgroup": null
@@ -5409,7 +5409,7 @@
 "variant_id": "55890193219919",
 "sku": null,
 "barcode": null,
-"shopify_qty": 980,
+"shopify_qty": 864,
 "unit_cost": 496.2,
 "levels": {
 "Stockgroup": null
@@ -5427,7 +5427,7 @@
 "variant_id": "55890230378831",
 "sku": null,
 "barcode": null,
-"shopify_qty": 829,
+"shopify_qty": 720,
 "unit_cost": 717.88,
 "levels": {
 "Stockgroup": null
@@ -5445,7 +5445,7 @@
 "variant_id": "55890388517199",
 "sku": null,
 "barcode": null,
-"shopify_qty": 600,
+"shopify_qty": 588,
 "unit_cost": 663.8,
 "levels": {
 "Stockgroup": null
@@ -5463,7 +5463,7 @@
 "variant_id": "55890449662287",
 "sku": null,
 "barcode": null,
-"shopify_qty": 681,
+"shopify_qty": 942,
 "unit_cost": 336.2,
 "levels": {
 "Stockgroup": null
@@ -5481,7 +5481,7 @@
 "variant_id": "55890478858575",
 "sku": null,
 "barcode": null,
-"shopify_qty": 829,
+"shopify_qty": 720,
 "unit_cost": 492.68,
 "levels": {
 "Stockgroup": null
@@ -5499,10 +5499,10 @@
 "variant_id": "55970748760399",
 "sku": "5740007827617",
 "barcode": "5740007827617",
-"shopify_qty": 732,
+"shopify_qty": 681,
 "unit_cost": 579.71,
 "levels": {
-"Stockgroup": 732
+"Stockgroup": 681
 },
 "ean": "5740007827617",
 "components": null
@@ -5517,10 +5517,10 @@
 "variant_id": "55986345148751",
 "sku": "5740007827693",
 "barcode": "5740007827693",
-"shopify_qty": 127,
+"shopify_qty": 58,
 "unit_cost": 775.0,
 "levels": {
-"Stockgroup": 127
+"Stockgroup": 58
 },
 "ean": "5740007827693",
 "components": null
@@ -5535,10 +5535,10 @@
 "variant_id": "55987865059663",
 "sku": "5740007827679",
 "barcode": "5740007827679",
-"shopify_qty": 26,
+"shopify_qty": 115,
 "unit_cost": 371.01,
 "levels": {
-"Stockgroup": 26
+"Stockgroup": 115
 },
 "ean": "5740007827679",
 "components": null
@@ -5553,10 +5553,10 @@
 "variant_id": "56009783017807",
 "sku": "5740007830693",
 "barcode": "5740007830693",
-"shopify_qty": 188,
+"shopify_qty": 180,
 "unit_cost": 840.58,
 "levels": {
-"Stockgroup": 188
+"Stockgroup": 180
 },
 "ean": "5740007830693",
 "components": null
@@ -5751,10 +5751,10 @@
 "variant_id": "56127034917199",
 "sku": "5740007813993",
 "barcode": "5740007813993",
-"shopify_qty": 125,
+"shopify_qty": 88,
 "unit_cost": 43.48,
 "levels": {
-"Stockgroup": 125
+"Stockgroup": 88
 },
 "ean": "5740007813993",
 "components": null
@@ -5769,10 +5769,10 @@
 "variant_id": "56127229722959",
 "sku": "5740007837425",
 "barcode": "5740007837425",
-"shopify_qty": 47,
+"shopify_qty": 15,
 "unit_cost": 43.48,
 "levels": {
-"Stockgroup": 47
+"Stockgroup": 15
 },
 "ean": "5740007837425",
 "components": null
@@ -5805,10 +5805,10 @@
 "variant_id": "56127760793935",
 "sku": "5740007832598",
 "barcode": "5740007832598",
-"shopify_qty": 108,
+"shopify_qty": 90,
 "unit_cost": 23.19,
 "levels": {
-"Stockgroup": 108
+"Stockgroup": 90
 },
 "ean": "5740007832598",
 "components": null
@@ -5823,10 +5823,10 @@
 "variant_id": "56137843933519",
 "sku": "5740007832581",
 "barcode": "5740007832581",
-"shopify_qty": 377,
+"shopify_qty": 842,
 "unit_cost": 23.19,
 "levels": {
-"Stockgroup": 377
+"Stockgroup": 842
 },
 "ean": "5740007832581",
 "components": null
@@ -5841,10 +5841,10 @@
 "variant_id": "56138016063823",
 "sku": "5740007832574",
 "barcode": "5740007832574",
-"shopify_qty": 652,
+"shopify_qty": 597,
 "unit_cost": 23.19,
 "levels": {
-"Stockgroup": 652
+"Stockgroup": 597
 },
 "ean": "5740007832574",
 "components": null
@@ -5859,10 +5859,10 @@
 "variant_id": "56138189734223",
 "sku": "5740007832192",
 "barcode": "5740007832192",
-"shopify_qty": 2966,
+"shopify_qty": 2710,
 "unit_cost": 330.43,
 "levels": {
-"Stockgroup": 2966
+"Stockgroup": 2710
 },
 "ean": "5740007832192",
 "components": null
@@ -5877,10 +5877,10 @@
 "variant_id": "56138349478223",
 "sku": "5740007831829",
 "barcode": "5740007831829",
-"shopify_qty": 2398,
+"shopify_qty": 2073,
 "unit_cost": 347.83,
 "levels": {
-"Stockgroup": 2398
+"Stockgroup": 2073
 },
 "ean": "5740007831829",
 "components": null
@@ -5895,10 +5895,10 @@
 "variant_id": "56138864034127",
 "sku": "5740007832727",
 "barcode": "5740007832727",
-"shopify_qty": 219,
+"shopify_qty": 207,
 "unit_cost": 46.38,
 "levels": {
-"Stockgroup": 219
+"Stockgroup": 207
 },
 "ean": "5740007832727",
 "components": null
@@ -5913,10 +5913,10 @@
 "variant_id": "56148645380431",
 "sku": "5740007832840",
 "barcode": "5740007832840",
-"shopify_qty": 199,
+"shopify_qty": 170,
 "unit_cost": 69.57,
 "levels": {
-"Stockgroup": 199
+"Stockgroup": 170
 },
 "ean": "5740007832840",
 "components": null
@@ -5931,10 +5931,10 @@
 "variant_id": "56148665401679",
 "sku": "5740007834271",
 "barcode": "5740007834271",
-"shopify_qty": 232,
+"shopify_qty": 224,
 "unit_cost": 695.65,
 "levels": {
-"Stockgroup": 232
+"Stockgroup": 224
 },
 "ean": "5740007834271",
 "components": null
@@ -5967,10 +5967,10 @@
 "variant_id": "56148692074831",
 "sku": "5740007832789",
 "barcode": "5740007832789",
-"shopify_qty": 145,
+"shopify_qty": 129,
 "unit_cost": 249.28,
 "levels": {
-"Stockgroup": 145
+"Stockgroup": 129
 },
 "ean": "5740007832789",
 "components": null
@@ -6003,10 +6003,10 @@
 "variant_id": "56150027895119",
 "sku": "5740007832383",
 "barcode": "5740007832383",
-"shopify_qty": 129,
+"shopify_qty": 127,
 "unit_cost": 144.93,
 "levels": {
-"Stockgroup": 129
+"Stockgroup": 127
 },
 "ean": "5740007832383",
 "components": null
@@ -6021,10 +6021,10 @@
 "variant_id": "56163086958927",
 "sku": "5206492030111",
 "barcode": "5206492030111",
-"shopify_qty": 814,
+"shopify_qty": 752,
 "unit_cost": 7.25,
 "levels": {
-"Stockgroup": 814
+"Stockgroup": 752
 },
 "ean": "5206492030111",
 "components": null
@@ -6039,10 +6039,10 @@
 "variant_id": "56163782459727",
 "sku": "R2-5740007827617",
 "barcode": "5740007818899",
-"shopify_qty": 53,
+"shopify_qty": 9,
 "unit_cost": 92.75,
 "levels": {
-"Stockgroup": 53
+"Stockgroup": 9
 },
 "ean": "5740007818899",
 "components": null
@@ -6057,10 +6057,10 @@
 "variant_id": "56163782492495",
 "sku": "R1-5740007827617",
 "barcode": "5740007818875",
-"shopify_qty": 44,
+"shopify_qty": 0,
 "unit_cost": 92.75,
 "levels": {
-"Stockgroup": 44
+"Stockgroup": 0
 },
 "ean": "5740007818875",
 "components": null
@@ -6075,10 +6075,10 @@
 "variant_id": "56321621524815",
 "sku": "5740007833281",
 "barcode": "5740007833281",
-"shopify_qty": 2948,
+"shopify_qty": 2703,
 "unit_cost": 7.25,
 "levels": {
-"Stockgroup": 2948
+"Stockgroup": 2703
 },
 "ean": "5740007833281",
 "components": null
@@ -6093,10 +6093,10 @@
 "variant_id": "56321638891855",
 "sku": "5740007835193",
 "barcode": "5740007835193",
-"shopify_qty": 589,
+"shopify_qty": 520,
 "unit_cost": 43.48,
 "levels": {
-"Stockgroup": 589
+"Stockgroup": 520
 },
 "ean": "5740007835193",
 "components": null
@@ -6111,10 +6111,10 @@
 "variant_id": "56321642004815",
 "sku": "5740007835186",
 "barcode": "5740007835186",
-"shopify_qty": 442,
+"shopify_qty": 378,
 "unit_cost": 43.48,
 "levels": {
-"Stockgroup": 442
+"Stockgroup": 378
 },
 "ean": "5740007835186",
 "components": null
@@ -6129,7 +6129,7 @@
 "variant_id": "56321989673295",
 "sku": null,
 "barcode": null,
-"shopify_qty": 442,
+"shopify_qty": 378,
 "unit_cost": 1284.07,
 "levels": {
 "Stockgroup": null
@@ -6147,10 +6147,10 @@
 "variant_id": "56352639222095",
 "sku": "5740007833342",
 "barcode": "5740007833342",
-"shopify_qty": 144,
+"shopify_qty": 134,
 "unit_cost": 57.97,
 "levels": {
-"Stockgroup": 144
+"Stockgroup": 134
 },
 "ean": "5740007833342",
 "components": null
@@ -6165,10 +6165,10 @@
 "variant_id": "56493071597903",
 "sku": "5740007832949",
 "barcode": "5740007832949",
-"shopify_qty": 563,
+"shopify_qty": 329,
 "unit_cost": 221.53,
 "levels": {
-"Stockgroup": 563
+"Stockgroup": 329
 },
 "ean": "5740007832949",
 "components": null
@@ -6201,10 +6201,10 @@
 "variant_id": "56548250222927",
 "sku": "5740007831836",
 "barcode": "5740007831836",
-"shopify_qty": 486,
+"shopify_qty": 19,
 "unit_cost": 43.43,
 "levels": {
-"Stockgroup": 486
+"Stockgroup": 19
 },
 "ean": "5740007831836",
 "components": null
@@ -6219,7 +6219,7 @@
 "variant_id": "56557458030927",
 "sku": null,
 "barcode": null,
-"shopify_qty": 3235,
+"shopify_qty": 2638,
 "unit_cost": 385.6,
 "levels": {
 "Stockgroup": null
@@ -6237,10 +6237,10 @@
 "variant_id": "56767795462479",
 "sku": "5740007832505",
 "barcode": "5740007832505",
-"shopify_qty": 290,
+"shopify_qty": 257,
 "unit_cost": 86.96,
 "levels": {
-"Stockgroup": 290
+"Stockgroup": 257
 },
 "ean": "5740007832505",
 "components": null
@@ -6255,10 +6255,10 @@
 "variant_id": "57145152536911",
 "sku": "5740007834448",
 "barcode": "5740007834448",
-"shopify_qty": 342,
+"shopify_qty": 328,
 "unit_cost": 220.29,
 "levels": {
-"Stockgroup": 342
+"Stockgroup": 328
 },
 "ean": "5740007834448",
 "components": null
@@ -6273,10 +6273,10 @@
 "variant_id": "57146703446351",
 "sku": "5740007837326",
 "barcode": "5740007837326",
-"shopify_qty": 68,
+"shopify_qty": 44,
 "unit_cost": 43.48,
 "levels": {
-"Stockgroup": 68
+"Stockgroup": 44
 },
 "ean": "5740007837326",
 "components": null
@@ -6309,10 +6309,10 @@
 "variant_id": "57459268682063",
 "sku": "5740007838187",
 "barcode": "5740007838187",
-"shopify_qty": 296,
+"shopify_qty": 250,
 "unit_cost": 1449.28,
 "levels": {
-"Stockgroup": 296
+"Stockgroup": 250
 },
 "ean": "5740007838187",
 "components": null
@@ -6417,10 +6417,10 @@
 "variant_id": "57545256403279",
 "sku": "5740007838378",
 "barcode": "5740007838378",
-"shopify_qty": 424,
+"shopify_qty": 419,
 "unit_cost": 43.48,
 "levels": {
-"Stockgroup": 424
+"Stockgroup": 419
 },
 "ean": "5740007838378",
 "components": null
@@ -6435,7 +6435,7 @@
 "variant_id": "57556853653839",
 "sku": null,
 "barcode": null,
-"shopify_qty": 144,
+"shopify_qty": 134,
 "unit_cost": 980.78,
 "levels": {
 "Stockgroup": null
@@ -6453,10 +6453,10 @@
 "variant_id": "57583399076175",
 "sku": "5740007841583",
 "barcode": "5740007841583",
-"shopify_qty": 208,
+"shopify_qty": 147,
 "unit_cost": 252.84,
 "levels": {
-"Stockgroup": 208
+"Stockgroup": 147
 },
 "ean": "5740007841583",
 "components": null
@@ -6471,10 +6471,10 @@
 "variant_id": "57797700026703",
 "sku": "5740007838163",
 "barcode": "5740007838163",
-"shopify_qty": 1936,
+"shopify_qty": 1642,
 "unit_cost": 231.88,
 "levels": {
-"Stockgroup": 1936
+"Stockgroup": 1642
 },
 "ean": "5740007838163",
 "components": null
@@ -6507,7 +6507,7 @@
 "variant_id": "57891858645327",
 "sku": null,
 "barcode": null,
-"shopify_qty": 44,
+"shopify_qty": 0,
 "unit_cost": 765.21,
 "levels": {
 "Stockgroup": null
@@ -6525,7 +6525,7 @@
 "variant_id": "57891903144271",
 "sku": null,
 "barcode": null,
-"shopify_qty": 44,
+"shopify_qty": 0,
 "unit_cost": 173.74,
 "levels": {
 "Stockgroup": null
@@ -6561,10 +6561,10 @@
 "variant_id": "58107307000143",
 "sku": "5740007839771",
 "barcode": "5740007839771",
-"shopify_qty": 686,
+"shopify_qty": 671,
 "unit_cost": 72.62,
 "levels": {
-"Stockgroup": 686
+"Stockgroup": 671
 },
 "ean": "5740007839771",
 "components": null
@@ -6579,10 +6579,10 @@
 "variant_id": "58116016931151",
 "sku": "5740007839719",
 "barcode": "5740007839719",
-"shopify_qty": 2258,
+"shopify_qty": 2139,
 "unit_cost": 48.14,
 "levels": {
-"Stockgroup": 2258
+"Stockgroup": 2139
 },
 "ean": "5740007839719",
 "components": null
@@ -6597,10 +6597,10 @@
 "variant_id": "58127137603919",
 "sku": "7072719024427",
 "barcode": "7072719024427",
-"shopify_qty": 229,
+"shopify_qty": 126,
 "unit_cost": 39.0,
 "levels": {
-"Stockgroup": 229
+"Stockgroup": 126
 },
 "ean": "7072719024427",
 "components": null
@@ -6615,10 +6615,10 @@
 "variant_id": "58127434252623",
 "sku": "7072719024465",
 "barcode": "7072719024465",
-"shopify_qty": 86,
+"shopify_qty": 8,
 "unit_cost": 39.0,
 "levels": {
-"Stockgroup": 86
+"Stockgroup": 8
 },
 "ean": "7072719024465",
 "components": null
@@ -6633,10 +6633,10 @@
 "variant_id": "58127540060495",
 "sku": "7072719024434",
 "barcode": "7072719024434",
-"shopify_qty": 219,
+"shopify_qty": 140,
 "unit_cost": 39.0,
 "levels": {
-"Stockgroup": 219
+"Stockgroup": 140
 },
 "ean": "7072719024434",
 "components": null
@@ -6651,10 +6651,10 @@
 "variant_id": "58127584133455",
 "sku": "7072719024458",
 "barcode": "7072719024458",
-"shopify_qty": 90,
+"shopify_qty": 17,
 "unit_cost": 39.0,
 "levels": {
-"Stockgroup": 90
+"Stockgroup": 17
 },
 "ean": "7072719024458",
 "components": null
@@ -6669,10 +6669,10 @@
 "variant_id": "58127588360527",
 "sku": "7072719024403",
 "barcode": "7072719024403",
-"shopify_qty": 71,
+"shopify_qty": 0,
 "unit_cost": 39.0,
 "levels": {
-"Stockgroup": 71
+"Stockgroup": 0
 },
 "ean": "7072719024403",
 "components": null
@@ -6687,10 +6687,10 @@
 "variant_id": "58127604711759",
 "sku": "7072719024441",
 "barcode": "7072719024441",
-"shopify_qty": 118,
+"shopify_qty": 42,
 "unit_cost": 39.0,
 "levels": {
-"Stockgroup": 118
+"Stockgroup": 42
 },
 "ean": "7072719024441",
 "components": null
@@ -6705,7 +6705,7 @@
 "variant_id": "58127612543311",
 "sku": null,
 "barcode": null,
-"shopify_qty": 71,
+"shopify_qty": 0,
 "unit_cost": 204.0,
 "levels": {
 "Stockgroup": null
@@ -6723,10 +6723,10 @@
 "variant_id": "58216102560079",
 "sku": "5740007843112",
 "barcode": "5740007843112",
-"shopify_qty": 1135,
+"shopify_qty": 1130,
 "unit_cost": 17.93,
 "levels": {
-"Stockgroup": 1135
+"Stockgroup": 1130
 },
 "ean": "5740007843112",
 "components": null
@@ -6741,10 +6741,10 @@
 "variant_id": "58290568134991",
 "sku": "5740007836671",
 "barcode": "5740007836671",
-"shopify_qty": 304,
+"shopify_qty": 258,
 "unit_cost": 147.04,
 "levels": {
-"Stockgroup": 304
+"Stockgroup": 258
 },
 "ean": "5740007836671",
 "components": null
@@ -6759,10 +6759,10 @@
 "variant_id": "58345930326351",
 "sku": "5740007841569",
 "barcode": "5740007841569",
-"shopify_qty": 2166,
+"shopify_qty": 2155,
 "unit_cost": 181.05,
 "levels": {
-"Stockgroup": 2166
+"Stockgroup": 2155
 },
 "ean": "5740007841569",
 "components": null
@@ -6777,7 +6777,7 @@
 "variant_id": "58387492503887",
 "sku": null,
 "barcode": null,
-"shopify_qty": 442,
+"shopify_qty": 378,
 "unit_cost": 2059.07,
 "levels": {
 "Stockgroup": null
@@ -6795,10 +6795,10 @@
 "variant_id": "58437821432143",
 "sku": "5740007842535",
 "barcode": "5740007842535",
-"shopify_qty": 86,
+"shopify_qty": 136,
 "unit_cost": 187.93,
 "levels": {
-"Stockgroup": 86
+"Stockgroup": 136
 },
 "ean": "5740007842535",
 "components": null
@@ -6813,10 +6813,10 @@
 "variant_id": "58437875335503",
 "sku": "5740007843051",
 "barcode": "5740007843051",
-"shopify_qty": 1796,
+"shopify_qty": 1774,
 "unit_cost": 23.5,
 "levels": {
-"Stockgroup": 1796
+"Stockgroup": 1774
 },
 "ean": "5740007843051",
 "components": null
@@ -6831,10 +6831,10 @@
 "variant_id": "58437911150927",
 "sku": "5740007843754",
 "barcode": "5740007843754",
-"shopify_qty": 548,
+"shopify_qty": 515,
 "unit_cost": 35.24,
 "levels": {
-"Stockgroup": 548
+"Stockgroup": 515
 },
 "ean": "5740007843754",
 "components": null
@@ -6849,10 +6849,10 @@
 "variant_id": "58437913084239",
 "sku": "5740007843778",
 "barcode": "5740007843778",
-"shopify_qty": 657,
+"shopify_qty": 634,
 "unit_cost": 35.24,
 "levels": {
-"Stockgroup": 657
+"Stockgroup": 634
 },
 "ean": "5740007843778",
 "components": null
@@ -6867,7 +6867,7 @@
 "variant_id": "58438085738831",
 "sku": null,
 "barcode": null,
-"shopify_qty": 548,
+"shopify_qty": 515,
 "unit_cost": null,
 "levels": {
 "Stockgroup": null
@@ -6885,534 +6885,12 @@
 "variant_id": "58473912140111",
 "sku": "5740007844096",
 "barcode": "5740007844096",
-"shopify_qty": 460,
+"shopify_qty": 401,
 "unit_cost": 76.14,
 "levels": {
-"Stockgroup": 460
+"Stockgroup": 401
 },
 "ean": "5740007844096",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16274669764943",
-"title": "Premium Universalskum – 1000 ml",
-"created_at": "2026-08-14",
-"published_at": "2026-08-21",
-"product_type": "Kjøkkenredskaper",
-"variant_id": "58474307354959",
-"sku": "5740007845840",
-"barcode": "5740007845840",
-"shopify_qty": 778,
-"unit_cost": 40.95,
-"levels": {
-"Stockgroup": 778
-},
-"ean": "5740007845840",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16274669928783",
-"title": "Premium Universalavfetter – 1000 ml",
-"created_at": "2026-08-14",
-"published_at": "2026-08-21",
-"product_type": "Kjøkkenredskaper",
-"variant_id": "58474308075855",
-"sku": "5740007845864",
-"barcode": "5740007845864",
-"shopify_qty": 720,
-"unit_cost": 40.95,
-"levels": {
-"Stockgroup": 720
-},
-"ean": "5740007845864",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16274669994319",
-"title": "Premium Grill- og Ovnsrens – 1000 ml",
-"created_at": "2026-08-14",
-"published_at": "2026-08-21",
-"product_type": "Kjøkkenredskaper",
-"variant_id": "58474308239695",
-"sku": "5740007845888",
-"barcode": "5740007845888",
-"shopify_qty": 111,
-"unit_cost": 40.95,
-"levels": {
-"Stockgroup": 111
-},
-"ean": "5740007845888",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16276628308303",
-"title": "Premium Kjøkkenrengjøring – sett med 3 deler",
-"created_at": "2026-08-16",
-"published_at": "2026-08-21",
-"product_type": "Rengjøring",
-"variant_id": "58488070308175",
-"sku": null,
-"barcode": null,
-"shopify_qty": 111,
-"unit_cost": null,
-"levels": {
-"Stockgroup": null
-},
-"ean": null,
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16288483803471",
-"title": "Bakebollesett med lokk – 3 stk",
-"created_at": "2026-08-24",
-"published_at": "2026-11-24",
-"product_type": "Kjøkkenredskaper",
-"variant_id": "58551211065679",
-"sku": "5740007842610",
-"barcode": "5740007842610",
-"shopify_qty": 444,
-"unit_cost": 93.02,
-"levels": {
-"Stockgroup": 444
-},
-"ean": "5740007842610",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16293373542735",
-"title": "Stavmiksersett 1450 W – 3 deler",
-"created_at": "2026-08-27",
-"published_at": "2026-09-10",
-"product_type": "Kjøkkenmaskiner",
-"variant_id": "58579473695055",
-"sku": "5740007841286",
-"barcode": "5740007841286",
-"shopify_qty": 501,
-"unit_cost": 186.21,
-"levels": {
-"Stockgroup": 501
-},
-"ean": "5740007841286",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16293384323407",
-"title": "Pannebeskytter - 3 stk i 3 størrelser",
-"created_at": "2026-08-27",
-"published_at": "2026-09-10",
-"product_type": "Kjøkkenredskaper",
-"variant_id": "58579628556623",
-"sku": "5740007844430",
-"barcode": "5740007844430",
-"shopify_qty": 2844,
-"unit_cost": 23.34,
-"levels": {
-"Stockgroup": 2844
-},
-"ean": "5740007844430",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16316449063247",
-"title": "San Marzano DOP tomater 400 g – Solania",
-"created_at": "2026-09-09",
-"published_at": "2026-09-09",
-"product_type": "Pizzautstyr",
-"variant_id": "58724167418191",
-"sku": "8032685820040",
-"barcode": "8032685820040",
-"shopify_qty": 549,
-"unit_cost": 17.0,
-"levels": {
-"Stockgroup": 549
-},
-"ean": "8032685820040",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16316467118415",
-"title": "Pizzaovn – med 2 bokser San Marzano DOP på kjøpet",
-"created_at": "2026-09-09",
-"published_at": "2026-09-09",
-"product_type": "",
-"variant_id": "58724331716943",
-"sku": null,
-"barcode": null,
-"shopify_qty": 274,
-"unit_cost": null,
-"levels": {
-"Stockgroup": null
-},
-"ean": null,
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16319478726991",
-"title": "Hevekasse for pizzadeig med lokk - 40x30x9 cm",
-"created_at": "2026-09-10",
-"published_at": "2026-10-26",
-"product_type": "Pizzautstyr",
-"variant_id": "58741979611471",
-"sku": "5740007846489",
-"barcode": "5740007846489",
-"shopify_qty": 690,
-"unit_cost": 69.21,
-"levels": {
-"Stockgroup": 690
-},
-"ean": "5740007846489",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16319482069327",
-"title": "Pizzaskjærer",
-"created_at": "2026-09-10",
-"published_at": "2026-10-26",
-"product_type": "Pizzautstyr",
-"variant_id": "58742007595343",
-"sku": "5740007846465",
-"barcode": "5740007846465",
-"shopify_qty": 241,
-"unit_cost": 23.07,
-"levels": {
-"Stockgroup": 241
-},
-"ean": "5740007846465",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16319487902031",
-"title": "Perforert Pizzaspade i aluminium - 30,5x74 cm",
-"created_at": "2026-09-10",
-"published_at": "2026-10-10",
-"product_type": "Pizzautstyr",
-"variant_id": "58742040592719",
-"sku": "5740007846441",
-"barcode": "5740007846441",
-"shopify_qty": 557,
-"unit_cost": 126.89,
-"levels": {
-"Stockgroup": 557
-},
-"ean": "5740007846441",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16319495078223",
-"title": "Matboks til pizzadeig - 700 ml",
-"created_at": "2026-09-10",
-"published_at": "2026-10-26",
-"product_type": "Pizzautstyr",
-"variant_id": "58742098985295",
-"sku": "5740007847097",
-"barcode": "5740007847097",
-"shopify_qty": 1230,
-"unit_cost": 28.84,
-"levels": {
-"Stockgroup": 1230
-},
-"ean": "5740007847097",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16319501893967",
-"title": "Pizzaspartel",
-"created_at": "2026-09-10",
-"published_at": "2026-10-26",
-"product_type": "Pizzautstyr",
-"variant_id": "58742128705871",
-"sku": "5740007846502",
-"barcode": "5740007846502",
-"shopify_qty": 746,
-"unit_cost": 34.62,
-"levels": {
-"Stockgroup": 746
-},
-"ean": "5740007846502",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16319525257551",
-"title": "Knivsliper",
-"created_at": "2026-09-10",
-"published_at": "2026-10-07",
-"product_type": "Kjøkkenredskaper",
-"variant_id": "58742303949135",
-"sku": "5740007845703",
-"barcode": "5740007845703",
-"shopify_qty": 71,
-"unit_cost": 115.39,
-"levels": {
-"Stockgroup": 71
-},
-"ean": "5740007845703",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16320157516111",
-"title": "Pro Paninigrill - 2000W",
-"created_at": "2026-09-11",
-"published_at": "2026-10-07",
-"product_type": "Kjøkkenmaskiner",
-"variant_id": "58744891965775",
-"sku": "5740007846267",
-"barcode": "5740007846267",
-"shopify_qty": 262,
-"unit_cost": 403.65,
-"levels": {
-"Stockgroup": 262
-},
-"ean": "5740007846267",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16320161644879",
-"title": "Mirakel stålsvamp – 3-pakning",
-"created_at": "2026-09-11",
-"published_at": "2026-10-20",
-"product_type": "Kjøkkenredskaper",
-"variant_id": "58744897175887",
-"sku": "5740007846724",
-"barcode": "5740007846724",
-"shopify_qty": 1169,
-"unit_cost": 11.53,
-"levels": {
-"Stockgroup": 1169
-},
-"ean": "5740007846724",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16326434292047",
-"title": "Digital Blender - 1200W",
-"created_at": "2026-09-14",
-"published_at": "2026-10-07",
-"product_type": "Kjøkkenmaskiner",
-"variant_id": "58779113750863",
-"sku": "5740007839757",
-"barcode": "5740007839757",
-"shopify_qty": 0,
-"unit_cost": 316.49,
-"levels": {
-"Stockgroup": 0
-},
-"ean": "5740007839757",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16326444187983",
-"title": "Kjøkkenforkle i bomull",
-"created_at": "2026-09-14",
-"published_at": "2026-10-07",
-"product_type": "Kjøkkenredskaper",
-"variant_id": "58779174863183",
-"sku": "5740007844607",
-"barcode": "5740007844607",
-"shopify_qty": 861,
-"unit_cost": 63.31,
-"levels": {
-"Stockgroup": 861
-},
-"ean": "5740007844607",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16326462603599",
-"title": "Hybrid Slipp-Lett Langpanne XL - 37x32x8cm",
-"created_at": "2026-09-14",
-"published_at": "2026-10-10",
-"product_type": "Hybrid",
-"variant_id": "58779229716815",
-"sku": "5740007844287",
-"barcode": "5740007844287",
-"shopify_qty": 0,
-"unit_cost": 460.57,
-"levels": {
-"Stockgroup": 0
-},
-"ean": "5740007844287",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16326468239695",
-"title": "Skjærefjøl Teak med Saftrille - 45x30x2,5cm",
-"created_at": "2026-09-14",
-"published_at": "2026-10-07",
-"product_type": "Kjøkkenredskaper",
-"variant_id": "58779239481679",
-"sku": "5740007843877",
-"barcode": "5740007843877",
-"shopify_qty": 325,
-"unit_cost": 172.72,
-"levels": {
-"Stockgroup": 325
-},
-"ean": "5740007843877",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16326479970639",
-"title": "Limited Edition Hybrid Slipp-Lett Stekepanne Ø28 - Grønn",
-"created_at": "2026-09-14",
-"published_at": "2026-10-26",
-"product_type": "Hybrid",
-"variant_id": "58779261665615",
-"sku": "5740007846427",
-"barcode": "5740007846427",
-"shopify_qty": 1729,
-"unit_cost": 204.93,
-"levels": {
-"Stockgroup": 1729
-},
-"ean": "5740007846427",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16326480036175",
-"title": "Limited Edition Hybrid Slipp-Lett Stekepanne Ø28 - Hvit",
-"created_at": "2026-09-14",
-"published_at": "2026-10-26",
-"product_type": "Hybrid",
-"variant_id": "58779261731151",
-"sku": "5740007846403",
-"barcode": "5740007846403",
-"shopify_qty": 1984,
-"unit_cost": 204.93,
-"levels": {
-"Stockgroup": 1984
-},
-"ean": "5740007846403",
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16359606092111",
-"title": "Hybrid Plancha – med Premium Kjøkkenredskaper på kjøpet",
-"created_at": "2026-10-01",
-"published_at": "2026-10-01",
-"product_type": "Stekepanne",
-"variant_id": "58972288909647",
-"sku": null,
-"barcode": null,
-"shopify_qty": 1525,
-"unit_cost": 475.36,
-"levels": {
-"Stockgroup": null
-},
-"ean": null,
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16370912002383",
-"title": "Matboks til pizzadeig – 4-pakning",
-"created_at": "2026-10-07",
-"published_at": "2026-10-26",
-"product_type": "Pizzautstyr",
-"variant_id": "59033483444559",
-"sku": null,
-"barcode": null,
-"shopify_qty": 307,
-"unit_cost": null,
-"levels": {
-"Stockgroup": null
-},
-"ean": null,
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16375142580559",
-"title": "Biscotto-pizzastein Ø33 cm – håndlaget i Sorrento",
-"created_at": "2026-10-08",
-"published_at": "2026-10-08",
-"product_type": "Pizzautstyr",
-"variant_id": "59056757342543",
-"sku": "1-pizzasten",
-"barcode": null,
-"shopify_qty": 164,
-"unit_cost": 149.0,
-"levels": {
-"Stockgroup": 164
-},
-"ean": null,
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16449097498959",
-"title": "Pizza Startpakke – Pizzaovn, pizzaspade, pizzaskjærer & 4 × San Marzano",
-"created_at": "2026-11-04",
-"published_at": "2026-11-04",
-"product_type": "Kjøkkenmaskiner",
-"variant_id": "59390676926799",
-"sku": null,
-"barcode": null,
-"shopify_qty": 137,
-"unit_cost": null,
-"levels": {
-"Stockgroup": null
-},
-"ean": null,
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16449097531727",
-"title": "Pizza Ekspertpakke – Pizzaovn, Biscotto-stein, pizzaspade, hevekasse, pizzaskjærer, pizzaspartel & 4 × San Marzano",
-"created_at": "2026-11-04",
-"published_at": "2026-11-04",
-"product_type": "Kjøkkenmaskiner",
-"variant_id": "59390677123407",
-"sku": null,
-"barcode": null,
-"shopify_qty": 137,
-"unit_cost": null,
-"levels": {
-"Stockgroup": null
-},
-"ean": null,
-"components": null
-},
-{
-"brand": "gladkokken",
-"product_id": "16449097630031",
-"title": "12-i-1 Multicooker 3 L + Rustfrie kjøkkenredskaper i stål 6 deler",
-"created_at": "2026-11-04",
-"published_at": "2026-11-04",
-"product_type": "Kjøkkenmaskiner",
-"variant_id": "59390677254479",
-"sku": null,
-"barcode": null,
-"shopify_qty": 209,
-"unit_cost": null,
-"levels": {
-"Stockgroup": null
-},
-"ean": null,
 "components": null
 },
 {
@@ -7425,7 +6903,7 @@
 "variant_id": "56524910035288",
 "sku": "5740007835223",
 "barcode": "5740007835223",
-"shopify_qty": 7958,
+"shopify_qty": 7628,
 "unit_cost": 11.98,
 "levels": {},
 "ean": "5740007835223",
@@ -7441,7 +6919,7 @@
 "variant_id": "56524922913112",
 "sku": "5740007835247",
 "barcode": "5740007835247",
-"shopify_qty": 12361,
+"shopify_qty": 11897,
 "unit_cost": 14.97,
 "levels": {},
 "ean": "5740007835247",
@@ -7457,7 +6935,7 @@
 "variant_id": "56524925370712",
 "sku": "5740007835261",
 "barcode": "5740007835261",
-"shopify_qty": 12707,
+"shopify_qty": 12063,
 "unit_cost": 17.96,
 "levels": {},
 "ean": "5740007835261",
@@ -7473,7 +6951,7 @@
 "variant_id": "56524928418136",
 "sku": "5740007836138",
 "barcode": "5740007836138",
-"shopify_qty": 2573,
+"shopify_qty": 2403,
 "unit_cost": 21.17,
 "levels": {},
 "ean": "5740007836138",
@@ -7489,7 +6967,7 @@
 "variant_id": "56524934644056",
 "sku": "5740007835346",
 "barcode": "5740007835346",
-"shopify_qty": 2649,
+"shopify_qty": 2533,
 "unit_cost": 12.88,
 "levels": {},
 "ean": "5740007835346",
@@ -7505,7 +6983,7 @@
 "variant_id": "56524935889240",
 "sku": "5740007835285",
 "barcode": "5740007835285",
-"shopify_qty": 2569,
+"shopify_qty": 2438,
 "unit_cost": 16.75,
 "levels": {},
 "ean": "5740007835285",
@@ -7521,7 +6999,7 @@
 "variant_id": "56524936282456",
 "sku": "5740007835308",
 "barcode": "5740007835308",
-"shopify_qty": 2839,
+"shopify_qty": 2712,
 "unit_cost": 20.08,
 "levels": {},
 "ean": "5740007835308",
@@ -7537,7 +7015,7 @@
 "variant_id": "56524937298264",
 "sku": "5740007835322",
 "barcode": "5740007835322",
-"shopify_qty": 1871,
+"shopify_qty": 1774,
 "unit_cost": 26.84,
 "levels": {},
 "ean": "5740007835322",
@@ -7553,7 +7031,7 @@
 "variant_id": "56524943327576",
 "sku": "5740007835360",
 "barcode": "5740007835360",
-"shopify_qty": 4407,
+"shopify_qty": 4056,
 "unit_cost": 21.04,
 "levels": {},
 "ean": "5740007835360",
@@ -7569,7 +7047,7 @@
 "variant_id": "56524944539992",
 "sku": "5740007835384",
 "barcode": "5740007835384",
-"shopify_qty": 6192,
+"shopify_qty": 5805,
 "unit_cost": 24.05,
 "levels": {},
 "ean": "5740007835384",
@@ -7585,7 +7063,7 @@
 "variant_id": "56539783299416",
 "sku": "5740007835407",
 "barcode": "5740007835407",
-"shopify_qty": 3837,
+"shopify_qty": 3800,
 "unit_cost": 30.6,
 "levels": {},
 "ean": "5740007835407",
@@ -7601,7 +7079,7 @@
 "variant_id": "56539783496024",
 "sku": "5740007835421",
 "barcode": "5740007835421",
-"shopify_qty": 3430,
+"shopify_qty": 3391,
 "unit_cost": 28.45,
 "levels": {},
 "ean": "5740007835421",
@@ -7617,7 +7095,7 @@
 "variant_id": "56539784675672",
 "sku": "5740007835445",
 "barcode": "5740007835445",
-"shopify_qty": 885,
+"shopify_qty": 812,
 "unit_cost": 21.47,
 "levels": {},
 "ean": "5740007835445",
@@ -7633,7 +7111,7 @@
 "variant_id": "56539785789784",
 "sku": "5740007835469",
 "barcode": "5740007835469",
-"shopify_qty": 733,
+"shopify_qty": 674,
 "unit_cost": 21.47,
 "levels": {},
 "ean": "5740007835469",
@@ -7649,7 +7127,7 @@
 "variant_id": "56539796373848",
 "sku": "5740007835483",
 "barcode": "5740007835483",
-"shopify_qty": 817,
+"shopify_qty": 780,
 "unit_cost": 21.47,
 "levels": {},
 "ean": "5740007835483",
@@ -7665,7 +7143,7 @@
 "variant_id": "56539799683416",
 "sku": "5740007835506",
 "barcode": "5740007835506",
-"shopify_qty": 683,
+"shopify_qty": 655,
 "unit_cost": 13.42,
 "levels": {},
 "ean": "5740007835506",
@@ -7681,7 +7159,7 @@
 "variant_id": "56539804762456",
 "sku": "5740007835520",
 "barcode": "5740007835520",
-"shopify_qty": 807,
+"shopify_qty": 753,
 "unit_cost": 21.47,
 "levels": {},
 "ean": "5740007835520",
@@ -7697,7 +7175,7 @@
 "variant_id": "56539814920536",
 "sku": "5740007835568",
 "barcode": "5740007835568",
-"shopify_qty": 767,
+"shopify_qty": 733,
 "unit_cost": 10.73,
 "levels": {},
 "ean": "5740007835568",
@@ -7713,7 +7191,7 @@
 "variant_id": "56539840282968",
 "sku": "5740007835827",
 "barcode": "5740007835827",
-"shopify_qty": 2032,
+"shopify_qty": 2015,
 "unit_cost": 77.85,
 "levels": {},
 "ean": "5740007835827",
@@ -7729,7 +7207,7 @@
 "variant_id": "56539849556312",
 "sku": "5740007835834",
 "barcode": "5740007835834",
-"shopify_qty": 2869,
+"shopify_qty": 2862,
 "unit_cost": 26.84,
 "levels": {},
 "ean": "5740007835834",
@@ -7745,7 +7223,7 @@
 "variant_id": "56539852407128",
 "sku": "5740007835858",
 "barcode": "5740007835858",
-"shopify_qty": 2547,
+"shopify_qty": 2534,
 "unit_cost": 44.56,
 "levels": {},
 "ean": "5740007835858",
@@ -7761,7 +7239,7 @@
 "variant_id": "56845343555928",
 "sku": null,
 "barcode": null,
-"shopify_qty": 12361,
+"shopify_qty": 11897,
 "unit_cost": 32.98,
 "levels": {},
 "ean": null,
@@ -7777,7 +7255,7 @@
 "variant_id": "56845652296024",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1871,
+"shopify_qty": 1774,
 "unit_cost": 38.77,
 "levels": {},
 "ean": null,
@@ -7793,7 +7271,7 @@
 "variant_id": "56845700563288",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2569,
+"shopify_qty": 2438,
 "unit_cost": 28.7,
 "levels": {},
 "ean": null,
@@ -7809,7 +7287,7 @@
 "variant_id": "56845714227544",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1871,
+"shopify_qty": 1774,
 "unit_cost": 56.34,
 "levels": {},
 "ean": null,
@@ -7825,7 +7303,7 @@
 "variant_id": "56845733036376",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2573,
+"shopify_qty": 2403,
 "unit_cost": 41.98,
 "levels": {},
 "ean": null,
@@ -7841,7 +7319,7 @@
 "variant_id": "56845747552600",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2839,
+"shopify_qty": 2712,
 "unit_cost": 32.02,
 "levels": {},
 "ean": null,
@@ -7857,7 +7335,7 @@
 "variant_id": "56845801357656",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2569,
+"shopify_qty": 2438,
 "unit_cost": 139.54,
 "levels": {},
 "ean": null,
@@ -7873,7 +7351,7 @@
 "variant_id": "56845820920152",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1871,
+"shopify_qty": 1774,
 "unit_cost": 79.79,
 "levels": {},
 "ean": null,
@@ -7889,7 +7367,7 @@
 "variant_id": "56845908509016",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2569,
+"shopify_qty": 2438,
 "unit_cost": 69.72,
 "levels": {},
 "ean": null,
@@ -7905,7 +7383,7 @@
 "variant_id": "56845996163416",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2569,
+"shopify_qty": 2438,
 "unit_cost": 31.7,
 "levels": {},
 "ean": null,
@@ -7921,7 +7399,7 @@
 "variant_id": "56846180614488",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2569,
+"shopify_qty": 2438,
 "unit_cost": 49.59,
 "levels": {},
 "ean": null,
@@ -7937,7 +7415,7 @@
 "variant_id": "56846239727960",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1871,
+"shopify_qty": 1774,
 "unit_cost": 63.52,
 "levels": {},
 "ean": null,
@@ -7953,7 +7431,7 @@
 "variant_id": "56846285799768",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2569,
+"shopify_qty": 2438,
 "unit_cost": 29.56,
 "levels": {},
 "ean": null,
@@ -7969,7 +7447,7 @@
 "variant_id": "56846319026520",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2573,
+"shopify_qty": 2403,
 "unit_cost": 65.96,
 "levels": {},
 "ean": null,
@@ -7985,7 +7463,7 @@
 "variant_id": "56846365360472",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1603,
+"shopify_qty": 1567,
 "unit_cost": 80.0,
 "levels": {},
 "ean": null,
@@ -8001,7 +7479,7 @@
 "variant_id": "56846403436888",
 "sku": null,
 "barcode": null,
-"shopify_qty": 7958,
+"shopify_qty": 7628,
 "unit_cost": 26.98,
 "levels": {},
 "ean": null,
@@ -8017,7 +7495,7 @@
 "variant_id": "56846459699544",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2839,
+"shopify_qty": 2712,
 "unit_cost": 38.02,
 "levels": {},
 "ean": null,
@@ -8033,7 +7511,7 @@
 "variant_id": "56846497251672",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2569,
+"shopify_qty": 2438,
 "unit_cost": 36.74,
 "levels": {},
 "ean": null,
@@ -8049,7 +7527,7 @@
 "variant_id": "56846543421784",
 "sku": null,
 "barcode": null,
-"shopify_qty": 7958,
+"shopify_qty": 7628,
 "unit_cost": 44.97,
 "levels": {},
 "ean": null,
@@ -8065,7 +7543,7 @@
 "variant_id": "56846612300120",
 "sku": null,
 "barcode": null,
-"shopify_qty": 4408,
+"shopify_qty": 4056,
 "unit_cost": 44.98,
 "levels": {},
 "ean": null,
@@ -8081,7 +7559,7 @@
 "variant_id": "56846684979544",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1871,
+"shopify_qty": 1774,
 "unit_cost": 187.31,
 "levels": {},
 "ean": null,
@@ -8097,7 +7575,7 @@
 "variant_id": "56846737342808",
 "sku": null,
 "barcode": null,
-"shopify_qty": 537,
+"shopify_qty": 498,
 "unit_cost": 125.9,
 "levels": {},
 "ean": null,
@@ -8113,7 +7591,7 @@
 "variant_id": "57044518142296",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2569,
+"shopify_qty": 2438,
 "unit_cost": 118.54,
 "levels": {},
 "ean": null,
@@ -8129,7 +7607,7 @@
 "variant_id": "57044753187160",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1871,
+"shopify_qty": 1774,
 "unit_cost": 166.31,
 "levels": {},
 "ean": null,
@@ -8257,7 +7735,7 @@
 "variant_id": "57199905243480",
 "sku": "5740007841361",
 "barcode": "5740007841361",
-"shopify_qty": 386,
+"shopify_qty": 359,
 "unit_cost": 23.01,
 "levels": {},
 "ean": "5740007841361",
@@ -8273,7 +7751,7 @@
 "variant_id": "57230763426136",
 "sku": "5740007837449",
 "barcode": "5740007837449",
-"shopify_qty": 327,
+"shopify_qty": 219,
 "unit_cost": 3.31,
 "levels": {},
 "ean": "5740007837449",
@@ -8289,7 +7767,7 @@
 "variant_id": "57230779613528",
 "sku": "5740007837326",
 "barcode": "5740007837326",
-"shopify_qty": 150,
+"shopify_qty": 108,
 "unit_cost": 3.31,
 "levels": {},
 "ean": "5740007837326",
@@ -8305,7 +7783,7 @@
 "variant_id": "57230782300504",
 "sku": "5740007837425",
 "barcode": "5740007837425",
-"shopify_qty": 142,
+"shopify_qty": 64,
 "unit_cost": 3.31,
 "levels": {},
 "ean": "5740007837425",
@@ -8321,7 +7799,7 @@
 "variant_id": "57230785249624",
 "sku": "5740007837401",
 "barcode": "5740007837401",
-"shopify_qty": 204,
+"shopify_qty": 146,
 "unit_cost": 3.31,
 "levels": {},
 "ean": "5740007837401",
@@ -8337,7 +7815,7 @@
 "variant_id": "57230898037080",
 "sku": "5740007831836",
 "barcode": "5740007831836",
-"shopify_qty": 1603,
+"shopify_qty": 1567,
 "unit_cost": 6.63,
 "levels": {},
 "ean": "5740007831836",
@@ -8353,7 +7831,7 @@
 "variant_id": "57246109106520",
 "sku": "5740007835629",
 "barcode": "5740007835629",
-"shopify_qty": 1599,
+"shopify_qty": 1585,
 "unit_cost": 2.25,
 "levels": {},
 "ean": "5740007835629",
@@ -8369,7 +7847,7 @@
 "variant_id": "57246109434200",
 "sku": "5740007835643",
 "barcode": "5740007835643",
-"shopify_qty": 1140,
+"shopify_qty": 1082,
 "unit_cost": 2.25,
 "levels": {},
 "ean": "5740007835643",
@@ -8385,7 +7863,7 @@
 "variant_id": "57272421613912",
 "sku": null,
 "barcode": null,
-"shopify_qty": 114,
+"shopify_qty": 109,
 "unit_cost": null,
 "levels": {},
 "ean": null,
@@ -8401,7 +7879,7 @@
 "variant_id": "57272839209304",
 "sku": "9789083455617",
 "barcode": "9789083455617",
-"shopify_qty": 114,
+"shopify_qty": 109,
 "unit_cost": 8.53,
 "levels": {},
 "ean": "9789083455617",
@@ -8433,7 +7911,7 @@
 "variant_id": "57282980938072",
 "sku": "5740007835902",
 "barcode": "5740007835902",
-"shopify_qty": 436,
+"shopify_qty": 399,
 "unit_cost": 10.73,
 "levels": {},
 "ean": "5740007835902",
@@ -8449,7 +7927,7 @@
 "variant_id": "57410871722328",
 "sku": null,
 "barcode": null,
-"shopify_qty": 142,
+"shopify_qty": 64,
 "unit_cost": 6.62,
 "levels": {},
 "ean": null,
@@ -8465,7 +7943,7 @@
 "variant_id": "57410873229656",
 "sku": null,
 "barcode": null,
-"shopify_qty": 142,
+"shopify_qty": 64,
 "unit_cost": 6.62,
 "levels": {},
 "ean": null,
@@ -8481,7 +7959,7 @@
 "variant_id": "57517224132952",
 "sku": null,
 "barcode": null,
-"shopify_qty": 327,
+"shopify_qty": 219,
 "unit_cost": 21.34,
 "levels": {},
 "ean": null,
@@ -8497,7 +7975,7 @@
 "variant_id": "57517224198488",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2839,
+"shopify_qty": 2712,
 "unit_cost": 38.11,
 "levels": {},
 "ean": null,
@@ -8513,7 +7991,7 @@
 "variant_id": "57532210053464",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2573,
+"shopify_qty": 2403,
 "unit_cost": 39.24,
 "levels": {},
 "ean": null,
@@ -8529,7 +8007,7 @@
 "variant_id": "57544542224728",
 "sku": null,
 "barcode": null,
-"shopify_qty": 4408,
+"shopify_qty": 4056,
 "unit_cost": 39.07,
 "levels": {},
 "ean": null,
@@ -8545,7 +8023,7 @@
 "variant_id": "57544542585176",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2573,
+"shopify_qty": 2403,
 "unit_cost": 63.0,
 "levels": {},
 "ean": null,
@@ -8561,7 +8039,7 @@
 "variant_id": "57544543404376",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1871,
+"shopify_qty": 1774,
 "unit_cost": 84.52,
 "levels": {},
 "ean": null,
@@ -8577,7 +8055,7 @@
 "variant_id": "57544577417560",
 "sku": null,
 "barcode": null,
-"shopify_qty": 327,
+"shopify_qty": 219,
 "unit_cost": 24.35,
 "levels": {},
 "ean": null,
@@ -8593,7 +8071,7 @@
 "variant_id": "57544631026008",
 "sku": null,
 "barcode": null,
-"shopify_qty": 327,
+"shopify_qty": 219,
 "unit_cost": 59.43,
 "levels": {},
 "ean": null,
@@ -8609,7 +8087,7 @@
 "variant_id": "57669325259096",
 "sku": "5740007835780",
 "barcode": "5740007835780",
-"shopify_qty": 1924,
+"shopify_qty": 1908,
 "unit_cost": 53.69,
 "levels": {},
 "ean": "5740007835780",
@@ -8625,7 +8103,7 @@
 "variant_id": "57704661352792",
 "sku": "5740007843112",
 "barcode": "5740007843112",
-"shopify_qty": 977,
+"shopify_qty": 976,
 "unit_cost": 1.61,
 "levels": {},
 "ean": "5740007843112",
@@ -8641,7 +8119,7 @@
 "variant_id": "57709835452760",
 "sku": "5740007835605",
 "barcode": "5740007835605",
-"shopify_qty": 1241,
+"shopify_qty": 1239,
 "unit_cost": 7.52,
 "levels": {},
 "ean": "5740007835605",
@@ -8657,7 +8135,7 @@
 "variant_id": "57710225293656",
 "sku": "5740007835766",
 "barcode": "5740007835766",
-"shopify_qty": 1677,
+"shopify_qty": 1662,
 "unit_cost": 13.42,
 "levels": {},
 "ean": "5740007835766",
@@ -8673,7 +8151,7 @@
 "variant_id": "57762209726808",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1924,
+"shopify_qty": 1908,
 "unit_cost": 71.72,
 "levels": {},
 "ean": null,
@@ -8689,7 +8167,7 @@
 "variant_id": "57762210447704",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1924,
+"shopify_qty": 1908,
 "unit_cost": 86.75,
 "levels": {},
 "ean": null,
@@ -8705,7 +8183,7 @@
 "variant_id": "57762211561816",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1924,
+"shopify_qty": 1908,
 "unit_cost": 77.74,
 "levels": {},
 "ean": null,
@@ -8721,7 +8199,7 @@
 "variant_id": "57762211725656",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1924,
+"shopify_qty": 1908,
 "unit_cost": 80.53,
 "levels": {},
 "ean": null,
@@ -8737,7 +8215,7 @@
 "variant_id": "57762212053336",
 "sku": null,
 "barcode": null,
-"shopify_qty": 767,
+"shopify_qty": 733,
 "unit_cost": 85.36,
 "levels": {},
 "ean": null,
@@ -8753,7 +8231,7 @@
 "variant_id": "57813161869656",
 "sku": null,
 "barcode": null,
-"shopify_qty": 150,
+"shopify_qty": 108,
 "unit_cost": 6.62,
 "levels": {},
 "ean": null,
@@ -8769,7 +8247,7 @@
 "variant_id": "57813199815000",
 "sku": null,
 "barcode": null,
-"shopify_qty": 142,
+"shopify_qty": 64,
 "unit_cost": 9.93,
 "levels": {},
 "ean": null,
@@ -8785,7 +8263,7 @@
 "variant_id": "57813207679320",
 "sku": null,
 "barcode": null,
-"shopify_qty": 142,
+"shopify_qty": 64,
 "unit_cost": 13.24,
 "levels": {},
 "ean": null,
@@ -8801,7 +8279,7 @@
 "variant_id": "57821716447576",
 "sku": "5740007835247+5740007835261",
 "barcode": null,
-"shopify_qty": 12361,
+"shopify_qty": 11897,
 "unit_cost": 33.06,
 "levels": {},
 "ean": null,
@@ -8820,7 +8298,7 @@
 "variant_id": "57822031216984",
 "sku": "5740007835223+5740007835247",
 "barcode": null,
-"shopify_qty": 7958,
+"shopify_qty": 7628,
 "unit_cost": 27.06,
 "levels": {},
 "ean": null,
@@ -8839,7 +8317,7 @@
 "variant_id": "57822033936728",
 "sku": "5740007835261+5740007836138",
 "barcode": null,
-"shopify_qty": 2573,
+"shopify_qty": 2403,
 "unit_cost": 39.28,
 "levels": {},
 "ean": null,
@@ -8858,7 +8336,7 @@
 "variant_id": "57822035837272",
 "sku": "5740007835247+5740007835261+5740007836138",
 "barcode": null,
-"shopify_qty": 2573,
+"shopify_qty": 2403,
 "unit_cost": 54.31,
 "levels": {},
 "ean": null,
@@ -8878,7 +8356,7 @@
 "variant_id": "57931864211800",
 "sku": "5740007841934",
 "barcode": "5740007841934",
-"shopify_qty": 778,
+"shopify_qty": 763,
 "unit_cost": 10.7,
 "levels": {},
 "ean": "5740007841934",
@@ -8894,7 +8372,7 @@
 "variant_id": "57931879874904",
 "sku": "5740007842498",
 "barcode": "5740007842498",
-"shopify_qty": 537,
+"shopify_qty": 498,
 "unit_cost": 17.12,
 "levels": {},
 "ean": "5740007842498",
@@ -8942,7 +8420,7 @@
 "variant_id": "57931938988376",
 "sku": "5740007843099",
 "barcode": "5740007843099",
-"shopify_qty": 1890,
+"shopify_qty": 1870,
 "unit_cost": 2.14,
 "levels": {},
 "ean": "5740007843099",
@@ -8958,7 +8436,7 @@
 "variant_id": "58001562665304",
 "sku": "5740007835766",
 "barcode": null,
-"shopify_qty": 263,
+"shopify_qty": 262,
 "unit_cost": null,
 "levels": {},
 "ean": "5740007835766",
@@ -8974,7 +8452,7 @@
 "variant_id": "58110808162648",
 "sku": null,
 "barcode": null,
-"shopify_qty": 6193,
+"shopify_qty": 5805,
 "unit_cost": null,
 "levels": {},
 "ean": null,
@@ -8990,7 +8468,7 @@
 "variant_id": "58110808195416",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2573,
+"shopify_qty": 2403,
 "unit_cost": null,
 "levels": {},
 "ean": null,
@@ -9006,7 +8484,7 @@
 "variant_id": "58110808228184",
 "sku": null,
 "barcode": null,
-"shopify_qty": 2573,
+"shopify_qty": 2403,
 "unit_cost": null,
 "levels": {},
 "ean": null,
@@ -9022,7 +8500,7 @@
 "variant_id": "58110808260952",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1603,
+"shopify_qty": 1567,
 "unit_cost": null,
 "levels": {},
 "ean": null,
@@ -9038,7 +8516,7 @@
 "variant_id": "58110808293720",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1871,
+"shopify_qty": 1774,
 "unit_cost": null,
 "levels": {},
 "ean": null,
@@ -9054,7 +8532,7 @@
 "variant_id": "58374831636824",
 "sku": "5740007842313",
 "barcode": "5740007842313",
-"shopify_qty": 364,
+"shopify_qty": 351,
 "unit_cost": 5.37,
 "levels": {},
 "ean": "5740007842313",
@@ -9086,7 +8564,7 @@
 "variant_id": "58420961116504",
 "sku": null,
 "barcode": null,
-"shopify_qty": 364,
+"shopify_qty": 351,
 "unit_cost": null,
 "levels": {},
 "ean": null,
@@ -9118,7 +8596,7 @@
 "variant_id": "58439971995992",
 "sku": null,
 "barcode": null,
-"shopify_qty": 386,
+"shopify_qty": 359,
 "unit_cost": null,
 "levels": {},
 "ean": null,
@@ -9134,7 +8612,7 @@
 "variant_id": "58467325509976",
 "sku": "5740007844416",
 "barcode": null,
-"shopify_qty": 3423,
+"shopify_qty": 3279,
 "unit_cost": 1.35,
 "levels": {},
 "ean": "5740007844416",
@@ -9150,7 +8628,7 @@
 "variant_id": "58536224424280",
 "sku": "5740007843655",
 "barcode": null,
-"shopify_qty": 3923,
+"shopify_qty": 3904,
 "unit_cost": 21.48,
 "levels": {},
 "ean": "5740007843655",
@@ -9166,7 +8644,7 @@
 "variant_id": "58536224588120",
 "sku": "5740007843891",
 "barcode": null,
-"shopify_qty": 2543,
+"shopify_qty": 2523,
 "unit_cost": 16.11,
 "levels": {},
 "ean": "5740007843891",
@@ -9182,7 +8660,7 @@
 "variant_id": "58607974613336",
 "sku": "5740007844478",
 "barcode": null,
-"shopify_qty": 1719,
+"shopify_qty": 1689,
 "unit_cost": 18.15,
 "levels": {},
 "ean": "5740007844478",
@@ -9198,7 +8676,7 @@
 "variant_id": "58607981658456",
 "sku": "5740007844492",
 "barcode": null,
-"shopify_qty": 1412,
+"shopify_qty": 1378,
 "unit_cost": 24.16,
 "levels": {},
 "ean": "5740007844492",
@@ -9214,7 +8692,7 @@
 "variant_id": "58608049160536",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1677,
+"shopify_qty": 1662,
 "unit_cost": 44.02,
 "levels": {},
 "ean": null,
@@ -9230,7 +8708,7 @@
 "variant_id": "58682887602520",
 "sku": null,
 "barcode": null,
-"shopify_qty": 436,
+"shopify_qty": 399,
 "unit_cost": null,
 "levels": {},
 "ean": null,
@@ -9246,7 +8724,7 @@
 "variant_id": "58784246890840",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1412,
+"shopify_qty": 1378,
 "unit_cost": null,
 "levels": {},
 "ean": null,
@@ -9262,7 +8740,7 @@
 "variant_id": "58786116206936",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1719,
+"shopify_qty": 1689,
 "unit_cost": null,
 "levels": {},
 "ean": null,
@@ -9278,7 +8756,7 @@
 "variant_id": "58787496001880",
 "sku": null,
 "barcode": null,
-"shopify_qty": 142,
+"shopify_qty": 64,
 "unit_cost": null,
 "levels": {},
 "ean": null,
@@ -9294,7 +8772,7 @@
 "variant_id": "58860373016920",
 "sku": "5740007845741",
 "barcode": "5740007845741",
-"shopify_qty": 172,
+"shopify_qty": 165,
 "unit_cost": 13.42,
 "levels": {},
 "ean": "5740007845741",
@@ -9310,7 +8788,7 @@
 "variant_id": "58860373082456",
 "sku": "5740007845680",
 "barcode": "5740007845680",
-"shopify_qty": 1220,
+"shopify_qty": 962,
 "unit_cost": 10.74,
 "levels": {},
 "ean": "5740007845680",
@@ -9326,7 +8804,7 @@
 "variant_id": "58860373147992",
 "sku": "5740007846281",
 "barcode": "5740007846281",
-"shopify_qty": 844,
+"shopify_qty": 830,
 "unit_cost": 37.58,
 "levels": {},
 "ean": "5740007846281",
@@ -9342,7 +8820,7 @@
 "variant_id": "58860373213528",
 "sku": "5740007841262",
 "barcode": "5740007841262",
-"shopify_qty": 3574,
+"shopify_qty": 3358,
 "unit_cost": 23.09,
 "levels": {},
 "ean": "5740007841262",
@@ -9358,7 +8836,7 @@
 "variant_id": "58860373442904",
 "sku": "5740007845765",
 "barcode": "5740007845765",
-"shopify_qty": 1935,
+"shopify_qty": 1024,
 "unit_cost": 13.53,
 "levels": {},
 "ean": "5740007845765",
@@ -9422,7 +8900,7 @@
 "variant_id": "58907804434776",
 "sku": null,
 "barcode": null,
-"shopify_qty": 4408,
+"shopify_qty": 4056,
 "unit_cost": 63.05,
 "levels": {},
 "ean": null,
@@ -9438,375 +8916,7 @@
 "variant_id": "58952915648856",
 "sku": null,
 "barcode": null,
-"shopify_qty": 142,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16227453632856",
-"title": "DualFry Fusion 4,5L Lade (Links 1)",
-"created_at": "2026-11-10",
-"published_at": null,
-"product_type": "Reserveonderdelen",
-"variant_id": "59085536919896",
-"sku": "5740007818899",
-"barcode": null,
-"shopify_qty": 329,
-"unit_cost": 7.37,
-"levels": {},
-"ean": "5740007818899",
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16227453665624",
-"title": "DualFry Fusion 4,5L Lade (Rechts 2)",
-"created_at": "2026-11-10",
-"published_at": null,
-"product_type": "Reserveonderdelen",
-"variant_id": "59085536952664",
-"sku": "5740007818875",
-"barcode": "5740007818875",
-"shopify_qty": 329,
-"unit_cost": 7.37,
-"levels": {},
-"ean": "5740007818875",
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16233842311512",
-"title": "DualFry Fusion Airfryer 10,5 Liter + 2 Extra 4,5L Lades",
-"created_at": "2026-11-12",
-"published_at": "2026-11-13",
-"product_type": "",
-"variant_id": "59104316391768",
-"sku": null,
-"barcode": null,
-"shopify_qty": 329,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181087850840",
-"sku": null,
-"barcode": null,
-"shopify_qty": 295,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088276824",
-"sku": null,
-"barcode": null,
-"shopify_qty": 442,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088309592",
-"sku": null,
-"barcode": null,
-"shopify_qty": 442,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088342360",
-"sku": null,
-"barcode": null,
-"shopify_qty": 442,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088375128",
-"sku": null,
-"barcode": null,
-"shopify_qty": 442,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088407896",
-"sku": null,
-"barcode": null,
-"shopify_qty": 366,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088440664",
-"sku": null,
-"barcode": null,
-"shopify_qty": 733,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088244056",
-"sku": null,
-"barcode": null,
-"shopify_qty": 733,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088473432",
-"sku": null,
-"barcode": null,
-"shopify_qty": 442,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088506200",
-"sku": null,
-"barcode": null,
-"shopify_qty": 733,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088538968",
-"sku": null,
-"barcode": null,
-"shopify_qty": 403,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088571736",
-"sku": null,
-"barcode": null,
-"shopify_qty": 807,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088604504",
-"sku": null,
-"barcode": null,
-"shopify_qty": 442,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088637272",
-"sku": null,
-"barcode": null,
-"shopify_qty": 733,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088670040",
-"sku": null,
-"barcode": null,
-"shopify_qty": 807,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088702808",
-"sku": null,
-"barcode": null,
-"shopify_qty": 408,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088735576",
-"sku": null,
-"barcode": null,
-"shopify_qty": 442,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088768344",
-"sku": null,
-"barcode": null,
-"shopify_qty": 366,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088801112",
-"sku": null,
-"barcode": null,
-"shopify_qty": 733,
-"unit_cost": null,
-"levels": {},
-"ean": null,
-"components": null
-},
-{
-"brand": "herman",
-"product_id": "16254016356696",
-"title": "Kies 3 Damascus-messen",
-"created_at": "2026-11-19",
-"published_at": "2026-11-25",
-"product_type": "",
-"variant_id": "59181088833880",
-"sku": null,
-"barcode": null,
-"shopify_qty": 733,
+"shopify_qty": 64,
 "unit_cost": null,
 "levels": {},
 "ean": null,
@@ -9822,10 +8932,10 @@
 "variant_id": "54804378059094",
 "sku": "5740007840142",
 "barcode": "5740007840142",
-"shopify_qty": 791,
+"shopify_qty": 783,
 "unit_cost": 26.84,
 "levels": {
-"3PL - Finland": 791
+"3PL - Finland": 783
 },
 "ean": "5740007840142",
 "components": null
@@ -9840,10 +8950,10 @@
 "variant_id": "54804378124630",
 "sku": "5740007840265",
 "barcode": "5740007840265",
-"shopify_qty": 697,
+"shopify_qty": 602,
 "unit_cost": 21.04,
 "levels": {
-"3PL - Finland": 697
+"3PL - Finland": 602
 },
 "ean": "5740007840265",
 "components": null
@@ -9858,10 +8968,10 @@
 "variant_id": "54804378190166",
 "sku": "5740007841781",
 "barcode": "5740007841781",
-"shopify_qty": 59,
+"shopify_qty": 357,
 "unit_cost": 1.43,
 "levels": {
-"3PL - Finland": 59
+"3PL - Finland": 357
 },
 "ean": "5740007841781",
 "components": null
@@ -9876,10 +8986,10 @@
 "variant_id": "54804378222934",
 "sku": "5740007838910",
 "barcode": "5740007838910",
-"shopify_qty": 240,
+"shopify_qty": 179,
 "unit_cost": 21.47,
 "levels": {
-"3PL - Finland": 240
+"3PL - Finland": 179
 },
 "ean": "5740007838910",
 "components": null
@@ -9894,10 +9004,10 @@
 "variant_id": "54804378288470",
 "sku": "5740007839368",
 "barcode": "5740007839368",
-"shopify_qty": 172,
+"shopify_qty": 124,
 "unit_cost": 2.25,
 "levels": {
-"3PL - Finland": 172
+"3PL - Finland": 124
 },
 "ean": "5740007839368",
 "components": null
@@ -9912,10 +9022,10 @@
 "variant_id": "54804388086102",
 "sku": "5740007838934",
 "barcode": "5740007838934",
-"shopify_qty": 303,
+"shopify_qty": 274,
 "unit_cost": 21.47,
 "levels": {
-"3PL - Finland": 303
+"3PL - Finland": 274
 },
 "ean": "5740007838934",
 "components": null
@@ -9930,10 +9040,10 @@
 "variant_id": "54804388151638",
 "sku": "5740007840326",
 "barcode": "5740007840326",
-"shopify_qty": 2242,
+"shopify_qty": 2226,
 "unit_cost": 28.45,
 "levels": {
-"3PL - Finland": 2242
+"3PL - Finland": 2226
 },
 "ean": "5740007840326",
 "components": null
@@ -9948,10 +9058,10 @@
 "variant_id": "54804388282710",
 "sku": "5740007838996",
 "barcode": "5740007838996",
-"shopify_qty": 157,
+"shopify_qty": 132,
 "unit_cost": 13.42,
 "levels": {
-"3PL - Finland": 157
+"3PL - Finland": 132
 },
 "ean": "5740007838996",
 "components": null
@@ -10002,10 +9112,10 @@
 "variant_id": "54804397424982",
 "sku": "5740007839559",
 "barcode": "5740007839559",
-"shopify_qty": 386,
+"shopify_qty": 382,
 "unit_cost": 44.56,
 "levels": {
-"3PL - Finland": 386
+"3PL - Finland": 382
 },
 "ean": "5740007839559",
 "components": null
@@ -10020,10 +9130,10 @@
 "variant_id": "54804397490518",
 "sku": "5740007840234",
 "barcode": "5740007840234",
-"shopify_qty": 1167,
+"shopify_qty": 1137,
 "unit_cost": 12.88,
 "levels": {
-"3PL - Finland": 1167
+"3PL - Finland": 1137
 },
 "ean": "5740007840234",
 "components": null
@@ -10038,10 +9148,10 @@
 "variant_id": "54804397523286",
 "sku": "5740007840111",
 "barcode": "5740007840111",
-"shopify_qty": 235,
+"shopify_qty": 375,
 "unit_cost": 12.03,
 "levels": {
-"3PL - Finland": 235
+"3PL - Finland": 375
 },
 "ean": "5740007840111",
 "components": null
@@ -10074,10 +9184,10 @@
 "variant_id": "54804405289302",
 "sku": "5740007840340",
 "barcode": "5740007840340",
-"shopify_qty": 387,
+"shopify_qty": 378,
 "unit_cost": 20.4,
 "levels": {
-"3PL - Finland": 387
+"3PL - Finland": 378
 },
 "ean": "5740007840340",
 "components": null
@@ -10092,10 +9202,10 @@
 "variant_id": "54804405387606",
 "sku": "5740007840081",
 "barcode": "5740007840081",
-"shopify_qty": 1132,
+"shopify_qty": 1467,
 "unit_cost": 15.03,
 "levels": {
-"3PL - Finland": 1132
+"3PL - Finland": 1467
 },
 "ean": "5740007840081",
 "components": null
@@ -10110,10 +9220,10 @@
 "variant_id": "54804405485910",
 "sku": "5740007838972",
 "barcode": "5740007838972",
-"shopify_qty": 388,
+"shopify_qty": 378,
 "unit_cost": 21.47,
 "levels": {
-"3PL - Finland": 388
+"3PL - Finland": 378
 },
 "ean": "5740007838972",
 "components": null
@@ -10128,10 +9238,10 @@
 "variant_id": "54804414497110",
 "sku": "5740007840050",
 "barcode": "5740007840050",
-"shopify_qty": 1501,
+"shopify_qty": 1774,
 "unit_cost": 18.03,
 "levels": {
-"3PL - Finland": 1501
+"3PL - Finland": 1774
 },
 "ean": "5740007840050",
 "components": null
@@ -10146,10 +9256,10 @@
 "variant_id": "54804414890326",
 "sku": "5740007840203",
 "barcode": "5740007840203",
-"shopify_qty": 1218,
+"shopify_qty": 1141,
 "unit_cost": 16.75,
 "levels": {
-"3PL - Finland": 1218
+"3PL - Finland": 1141
 },
 "ean": "5740007840203",
 "components": null
@@ -10164,10 +9274,10 @@
 "variant_id": "54804415349078",
 "sku": "5740007838958",
 "barcode": "5740007838958",
-"shopify_qty": 350,
+"shopify_qty": 335,
 "unit_cost": 21.47,
 "levels": {
-"3PL - Finland": 350
+"3PL - Finland": 335
 },
 "ean": "5740007838958",
 "components": null
@@ -10182,10 +9292,10 @@
 "variant_id": "54804415381846",
 "sku": "5740007840029",
 "barcode": "5740007840029",
-"shopify_qty": 1333,
+"shopify_qty": 1308,
 "unit_cost": 21.25,
 "levels": {
-"3PL - Finland": 1333
+"3PL - Finland": 1308
 },
 "ean": "5740007840029",
 "components": null
@@ -10200,10 +9310,10 @@
 "variant_id": "54804435599702",
 "sku": "5740007840173",
 "barcode": "5740007840173",
-"shopify_qty": 1123,
+"shopify_qty": 1073,
 "unit_cost": 20.08,
 "levels": {
-"3PL - Finland": 1123
+"3PL - Finland": 1073
 },
 "ean": "5740007840173",
 "components": null
@@ -10218,10 +9328,10 @@
 "variant_id": "54804435632470",
 "sku": "5740007839535",
 "barcode": "5740007839535",
-"shopify_qty": 1045,
+"shopify_qty": 1032,
 "unit_cost": 26.84,
 "levels": {
-"3PL - Finland": 1045
+"3PL - Finland": 1032
 },
 "ean": "5740007839535",
 "components": null
@@ -10236,10 +9346,10 @@
 "variant_id": "54804435665238",
 "sku": "5740007839931",
 "barcode": "5740007839931",
-"shopify_qty": 413,
+"shopify_qty": 409,
 "unit_cost": 53.69,
 "levels": {
-"3PL - Finland": 413
+"3PL - Finland": 409
 },
 "ean": "5740007839931",
 "components": null
@@ -10254,10 +9364,10 @@
 "variant_id": "54804435730774",
 "sku": "5740007840401",
 "barcode": "5740007840401",
-"shopify_qty": 986,
+"shopify_qty": 978,
 "unit_cost": 8.05,
 "levels": {
-"3PL - Finland": 986
+"3PL - Finland": 978
 },
 "ean": "5740007840401",
 "components": null
@@ -10272,10 +9382,10 @@
 "variant_id": "54804435763542",
 "sku": "5740007840296",
 "barcode": "5740007840296",
-"shopify_qty": 210,
+"shopify_qty": 398,
 "unit_cost": 24.05,
 "levels": {
-"3PL - Finland": 210
+"3PL - Finland": 398
 },
 "ean": "5740007840296",
 "components": null
@@ -10290,10 +9400,10 @@
 "variant_id": "54804435796310",
 "sku": "5740007840388",
 "barcode": "5740007840388",
-"shopify_qty": 3553,
+"shopify_qty": 3501,
 "unit_cost": 30.6,
 "levels": {
-"3PL - Finland": 3553
+"3PL - Finland": 3501
 },
 "ean": "5740007840388",
 "components": null
@@ -10308,10 +9418,10 @@
 "variant_id": "54804445430102",
 "sku": "5740007839429",
 "barcode": "5740007839429",
-"shopify_qty": 359,
+"shopify_qty": 290,
 "unit_cost": 10.73,
 "levels": {
-"3PL - Finland": 359
+"3PL - Finland": 290
 },
 "ean": "5740007839429",
 "components": null
@@ -10326,10 +9436,10 @@
 "variant_id": "54940824895830",
 "sku": "5740007839672",
 "barcode": "5740007839672",
-"shopify_qty": 743,
+"shopify_qty": 621,
 "unit_cost": 6.71,
 "levels": {
-"3PL - Finland": 743
+"3PL - Finland": 621
 },
 "ean": "5740007839672",
 "components": null
@@ -10362,10 +9472,10 @@
 "variant_id": "54940824961366",
 "sku": "5740007839917",
 "barcode": "5740007839917",
-"shopify_qty": 805,
+"shopify_qty": 788,
 "unit_cost": 77.85,
 "levels": {
-"3PL - Finland": 805
+"3PL - Finland": 788
 },
 "ean": "5740007839917",
 "components": null
@@ -10380,10 +9490,10 @@
 "variant_id": "54940824994134",
 "sku": "5740007839634",
 "barcode": "5740007839634",
-"shopify_qty": 252,
+"shopify_qty": 180,
 "unit_cost": 5.83,
 "levels": {
-"3PL - Finland": 252
+"3PL - Finland": 180
 },
 "ean": "5740007839634",
 "components": null
@@ -10398,10 +9508,10 @@
 "variant_id": "54940825026902",
 "sku": "5740007839610",
 "barcode": "5740007839610",
-"shopify_qty": 16,
+"shopify_qty": 0,
 "unit_cost": 3.66,
 "levels": {
-"3PL - Finland": 16
+"3PL - Finland": 0
 },
 "ean": "5740007839610",
 "components": null
@@ -10416,10 +9526,10 @@
 "variant_id": "54940825092438",
 "sku": "5740007839658",
 "barcode": "5740007839658",
-"shopify_qty": 174,
+"shopify_qty": 144,
 "unit_cost": 11.19,
 "levels": {
-"3PL - Finland": 174
+"3PL - Finland": 144
 },
 "ean": "5740007839658",
 "components": null
@@ -10434,10 +9544,10 @@
 "variant_id": "54940825157974",
 "sku": "5740007843075",
 "barcode": "5740007843075",
-"shopify_qty": 249,
+"shopify_qty": 239,
 "unit_cost": 2.14,
 "levels": {
-"3PL - Finland": 249
+"3PL - Finland": 239
 },
 "ean": "5740007843075",
 "components": null
@@ -10452,10 +9562,10 @@
 "variant_id": "54940825190742",
 "sku": "5740007841880",
 "barcode": "5740007841880",
-"shopify_qty": 280,
+"shopify_qty": 219,
 "unit_cost": 10.7,
 "levels": {
-"3PL - Finland": 280
+"3PL - Finland": 219
 },
 "ean": "5740007841880",
 "components": null
@@ -10470,10 +9580,10 @@
 "variant_id": "54940825813334",
 "sku": "5740007843730",
 "barcode": "5740007843730",
-"shopify_qty": 174,
+"shopify_qty": 164,
 "unit_cost": 3.22,
 "levels": {
-"3PL - Finland": 174
+"3PL - Finland": 164
 },
 "ean": "5740007843730",
 "components": null
@@ -10488,10 +9598,10 @@
 "variant_id": "54940825846102",
 "sku": "5740007843716",
 "barcode": "5740007843716",
-"shopify_qty": 149,
+"shopify_qty": 164,
 "unit_cost": 3.22,
 "levels": {
-"3PL - Finland": 149
+"3PL - Finland": 164
 },
 "ean": "5740007843716",
 "components": null
@@ -10506,10 +9616,10 @@
 "variant_id": "54940825878870",
 "sku": "5740007841682",
 "barcode": "5740007841682",
-"shopify_qty": 170,
+"shopify_qty": 159,
 "unit_cost": 20.13,
 "levels": {
-"3PL - Finland": 170
+"3PL - Finland": 159
 },
 "ean": "5740007841682",
 "components": null
@@ -10524,10 +9634,10 @@
 "variant_id": "54940825911638",
 "sku": "5740007843969",
 "barcode": "5740007843969",
-"shopify_qty": 273,
+"shopify_qty": 258,
 "unit_cost": 5.37,
 "levels": {
-"3PL - Finland": 273
+"3PL - Finland": 258
 },
 "ean": "5740007843969",
 "components": null
@@ -10560,10 +9670,10 @@
 "variant_id": "54940826009942",
 "sku": "5740007843914",
 "barcode": "5740007843914",
-"shopify_qty": 222,
+"shopify_qty": 202,
 "unit_cost": 16.11,
 "levels": {
-"3PL - Finland": 222
+"3PL - Finland": 202
 },
 "ean": "5740007843914",
 "components": null
@@ -10578,10 +9688,10 @@
 "variant_id": "54940826042710",
 "sku": "5740007841248",
 "barcode": "5740007841248",
-"shopify_qty": 955,
+"shopify_qty": 740,
 "unit_cost": 18.79,
 "levels": {
-"3PL - Finland": 955
+"3PL - Finland": 740
 },
 "ean": "5740007841248",
 "components": null
@@ -10596,10 +9706,10 @@
 "variant_id": "54940826075478",
 "sku": "5740007844393",
 "barcode": "5740007844393",
-"shopify_qty": 1742,
+"shopify_qty": 1632,
 "unit_cost": 2.15,
 "levels": {
-"3PL - Finland": 1742
+"3PL - Finland": 1632
 },
 "ean": "5740007844393",
 "components": null
@@ -10650,10 +9760,10 @@
 "variant_id": "54941995762006",
 "sku": "5740007843112",
 "barcode": "5740007843112",
-"shopify_qty": 453,
+"shopify_qty": 442,
 "unit_cost": 1.61,
 "levels": {
-"3PL - Finland": 453
+"3PL - Finland": 442
 },
 "ean": "5740007843112",
 "components": null
@@ -10776,7 +9886,7 @@
 "variant_id": "54983403340118",
 "sku": null,
 "barcode": null,
-"shopify_qty": 235,
+"shopify_qty": 375,
 "unit_cost": 27.06,
 "levels": {
 "3PL - Finland": null
@@ -10794,7 +9904,7 @@
 "variant_id": "54983521468758",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1132,
+"shopify_qty": 1467,
 "unit_cost": 33.06,
 "levels": {
 "3PL - Finland": null
@@ -10812,7 +9922,7 @@
 "variant_id": "54983521435990",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1333,
+"shopify_qty": 1308,
 "unit_cost": 39.28,
 "levels": {
 "3PL - Finland": null
@@ -10830,7 +9940,7 @@
 "variant_id": "54983521403222",
 "sku": null,
 "barcode": null,
-"shopify_qty": 235,
+"shopify_qty": 375,
 "unit_cost": 45.09,
 "levels": {
 "3PL - Finland": null
@@ -10848,7 +9958,7 @@
 "variant_id": "54983521501526",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1132,
+"shopify_qty": 1308,
 "unit_cost": 54.31,
 "levels": {
 "3PL - Finland": null
@@ -10866,7 +9976,7 @@
 "variant_id": "54983521534294",
 "sku": null,
 "barcode": null,
-"shopify_qty": 235,
+"shopify_qty": 375,
 "unit_cost": 66.34,
 "levels": {
 "3PL - Finland": null
@@ -10884,7 +9994,7 @@
 "variant_id": "54983521567062",
 "sku": null,
 "barcode": null,
-"shopify_qty": 697,
+"shopify_qty": 602,
 "unit_cost": 39.07,
 "levels": {
 "3PL - Finland": null
@@ -10902,7 +10012,7 @@
 "variant_id": "54983521599830",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1167,
+"shopify_qty": 1137,
 "unit_cost": 29.63,
 "levels": {
 "3PL - Finland": null
@@ -10920,7 +10030,7 @@
 "variant_id": "54983521632598",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1123,
+"shopify_qty": 1073,
 "unit_cost": 36.83,
 "levels": {
 "3PL - Finland": null
@@ -10938,7 +10048,7 @@
 "variant_id": "54983521665366",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1123,
+"shopify_qty": 1073,
 "unit_cost": 49.71,
 "levels": {
 "3PL - Finland": null
@@ -10956,7 +10066,7 @@
 "variant_id": "54983521698134",
 "sku": null,
 "barcode": null,
-"shopify_qty": 210,
+"shopify_qty": 398,
 "unit_cost": 45.09,
 "levels": {
 "3PL - Finland": null
@@ -10974,7 +10084,7 @@
 "variant_id": "54983522582870",
 "sku": null,
 "barcode": null,
-"shopify_qty": 791,
+"shopify_qty": 783,
 "unit_cost": 63.67,
 "levels": {
 "3PL - Finland": null
@@ -10992,7 +10102,7 @@
 "variant_id": "54983522648406",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1132,
+"shopify_qty": 1141,
 "unit_cost": 31.78,
 "levels": {
 "3PL - Finland": null
@@ -11010,7 +10120,7 @@
 "variant_id": "54983522615638",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1123,
+"shopify_qty": 1073,
 "unit_cost": 69.89,
 "levels": {
 "3PL - Finland": null
@@ -11028,7 +10138,7 @@
 "variant_id": "54983522713942",
 "sku": null,
 "barcode": null,
-"shopify_qty": 387,
+"shopify_qty": 378,
 "unit_cost": 48.85,
 "levels": {
 "3PL - Finland": null
@@ -11046,7 +10156,7 @@
 "variant_id": "54983522681174",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1501,
+"shopify_qty": 1774,
 "unit_cost": 48.63,
 "levels": {
 "3PL - Finland": null
@@ -11064,7 +10174,7 @@
 "variant_id": "54983522746710",
 "sku": null,
 "barcode": null,
-"shopify_qty": 210,
+"shopify_qty": 375,
 "unit_cost": 139.89,
 "levels": {
 "3PL - Finland": null
@@ -11082,7 +10192,7 @@
 "variant_id": "54983522877782",
 "sku": null,
 "barcode": null,
-"shopify_qty": 240,
+"shopify_qty": 179,
 "unit_cost": 99.3,
 "levels": {
 "3PL - Finland": null
@@ -11100,7 +10210,7 @@
 "variant_id": "54983525138774",
 "sku": null,
 "barcode": null,
-"shopify_qty": 240,
+"shopify_qty": 179,
 "unit_cost": 27.3,
 "levels": {
 "3PL - Finland": null
@@ -11118,7 +10228,7 @@
 "variant_id": "54983525171542",
 "sku": null,
 "barcode": null,
-"shopify_qty": 16,
+"shopify_qty": 0,
 "unit_cost": 20.68,
 "levels": {
 "3PL - Finland": null
@@ -11136,7 +10246,7 @@
 "variant_id": "54983525204310",
 "sku": null,
 "barcode": null,
-"shopify_qty": 273,
+"shopify_qty": 258,
 "unit_cost": 83.22,
 "levels": {
 "3PL - Finland": null
@@ -11154,7 +10264,7 @@
 "variant_id": "54983525237078",
 "sku": null,
 "barcode": null,
-"shopify_qty": 413,
+"shopify_qty": 409,
 "unit_cost": 60.4,
 "levels": {
 "3PL - Finland": null
@@ -11172,7 +10282,7 @@
 "variant_id": "54983525302614",
 "sku": null,
 "barcode": null,
-"shopify_qty": 413,
+"shopify_qty": 409,
 "unit_cost": 80.53,
 "levels": {
 "3PL - Finland": null
@@ -11208,7 +10318,7 @@
 "variant_id": "54983525400918",
 "sku": null,
 "barcode": null,
-"shopify_qty": 252,
+"shopify_qty": 180,
 "unit_cost": 23.86,
 "levels": {
 "3PL - Finland": null
@@ -11298,10 +10408,10 @@
 "variant_id": "55254389784918",
 "sku": "5740007838378",
 "barcode": "5740007838378",
-"shopify_qty": 54,
+"shopify_qty": 48,
 "unit_cost": 3.21,
 "levels": {
-"3PL - Finland": 54
+"3PL - Finland": 48
 },
 "ean": "5740007838378",
 "components": null
@@ -11316,10 +10426,10 @@
 "variant_id": "55254408266070",
 "sku": "5740007831836",
 "barcode": "5740007831836",
-"shopify_qty": 37,
+"shopify_qty": 25,
 "unit_cost": 5.84,
 "levels": {
-"3PL - Finland": 37
+"3PL - Finland": 25
 },
 "ean": "5740007831836",
 "components": null
@@ -11334,7 +10444,7 @@
 "variant_id": "55260337963350",
 "sku": null,
 "barcode": null,
-"shopify_qty": 240,
+"shopify_qty": 179,
 "unit_cost": 36.5,
 "levels": {
 "3PL - Finland": null
@@ -11388,7 +10498,7 @@
 "variant_id": "55260362441046",
 "sku": null,
 "barcode": null,
-"shopify_qty": 743,
+"shopify_qty": 621,
 "unit_cost": 41.82,
 "levels": {
 "3PL - Finland": null
@@ -11424,7 +10534,7 @@
 "variant_id": "55260363653462",
 "sku": null,
 "barcode": null,
-"shopify_qty": 1045,
+"shopify_qty": 1032,
 "unit_cost": 55.29,
 "levels": {
 "3PL - Finland": null
@@ -11442,7 +10552,7 @@
 "variant_id": "55260363718998",
 "sku": null,
 "barcode": null,
-"shopify_qty": 174,
+"shopify_qty": 144,
 "unit_cost": 32.66,
 "levels": {
 "3PL - Finland": null
@@ -11478,7 +10588,7 @@
 "variant_id": "55260364636502",
 "sku": null,
 "barcode": null,
-"shopify_qty": 149,
+"shopify_qty": 124,
 "unit_cost": 8.69,
 "levels": {
 "3PL - Finland": null
@@ -11514,7 +10624,7 @@
 "variant_id": "55359067488598",
 "sku": null,
 "barcode": null,
-"shopify_qty": 240,
+"shopify_qty": 179,
 "unit_cost": 34.27,
 "levels": {
 "3PL - Finland": null
@@ -11640,7 +10750,7 @@
 "variant_id": "55447136665942",
 "sku": null,
 "barcode": null,
-"shopify_qty": 59,
+"shopify_qty": 124,
 "unit_cost": 138.77,
 "levels": {
 "3PL - Finland": null
@@ -11748,7 +10858,7 @@
 "variant_id": "55513072861526",
 "sku": null,
 "barcode": null,
-"shopify_qty": 54,
+"shopify_qty": 48,
 "unit_cost": 23.61,
 "levels": {
 "3PL - Finland": null
@@ -11766,7 +10876,7 @@
 "variant_id": "55513072927062",
 "sku": null,
 "barcode": null,
-"shopify_qty": 37,
+"shopify_qty": 25,
 "unit_cost": 34.29,
 "levels": {
 "3PL - Finland": null
@@ -11784,7 +10894,7 @@
 "variant_id": "55513072992598",
 "sku": null,
 "barcode": null,
-"shopify_qty": 37,
+"shopify_qty": 25,
 "unit_cost": 57.9,
 "levels": {
 "3PL - Finland": null
@@ -11820,7 +10930,7 @@
 "variant_id": "56277028962646",
 "sku": null,
 "barcode": null,
-"shopify_qty": 210,
+"shopify_qty": 398,
 "unit_cost": 42.08,
 "levels": {
 "3PL - Finland": null
@@ -11865,20 +10975,892 @@
 "components": null
 },
 {
-"brand": "casper",
-"product_id": "16334176092485",
-"title": "Andestegspakken, airfryer med skærebræt og forskærerkniv",
-"created_at": "2026-11-03",
-"published_at": "2026-11-03",
-"product_type": "",
-"variant_id": "60050761777477",
+"brand": "gladkokken",
+"product_id": "16274669764943",
+"title": "Premium Universalskum – 1000 ml",
+"created_at": "2026-08-14",
+"published_at": "2026-08-21",
+"product_type": "Kjøkkenredskaper",
+"variant_id": "58474307354959",
+"sku": "5740007845840",
+"barcode": "5740007845840",
+"shopify_qty": 764,
+"unit_cost": 40.95,
+"levels": {
+"Stockgroup": 764
+},
+"ean": "5740007845840",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16274669928783",
+"title": "Premium Universalavfetter – 1000 ml",
+"created_at": "2026-08-14",
+"published_at": "2026-08-21",
+"product_type": "Kjøkkenredskaper",
+"variant_id": "58474308075855",
+"sku": "5740007845864",
+"barcode": "5740007845864",
+"shopify_qty": 704,
+"unit_cost": 40.95,
+"levels": {
+"Stockgroup": 704
+},
+"ean": "5740007845864",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16274669994319",
+"title": "Premium Grill- og Ovnsrens – 1000 ml",
+"created_at": "2026-08-14",
+"published_at": "2026-08-21",
+"product_type": "Kjøkkenredskaper",
+"variant_id": "58474308239695",
+"sku": "5740007845888",
+"barcode": "5740007845888",
+"shopify_qty": 76,
+"unit_cost": 40.95,
+"levels": {
+"Stockgroup": 76
+},
+"ean": "5740007845888",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16276628308303",
+"title": "Premium Kjøkkenrengjøring – sett med 3 deler",
+"created_at": "2026-08-16",
+"published_at": "2026-08-21",
+"product_type": "Rengjøring",
+"variant_id": "58488070308175",
 "sku": null,
 "barcode": null,
-"shopify_qty": 356,
-"unit_cost": 905.5,
+"shopify_qty": 76,
+"unit_cost": null,
 "levels": {
 "Stockgroup": null
 },
+"ean": null,
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16288483803471",
+"title": "Bakebollesett med lokk – 3 stk",
+"created_at": "2026-08-24",
+"published_at": "2026-11-24",
+"product_type": "Kjøkkenredskaper",
+"variant_id": "58551211065679",
+"sku": "5740007842610",
+"barcode": "5740007842610",
+"shopify_qty": 269,
+"unit_cost": 93.02,
+"levels": {
+"Stockgroup": 269
+},
+"ean": "5740007842610",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16293373542735",
+"title": "Stavmiksersett 1450 W – 3 deler",
+"created_at": "2026-08-27",
+"published_at": "2026-09-10",
+"product_type": "Kjøkkenmaskiner",
+"variant_id": "58579473695055",
+"sku": "5740007841286",
+"barcode": "5740007841286",
+"shopify_qty": 478,
+"unit_cost": 186.21,
+"levels": {
+"Stockgroup": 478
+},
+"ean": "5740007841286",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16293384323407",
+"title": "Pannebeskytter - 3 stk i 3 størrelser",
+"created_at": "2026-08-27",
+"published_at": "2026-09-10",
+"product_type": "Kjøkkenredskaper",
+"variant_id": "58579628556623",
+"sku": "5740007844430",
+"barcode": "5740007844430",
+"shopify_qty": 2580,
+"unit_cost": 23.34,
+"levels": {
+"Stockgroup": 2580
+},
+"ean": "5740007844430",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16316449063247",
+"title": "San Marzano DOP tomater 400 g – Solania",
+"created_at": "2026-09-09",
+"published_at": "2026-09-09",
+"product_type": "Pizzautstyr",
+"variant_id": "58724167418191",
+"sku": "8032685820040",
+"barcode": "8032685820040",
+"shopify_qty": 470,
+"unit_cost": 17.0,
+"levels": {
+"Stockgroup": 470
+},
+"ean": "8032685820040",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16316467118415",
+"title": "Pizzaovn – med 2 bokser San Marzano DOP på kjøpet",
+"created_at": "2026-09-09",
+"published_at": "2026-09-09",
+"product_type": "",
+"variant_id": "58724331716943",
+"sku": null,
+"barcode": null,
+"shopify_qty": 235,
+"unit_cost": null,
+"levels": {
+"Stockgroup": null
+},
+"ean": null,
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16319478726991",
+"title": "Hevekasse for pizzadeig med lokk - 40x30x9 cm",
+"created_at": "2026-09-10",
+"published_at": "2026-10-26",
+"product_type": "Pizzautstyr",
+"variant_id": "58741979611471",
+"sku": "5740007846489",
+"barcode": "5740007846489",
+"shopify_qty": 672,
+"unit_cost": 69.21,
+"levels": {
+"Stockgroup": 672
+},
+"ean": "5740007846489",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16319482069327",
+"title": "Pizzaskjærer",
+"created_at": "2026-09-10",
+"published_at": "2026-10-26",
+"product_type": "Pizzautstyr",
+"variant_id": "58742007595343",
+"sku": "5740007846465",
+"barcode": "5740007846465",
+"shopify_qty": 216,
+"unit_cost": 23.07,
+"levels": {
+"Stockgroup": 216
+},
+"ean": "5740007846465",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16319487902031",
+"title": "Perforert Pizzaspade i aluminium - 30,5x74 cm",
+"created_at": "2026-09-10",
+"published_at": "2026-10-10",
+"product_type": "Pizzautstyr",
+"variant_id": "58742040592719",
+"sku": "5740007846441",
+"barcode": "5740007846441",
+"shopify_qty": 535,
+"unit_cost": 126.89,
+"levels": {
+"Stockgroup": 535
+},
+"ean": "5740007846441",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16319495078223",
+"title": "Matboks til pizzadeig - 700 ml",
+"created_at": "2026-09-10",
+"published_at": "2026-10-26",
+"product_type": "Pizzautstyr",
+"variant_id": "58742098985295",
+"sku": "5740007847097",
+"barcode": "5740007847097",
+"shopify_qty": 1131,
+"unit_cost": 28.84,
+"levels": {
+"Stockgroup": 1131
+},
+"ean": "5740007847097",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16319501893967",
+"title": "Pizzaspartel",
+"created_at": "2026-09-10",
+"published_at": "2026-10-26",
+"product_type": "Pizzautstyr",
+"variant_id": "58742128705871",
+"sku": "5740007846502",
+"barcode": "5740007846502",
+"shopify_qty": 731,
+"unit_cost": 34.62,
+"levels": {
+"Stockgroup": 731
+},
+"ean": "5740007846502",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16319525257551",
+"title": "Knivsliper",
+"created_at": "2026-09-10",
+"published_at": "2026-10-07",
+"product_type": "Kjøkkenredskaper",
+"variant_id": "58742303949135",
+"sku": "5740007845703",
+"barcode": "5740007845703",
+"shopify_qty": 29,
+"unit_cost": 115.39,
+"levels": {
+"Stockgroup": 29
+},
+"ean": "5740007845703",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16320157516111",
+"title": "Pro Paninigrill - 2000W",
+"created_at": "2026-09-11",
+"published_at": "2026-10-07",
+"product_type": "Kjøkkenmaskiner",
+"variant_id": "58744891965775",
+"sku": "5740007846267",
+"barcode": "5740007846267",
+"shopify_qty": 254,
+"unit_cost": 403.65,
+"levels": {
+"Stockgroup": 254
+},
+"ean": "5740007846267",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16320161644879",
+"title": "Mirakel stålsvamp – 3-pakning",
+"created_at": "2026-09-11",
+"published_at": "2026-10-20",
+"product_type": "Kjøkkenredskaper",
+"variant_id": "58744897175887",
+"sku": "5740007846724",
+"barcode": "5740007846724",
+"shopify_qty": 1090,
+"unit_cost": 11.53,
+"levels": {
+"Stockgroup": 1090
+},
+"ean": "5740007846724",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16326434292047",
+"title": "Digital Blender - 1200W",
+"created_at": "2026-09-14",
+"published_at": "2026-10-07",
+"product_type": "Kjøkkenmaskiner",
+"variant_id": "58779113750863",
+"sku": "5740007839757",
+"barcode": "5740007839757",
+"shopify_qty": 0,
+"unit_cost": 316.49,
+"levels": {
+"Stockgroup": 0
+},
+"ean": "5740007839757",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16326444187983",
+"title": "Kjøkkenforkle i bomull",
+"created_at": "2026-09-14",
+"published_at": "2026-10-07",
+"product_type": "Kjøkkenredskaper",
+"variant_id": "58779174863183",
+"sku": "5740007844607",
+"barcode": "5740007844607",
+"shopify_qty": 847,
+"unit_cost": 63.31,
+"levels": {
+"Stockgroup": 847
+},
+"ean": "5740007844607",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16326462603599",
+"title": "Hybrid Slipp-Lett Langpanne XL - 37x32x8cm",
+"created_at": "2026-09-14",
+"published_at": "2026-10-10",
+"product_type": "Hybrid",
+"variant_id": "58779229716815",
+"sku": "5740007844287",
+"barcode": "5740007844287",
+"shopify_qty": 0,
+"unit_cost": 460.57,
+"levels": {
+"Stockgroup": 0
+},
+"ean": "5740007844287",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16326468239695",
+"title": "Skjærefjøl Teak med Saftrille - 45x30x2,5cm",
+"created_at": "2026-09-14",
+"published_at": "2026-10-07",
+"product_type": "Kjøkkenredskaper",
+"variant_id": "58779239481679",
+"sku": "5740007843877",
+"barcode": "5740007843877",
+"shopify_qty": 284,
+"unit_cost": 172.72,
+"levels": {
+"Stockgroup": 284
+},
+"ean": "5740007843877",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16326479970639",
+"title": "Limited Edition Hybrid Slipp-Lett Stekepanne Ø28 - Grønn",
+"created_at": "2026-09-14",
+"published_at": "2026-10-26",
+"product_type": "Hybrid",
+"variant_id": "58779261665615",
+"sku": "5740007846427",
+"barcode": "5740007846427",
+"shopify_qty": 1711,
+"unit_cost": 204.93,
+"levels": {
+"Stockgroup": 1711
+},
+"ean": "5740007846427",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16326480036175",
+"title": "Limited Edition Hybrid Slipp-Lett Stekepanne Ø28 - Hvit",
+"created_at": "2026-09-14",
+"published_at": "2026-10-26",
+"product_type": "Hybrid",
+"variant_id": "58779261731151",
+"sku": "5740007846403",
+"barcode": "5740007846403",
+"shopify_qty": 1981,
+"unit_cost": 204.93,
+"levels": {
+"Stockgroup": 1981
+},
+"ean": "5740007846403",
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16359606092111",
+"title": "Hybrid Plancha – med Premium Kjøkkenredskaper på kjøpet",
+"created_at": "2026-10-01",
+"published_at": "2026-10-01",
+"product_type": "Stekepanne",
+"variant_id": "58972288909647",
+"sku": null,
+"barcode": null,
+"shopify_qty": 1412,
+"unit_cost": 475.36,
+"levels": {
+"Stockgroup": null
+},
+"ean": null,
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16370912002383",
+"title": "Matboks til pizzadeig – 4-pakning",
+"created_at": "2026-10-07",
+"published_at": "2026-10-26",
+"product_type": "Pizzautstyr",
+"variant_id": "59033483444559",
+"sku": null,
+"barcode": null,
+"shopify_qty": 282,
+"unit_cost": null,
+"levels": {
+"Stockgroup": null
+},
+"ean": null,
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16375142580559",
+"title": "Biscotto-pizzastein Ø33 cm – håndlaget i Sorrento",
+"created_at": "2026-10-08",
+"published_at": "2026-10-08",
+"product_type": "Pizzautstyr",
+"variant_id": "59056757342543",
+"sku": "1-pizzasten",
+"barcode": null,
+"shopify_qty": 153,
+"unit_cost": 149.0,
+"levels": {
+"Stockgroup": 153
+},
+"ean": null,
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16449097498959",
+"title": "Pizza Startpakke – Pizzaovn, pizzaspade, pizzaskjærer & 4 × San Marzano",
+"created_at": "2026-11-04",
+"published_at": "2026-11-04",
+"product_type": "Kjøkkenmaskiner",
+"variant_id": "59390676926799",
+"sku": null,
+"barcode": null,
+"shopify_qty": 117,
+"unit_cost": null,
+"levels": {
+"Stockgroup": null
+},
+"ean": null,
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16449097531727",
+"title": "Pizza Ekspertpakke – Pizzaovn, Biscotto-stein, pizzaspade, hevekasse, pizzaskjærer, pizzaspartel & 4 × San Marzano",
+"created_at": "2026-11-04",
+"published_at": "2026-11-04",
+"product_type": "Kjøkkenmaskiner",
+"variant_id": "59390677123407",
+"sku": null,
+"barcode": null,
+"shopify_qty": 117,
+"unit_cost": null,
+"levels": {
+"Stockgroup": null
+},
+"ean": null,
+"components": null
+},
+{
+"brand": "gladkokken",
+"product_id": "16449097630031",
+"title": "12-i-1 Multicooker 3 L + Rustfrie kjøkkenredskaper i stål 6 deler",
+"created_at": "2026-11-04",
+"published_at": "2026-11-04",
+"product_type": "Kjøkkenmaskiner",
+"variant_id": "59390677254479",
+"sku": null,
+"barcode": null,
+"shopify_qty": 147,
+"unit_cost": null,
+"levels": {
+"Stockgroup": null
+},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16227453632856",
+"title": "DualFry Fusion 4,5L Lade (Links 1)",
+"created_at": "2026-11-10",
+"published_at": null,
+"product_type": "Reserveonderdelen",
+"variant_id": "59085536919896",
+"sku": "5740007818899",
+"barcode": null,
+"shopify_qty": 321,
+"unit_cost": 7.37,
+"levels": {},
+"ean": "5740007818899",
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16227453665624",
+"title": "DualFry Fusion 4,5L Lade (Rechts 2)",
+"created_at": "2026-11-10",
+"published_at": null,
+"product_type": "Reserveonderdelen",
+"variant_id": "59085536952664",
+"sku": "5740007818875",
+"barcode": "5740007818875",
+"shopify_qty": 321,
+"unit_cost": 7.37,
+"levels": {},
+"ean": "5740007818875",
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16233842311512",
+"title": "DualFry Fusion Airfryer 10,5 Liter + 2 Extra 4,5L Lades",
+"created_at": "2026-11-12",
+"published_at": "2026-11-13",
+"product_type": "",
+"variant_id": "59104316391768",
+"sku": null,
+"barcode": null,
+"shopify_qty": 321,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181087850840",
+"sku": null,
+"barcode": null,
+"shopify_qty": 270,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088276824",
+"sku": null,
+"barcode": null,
+"shopify_qty": 406,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088309592",
+"sku": null,
+"barcode": null,
+"shopify_qty": 406,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088342360",
+"sku": null,
+"barcode": null,
+"shopify_qty": 406,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088375128",
+"sku": null,
+"barcode": null,
+"shopify_qty": 406,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088407896",
+"sku": null,
+"barcode": null,
+"shopify_qty": 337,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088440664",
+"sku": null,
+"barcode": null,
+"shopify_qty": 674,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088244056",
+"sku": null,
+"barcode": null,
+"shopify_qty": 674,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088473432",
+"sku": null,
+"barcode": null,
+"shopify_qty": 406,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088506200",
+"sku": null,
+"barcode": null,
+"shopify_qty": 674,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088538968",
+"sku": null,
+"barcode": null,
+"shopify_qty": 376,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088571736",
+"sku": null,
+"barcode": null,
+"shopify_qty": 753,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088604504",
+"sku": null,
+"barcode": null,
+"shopify_qty": 406,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088637272",
+"sku": null,
+"barcode": null,
+"shopify_qty": 674,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088670040",
+"sku": null,
+"barcode": null,
+"shopify_qty": 753,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088702808",
+"sku": null,
+"barcode": null,
+"shopify_qty": 390,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088735576",
+"sku": null,
+"barcode": null,
+"shopify_qty": 406,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088768344",
+"sku": null,
+"barcode": null,
+"shopify_qty": 337,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088801112",
+"sku": null,
+"barcode": null,
+"shopify_qty": 674,
+"unit_cost": null,
+"levels": {},
+"ean": null,
+"components": null
+},
+{
+"brand": "herman",
+"product_id": "16254016356696",
+"title": "Kies 3 Damascus-messen",
+"created_at": "2026-11-19",
+"published_at": "2026-11-25",
+"product_type": "",
+"variant_id": "59181088833880",
+"sku": null,
+"barcode": null,
+"shopify_qty": 674,
+"unit_cost": null,
+"levels": {},
 "ean": null,
 "components": null
 }

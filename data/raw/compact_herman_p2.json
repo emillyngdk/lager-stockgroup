@@ -1,0 +1,27 @@
+{"brand":"herman","compact":true,"nodes":[
+{"id":"gid://shopify/Product/16227453632856","title":"DualFry Fusion 4,5L Lade (Links 1)","createdAt":"2026-11-10T07:34:39Z","publishedAt":null,"productType":"Reserveonderdelen","variants":[{"id":"gid://shopify/ProductVariant/59085536919896","sku":"5740007818899","barcode":null,"qty":321,"cost":7.37,"loc":{}}]},
+{"id":"gid://shopify/Product/16227453665624","title":"DualFry Fusion 4,5L Lade (Rechts 2)","createdAt":"2026-11-10T07:34:40Z","publishedAt":null,"productType":"Reserveonderdelen","variants":[{"id":"gid://shopify/ProductVariant/59085536952664","sku":"5740007818875","barcode":"5740007818875","qty":321,"cost":7.37,"loc":{}}]},
+{"id":"gid://shopify/Product/16233842311512","title":"DualFry Fusion Airfryer 10,5 Liter + 2 Extra 4,5L Lades","createdAt":"2026-11-12T12:31:59Z","publishedAt":"2026-11-13T13:58:01Z","productType":"","variants":[{"id":"gid://shopify/ProductVariant/59104316391768","sku":null,"barcode":null,"qty":321,"cost":null,"loc":{}}]},
+{"id":"gid://shopify/Product/16254016356696","title":"Kies 3 Damascus-messen","createdAt":"2026-11-19T13:04:40Z","publishedAt":"2026-11-25T15:33:25Z","productType":"","variants":[
+{"id":"gid://shopify/ProductVariant/59181087850840","sku":null,"barcode":null,"qty":270,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088276824","sku":null,"barcode":null,"qty":406,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088309592","sku":null,"barcode":null,"qty":406,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088342360","sku":null,"barcode":null,"qty":406,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088375128","sku":null,"barcode":null,"qty":406,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088407896","sku":null,"barcode":null,"qty":337,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088440664","sku":null,"barcode":null,"qty":674,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088244056","sku":null,"barcode":null,"qty":674,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088473432","sku":null,"barcode":null,"qty":406,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088506200","sku":null,"barcode":null,"qty":674,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088538968","sku":null,"barcode":null,"qty":376,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088571736","sku":null,"barcode":null,"qty":753,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088604504","sku":null,"barcode":null,"qty":406,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088637272","sku":null,"barcode":null,"qty":674,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088670040","sku":null,"barcode":null,"qty":753,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088702808","sku":null,"barcode":null,"qty":390,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088735576","sku":null,"barcode":null,"qty":406,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088768344","sku":null,"barcode":null,"qty":337,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088801112","sku":null,"barcode":null,"qty":674,"cost":null,"loc":{}},
+{"id":"gid://shopify/ProductVariant/59181088833880","sku":null,"barcode":null,"qty":674,"cost":null,"loc":{}}
+]}
+]}
